@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Headphones, Pause, Play, RotateCcw, Volume2, VolumeX } from "lucide-react";
 import type { BlogNarrationControls } from "../hooks/useBlogNarration";
@@ -13,49 +13,47 @@ function formatTime(seconds: number) {
   return `${m}:${r.toString().padStart(2, "0")}`;
 }
 
-interface BlogAudioPlayerProps {
+interface PlayerBodyProps {
+  compact?: boolean;
   title: string;
   paragraphCount: number;
-  narration: BlogNarrationControls;
+  status: BlogNarrationControls["status"];
+  progressPercent: number;
+  rate: number;
+  volume: number;
+  estimatedDurationSec: number;
+  muted: boolean;
+  setRate: (rate: number) => void;
+  setVolume: (volume: number) => void;
+  togglePlay: () => void;
+  seekToPercent: (pct: number) => void;
+  play: (fromWordIndex?: number) => void;
+  onMuteToggle: () => void;
+  onVolumeChange: (volume: number) => void;
 }
 
-export default function BlogAudioPlayer({ title, paragraphCount, narration }: BlogAudioPlayerProps) {
-  const mainRef = useRef<HTMLDivElement>(null);
-  const [showFloating, setShowFloating] = useState(false);
-  const [muted, setMuted] = useState(false);
-  const [prevVolume, setPrevVolume] = useState(1);
-
-  const {
-    status,
-    progressPercent,
-    rate,
-    volume,
-    estimatedDurationSec,
-    setRate,
-    setVolume,
-    play,
-    togglePlay,
-    seekToPercent,
-  } = narration;
-
+function PlayerBody({
+  compact = false,
+  title,
+  paragraphCount,
+  status,
+  progressPercent,
+  rate,
+  volume,
+  estimatedDurationSec,
+  muted,
+  setRate,
+  setVolume,
+  togglePlay,
+  seekToPercent,
+  play,
+  onMuteToggle,
+  onVolumeChange,
+}: PlayerBodyProps) {
   const elapsedSec = (progressPercent / 100) * estimatedDurationSec;
   const isPlaying = status === "playing";
 
-  useEffect(() => {
-    const el = mainRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setShowFloating(!entry.isIntersecting),
-      { threshold: 0.05, rootMargin: "-72px 0px 0px 0px" },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  const shell =
-    "border border-purple-200/80 text-gray-900 shadow-lg shadow-purple-200/30";
-
-  const PlayerBody = ({ compact = false }: { compact?: boolean }) => (
+  return (
     <div className={compact ? "p-3" : "p-5 md:p-6"} style={{ backgroundColor: PLAYER_BG }}>
       <div className={`flex items-start gap-3 ${compact ? "mb-3" : "mb-5"}`}>
         <div
@@ -69,7 +67,11 @@ export default function BlogAudioPlayer({ title, paragraphCount, narration }: Bl
           <p className="text-[10px] font-black uppercase tracking-[0.2em] text-purple-700">
             Listen to this blog
           </p>
-          <p className={`font-bold leading-snug truncate text-gray-900 ${compact ? "text-sm" : "text-base md:text-lg"}`}>
+          <p
+            className={`font-bold leading-snug text-gray-900 ${
+              compact ? "text-sm line-clamp-2" : "text-base md:text-lg truncate"
+            }`}
+          >
             {title}
           </p>
           {!compact && (
@@ -135,16 +137,7 @@ export default function BlogAudioPlayer({ title, paragraphCount, narration }: Bl
         <div className={`flex items-center gap-2 ${compact ? "" : "md:ml-auto"}`}>
           <button
             type="button"
-            onClick={() => {
-              if (muted) {
-                setVolume(prevVolume || 1);
-                setMuted(false);
-              } else {
-                setPrevVolume(volume);
-                setVolume(0);
-                setMuted(true);
-              }
-            }}
+            onClick={onMuteToggle}
             className="p-2 rounded-xl text-gray-700 hover:bg-white/50 transition-colors"
             aria-label={muted ? "Unmute" : "Mute"}
           >
@@ -156,11 +149,7 @@ export default function BlogAudioPlayer({ title, paragraphCount, narration }: Bl
             max={1}
             step={0.05}
             value={volume}
-            onChange={(e) => {
-              const v = Number(e.target.value);
-              setVolume(v);
-              setMuted(v === 0);
-            }}
+            onChange={(e) => onVolumeChange(Number(e.target.value))}
             className="w-20 md:w-24 h-1.5 rounded-full appearance-none cursor-pointer bg-white/60"
             aria-label="Volume"
           />
@@ -196,6 +185,86 @@ export default function BlogAudioPlayer({ title, paragraphCount, narration }: Bl
       </div>
     </div>
   );
+}
+
+interface BlogAudioPlayerProps {
+  title: string;
+  paragraphCount: number;
+  narration: BlogNarrationControls;
+  variant?: "default" | "sidebar";
+}
+
+function BlogAudioPlayer({
+  title,
+  paragraphCount,
+  narration,
+  variant = "default",
+}: BlogAudioPlayerProps) {
+  const mainRef = useRef<HTMLDivElement>(null);
+  const [showFloating, setShowFloating] = useState(false);
+  const [muted, setMuted] = useState(false);
+  const [prevVolume, setPrevVolume] = useState(1);
+
+  const {
+    status,
+    progressPercent,
+    rate,
+    volume,
+    estimatedDurationSec,
+    setRate,
+    setVolume,
+    play,
+    togglePlay,
+    seekToPercent,
+  } = narration;
+
+  useEffect(() => {
+    const el = mainRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setShowFloating(!entry.isIntersecting),
+      { threshold: 0.05, rootMargin: "-72px 0px 0px 0px" },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const shell =
+    "border border-purple-200/80 text-gray-900 shadow-lg shadow-purple-200/30";
+
+  const isSidebar = variant === "sidebar";
+  const isCompact = isSidebar;
+
+  const bodyProps: PlayerBodyProps = {
+    compact: isCompact,
+    title,
+    paragraphCount,
+    status,
+    progressPercent,
+    rate,
+    volume,
+    estimatedDurationSec,
+    muted,
+    setRate,
+    setVolume,
+    togglePlay,
+    seekToPercent,
+    play,
+    onMuteToggle: () => {
+      if (muted) {
+        setVolume(prevVolume || 1);
+        setMuted(false);
+      } else {
+        setPrevVolume(volume);
+        setVolume(0);
+        setMuted(true);
+      }
+    },
+    onVolumeChange: (v) => {
+      setVolume(v);
+      setMuted(v === 0);
+    },
+  };
 
   if (paragraphCount === 0) return null;
 
@@ -203,11 +272,11 @@ export default function BlogAudioPlayer({ title, paragraphCount, narration }: Bl
     <>
       <section
         ref={mainRef}
-        className={`rounded-3xl overflow-hidden ${shell}`}
+        className={`${isSidebar ? "rounded-2xl" : "rounded-3xl"} overflow-hidden ${shell}`}
         style={{ backgroundColor: PLAYER_BG }}
         aria-label="Listen to this blog"
       >
-        <PlayerBody />
+        <PlayerBody {...bodyProps} />
       </section>
 
       <AnimatePresence>
@@ -222,10 +291,32 @@ export default function BlogAudioPlayer({ title, paragraphCount, narration }: Bl
             role="region"
             aria-label="Audio player controls"
           >
-            <PlayerBody compact />
+            <PlayerBody {...bodyProps} compact />
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
 }
+
+function playerPropsEqual(prev: BlogAudioPlayerProps, next: BlogAudioPlayerProps) {
+  const a = prev.narration;
+  const b = next.narration;
+  return (
+    prev.title === next.title &&
+    prev.paragraphCount === next.paragraphCount &&
+    prev.variant === next.variant &&
+    a.status === b.status &&
+    a.progressPercent === b.progressPercent &&
+    a.rate === b.rate &&
+    a.volume === b.volume &&
+    a.estimatedDurationSec === b.estimatedDurationSec &&
+    a.setRate === b.setRate &&
+    a.setVolume === b.setVolume &&
+    a.play === b.play &&
+    a.togglePlay === b.togglePlay &&
+    a.seekToPercent === b.seekToPercent
+  );
+}
+
+export default memo(BlogAudioPlayer, playerPropsEqual);

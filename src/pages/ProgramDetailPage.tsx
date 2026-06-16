@@ -5,6 +5,7 @@ import { PROGRAMS } from "../data/programs";
 import { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import HoverFillLink from "../components/HoverFillLink";
 
 
 export default function ProgramDetailPage() {
@@ -39,9 +40,9 @@ export default function ProgramDetailPage() {
         <div>
           <h2 className="font-bold text-gray-900 mb-4">Program Not Found</h2>
           <p className="text-gray-500 mb-8">The program you are looking for does not exist.</p>
-          <Link to="/programs" className="px-8 py-3 bg-purple-600 text-white rounded-full font-bold shadow-lg hover:bg-purple-700 transition-all">
+          <HoverFillLink to="/programs" variant="purple" className="px-8 py-3 font-bold">
             Back to Programs
-          </Link>
+          </HoverFillLink>
         </div>
       </div>
     );
@@ -50,7 +51,7 @@ export default function ProgramDetailPage() {
   return (
     <div className="relative bg-[#f5f9ff] min-h-screen selection:bg-blue-100 font-sans flex flex-col">
       <Header variant="dark" />
-      <div className="max-w-7xl mx-auto w-full pl-0 pr-6 -mt-1 mb-6">
+      <div className="max-w-7xl mx-auto w-full px-6 -mt-1 mb-6">
         <nav className="flex flex-wrap items-center gap-2 text-sm text-gray-500 font-bold">
           <Link to="/" className="inline-flex items-center text-purple-600 hover:text-purple-700 transition-colors">
             <House size={16} />
@@ -64,7 +65,7 @@ export default function ProgramDetailPage() {
         </nav>
       </div>
       {/* Hero Section */}
-      <div className="relative h-[60vh] min-h-[400px] overflow-hidden">
+      <div className="relative h-[45vh] sm:h-[55vh] md:h-[60vh] min-h-[280px] sm:min-h-[320px] overflow-hidden">
         <img
           src={program.img}
           alt={program.title}
@@ -80,7 +81,7 @@ export default function ProgramDetailPage() {
             </div>
 
             
-            <h1 className="text-[2.5rem] font-bold text-white tracking-tight leading-tight max-w-4xl">
+            <h1 className="text-2xl sm:text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-tight max-w-4xl">
               {program.title}
             </h1>
           </div>
@@ -97,7 +98,7 @@ export default function ProgramDetailPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className="flex flex-wrap gap-8 mb-12 py-8 border-b border-gray-100">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-6 sm:gap-8 mb-12 py-8 border-b border-gray-100">
                 <div className="flex items-center gap-3">
                   <div className="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600">
                     <Calendar className="w-6 h-6" />
@@ -118,7 +119,7 @@ export default function ProgramDetailPage() {
                   </div>
                 </div>
 
-                <div className="ml-auto flex items-center gap-3">
+                <div className="flex items-center gap-3 sm:ml-auto">
                   <button
                     aria-label="Donate Now"
                     title="Donate Now"
@@ -136,9 +137,9 @@ export default function ProgramDetailPage() {
                 </div>
               </div>
 
-              <div className="prose prose-xl prose-purple max-w-none">
+              <div className="prose prose-base sm:prose-lg md:prose-xl prose-purple max-w-none">
                 <h2 className="font-bold text-gray-900 mb-6">About the Program</h2>
-                <p className="text-xl text-gray-600 leading-relaxed mb-8">
+                <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
                   {program.longDesc}
                 </p>
                 <p className="text-lg text-gray-500 leading-relaxed italic">

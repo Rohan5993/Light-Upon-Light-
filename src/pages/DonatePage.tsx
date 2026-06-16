@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { CheckCircle2, ChevronLeft, ChevronRight, HeartHandshake, Lock, ShieldCheck, Sparkles, Users } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import HoverFillButton from "../components/HoverFillButton";
+import HoverFillLink from "../components/HoverFillLink";
 
 const ONE_TIME_AMOUNTS = [25, 50, 100, 250];
 const MONTHLY_AMOUNTS = [15, 30, 60, 100];
@@ -87,7 +89,7 @@ export default function DonatePage() {
                 <Sparkles size={12} className="text-purple-600" />
                 Give Hope Today
               </div>
-              <h1 className="text-[2rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">
+              <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[2.25rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">
                 Your generosity turns compassion into real, measurable impact.
               </h1>
               <p className="text-lg text-gray-600 leading-relaxed max-w-2xl mb-8">
@@ -123,7 +125,7 @@ export default function DonatePage() {
               </div>
             </div>
 
-            <div id="top-donate-card" className="bg-white rounded-[2rem] border border-gray-100 shadow-md p-7 md:p-8 min-h-[620px] flex flex-col">
+            <div id="top-donate-card" className="bg-white rounded-[2rem] border border-gray-100 shadow-md p-7 md:p-8 lg:min-h-[620px] flex flex-col">
               <div>
               <div className="mb-5">
                 <h2 className="text-xl font-black text-gray-900">Choose your gift</h2>
@@ -206,12 +208,13 @@ export default function DonatePage() {
               </div>
 
               <div className="pt-4">
-                <button
+                <HoverFillButton
                   type="button"
-                  className="w-full py-4 rounded-full bg-purple-600 text-white font-black text-sm uppercase tracking-wider hover:bg-purple-700 transition-colors shadow-lg hover:shadow-purple-200"
+                  variant="purple"
+                  className="w-full py-4 font-black text-sm uppercase tracking-wider"
                 >
                   {ctaText}
-                </button>
+                </HoverFillButton>
 
                 <p className="mt-3 text-center text-xs text-gray-500">
                   {frequency === "monthly"
@@ -307,7 +310,7 @@ export default function DonatePage() {
                 />
                 <div>
                 <p className="text-[11px] uppercase tracking-widest font-black text-purple-200 mb-3">Donor Story</p>
-                <blockquote className="text-2xl leading-snug font-bold mb-4">
+                <blockquote className="text-lg sm:text-xl md:text-2xl leading-snug font-bold mb-4">
                   “{activeStory.quote}”
                 </blockquote>
                 <p className="text-purple-100 font-medium">— {activeStory.name}, {activeStory.role}</p>
@@ -353,12 +356,13 @@ export default function DonatePage() {
                     <span>Impact updates from the field</span>
                   </li>
                 </ul>
-                <a
+                <HoverFillLink
                   href="#top-donate-card"
-                  className="inline-flex items-center justify-center w-full py-3 rounded-full bg-white text-purple-700 font-black hover:bg-purple-50 transition-colors"
+                  variant="white"
+                  className="w-full py-3 font-black"
                 >
                   Donate Now
-                </a>
+                </HoverFillLink>
               </div>
             </div>
           </div>

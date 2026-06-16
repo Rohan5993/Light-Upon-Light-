@@ -30,7 +30,7 @@ export default function ProgramsPage() {
               <div className="w-1.5 h-1.5 rounded-full bg-purple-600" />
               Impactful Initiatives
             </div>
-            <h1 className="text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight">
+            <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight">
               Our Radiant Programs
             </h1>
             <p className="text-xl text-gray-500 font-medium mt-6 max-w-3xl">

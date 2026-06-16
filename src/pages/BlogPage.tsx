@@ -63,7 +63,7 @@ export default function BlogPage() {
             <div className="w-1.5 h-1.5 rounded-full bg-purple-600" />
             Blog
           </div>
-          <h1 className="text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">
+          <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">
             Stories that Inspire Action
           </h1>
           <p className="text-xl text-gray-500 font-medium max-w-3xl">
@@ -103,7 +103,7 @@ export default function BlogPage() {
           ))}
         </div>
 
-        <div className="mt-14 mb-20 flex items-center justify-center gap-3">
+        <div className="mt-14 mb-20 flex flex-wrap items-center justify-center gap-3 px-2">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
             <button
               key={num}

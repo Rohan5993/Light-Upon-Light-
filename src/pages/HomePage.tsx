@@ -6,6 +6,8 @@ import { PROGRAMS } from "../data/programs";
 import { BLOG_POSTS, type BlogPost } from "../data/blogPosts";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import HoverFillButton from "../components/HoverFillButton";
+import HoverFillLink from "../components/HoverFillLink";
 import { getAllBlogPosts } from "../services/blogService";
 
 
@@ -142,7 +144,7 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="relative h-screen overflow-hidden selection:bg-purple-100 font-sans flex flex-col">
+      <div className="relative min-h-screen min-h-[100dvh] overflow-hidden selection:bg-purple-100 font-sans flex flex-col">
         <Header variant="light" />
         {/* Background Hero Image with Vertical Ribbon Effect */}
         <div className="absolute inset-0 z-0">
@@ -172,29 +174,30 @@ export default function HomePage() {
         </div>
 
         {/* Hero Content */}
-        <main className="relative z-10 px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl">
+        <main className="relative z-10 px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl pt-20 pb-16 md:pt-0 md:pb-0">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-4xl"
           >
-            <h1 className="text-5xl md:text-7xl font-bold text-white leading-[1.05] tracking-tight mb-8">
+            <h1 className="text-[2rem] md:text-7xl font-bold text-white leading-[1.05] tracking-tight mb-8">
               Igniting Hope,<br />
               Radiating Impact.
             </h1>
-            <p className="text-lg md:text-xl text-white/90 leading-relaxed mb-14 max-w-2xl font-medium">
-              Cultivating resilience and hope through radiant action. We provide sustainable support to communities facing adversity, turning small acts into global transformations.
+            <p className="text-base md:text-xl text-white/90 leading-relaxed mb-10 md:mb-14 max-w-2xl font-medium">
+            Building resilience and hope through action, providing sustainable support that turns small acts into lasting change.
             </p>
 
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="group flex items-center gap-5 bg-white pl-10 pr-3 py-3 rounded-full text-slate-900 font-bold shadow-2xl hover:shadow-white/20 transition-all"
+              className="group flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-5 bg-white pl-4 sm:pl-10 pr-2 sm:pr-3 py-2 sm:py-3 rounded-full text-slate-900 font-bold shadow-2xl hover:shadow-white/20 transition-all max-w-full"
             >
-              <span className="text-lg">Join The Movement</span>
-              <div className="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center text-white group-hover:bg-purple-700 transition-colors">
-                <ArrowUpRight size={24} strokeWidth={2.5} />
+              <span className="text-sm sm:text-lg">Join The Movement</span>
+              <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-purple-600 flex items-center justify-center text-white group-hover:bg-purple-700 transition-colors shrink-0">
+                <ArrowUpRight size={20} strokeWidth={2.5} className="sm:hidden" />
+                <ArrowUpRight size={24} strokeWidth={2.5} className="hidden sm:block" />
               </div>
             </motion.button>
           </motion.div>
@@ -231,11 +234,11 @@ export default function HomePage() {
               </p>
               <div className="grid grid-cols-2 gap-8">
                 <div>
-                  <p className="text-5xl font-bold text-gray-900 mb-2">120<span className="text-purple-600">+</span></p>
+                  <p className="text-3xl sm:text-5xl font-bold text-gray-900 mb-2">120<span className="text-purple-600">+</span></p>
                   <p className="text-sm text-gray-400 font-bold uppercase tracking-wider leading-snug">Charity Events <br /> Organized</p>
                 </div>
                 <div>
-                  <p className="text-5xl font-bold text-gray-900 mb-2">8,000<span className="text-purple-600">+</span></p>
+                  <p className="text-3xl sm:text-5xl font-bold text-gray-900 mb-2">8,000<span className="text-purple-600">+</span></p>
                   <p className="text-sm text-gray-400 font-bold uppercase tracking-wider leading-snug">Active <br /> Volunteers</p>
                 </div>
               </div>
@@ -280,8 +283,8 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className="max-w-7xl mx-auto grid md:grid-cols-[auto_1fr] gap-20 items-center relative z-10">
-          <div className="relative">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-[auto_1fr] gap-10 md:gap-20 items-center relative z-10">
+          <div className="relative mx-auto md:mx-0 w-full max-w-sm overflow-hidden">
             <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border border-gray-100 max-w-sm">
               <img
                 src="/founder.png"
@@ -289,7 +292,7 @@ export default function HomePage() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-xl border border-gray-50 flex items-center gap-4">
+            <div className="absolute bottom-4 right-4 sm:-bottom-6 sm:-right-6 bg-white p-4 sm:p-6 rounded-2xl shadow-xl border border-gray-50 flex items-center gap-3 sm:gap-4 max-w-[calc(100%-2rem)]">
               <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
                 <Heart className="w-6 h-6 fill-purple-600" />
               </div>
@@ -424,13 +427,15 @@ export default function HomePage() {
           </div>
 
           <div className="mt-12 text-center">
-            <Link
+            <HoverFillLink
               to="/programs"
-              className="inline-flex items-center gap-3 px-10 py-4 bg-purple-600 text-white rounded-full font-black text-sm uppercase tracking-widest hover:bg-purple-700 transition-all shadow-xl shadow-purple-200 group"
+              variant="purple"
+              className="gap-3 px-10 py-4 font-black text-sm uppercase tracking-widest"
+              labelClassName="inline-flex items-center gap-3"
             >
               View All Programs
-              <ArrowUpRight className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-            </Link>
+              <ArrowUpRight className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+            </HoverFillLink>
           </div>
         </div>
       </section>
@@ -615,7 +620,7 @@ export default function HomePage() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="bg-gradient-to-br from-blue-100 via-white to-purple-100 rounded-2xl p-16 md:p-24 text-center shadow-2xl shadow-purple-900/10 overflow-hidden relative border border-purple-200/50"
+            className="bg-gradient-to-br from-blue-100 via-white to-purple-100 rounded-2xl p-8 sm:p-12 md:p-24 text-center shadow-2xl shadow-purple-900/10 overflow-hidden relative border border-purple-200/50"
           >
             {/* Ambient light effects inside white box */}
             <div className="absolute inset-0 opacity-50 pointer-events-none">
@@ -623,20 +628,30 @@ export default function HomePage() {
               <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-50 rounded-full blur-[120px] translate-x-1/2 translate-y-1/2" />
             </div>
 
-            <h2 className="text-4xl md:text-6xl font-black tracking-widest mb-0 flex flex-col items-center gap-4">
-              <span className="text-gray-300 text-[10px] md:text-xs tracking-[1em] mb-4">THE GLOBAL MISSION OF</span>
+            <h2 className="text-2xl sm:text-4xl md:text-6xl font-black tracking-wide sm:tracking-widest mb-0 flex flex-col items-center gap-4">
+              <span className="text-gray-300 text-[9px] sm:text-[10px] md:text-xs tracking-[0.35em] sm:tracking-[1em] mb-2 sm:mb-4 text-center px-2">
+                THE GLOBAL MISSION OF
+              </span>
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
                 LIGHT UPON LIGHT
               </span>
             </h2>
 
             <div className="mt-12 flex flex-wrap justify-center gap-6 relative z-10">
-              <button className="px-10 py-4 bg-purple-600 text-white rounded-2xl font-black uppercase text-sm tracking-widest hover:scale-105 transition-all shadow-xl shadow-purple-200">
+              <HoverFillButton
+                variant="purple"
+                rounded="2xl"
+                className="px-6 sm:px-10 py-3 sm:py-4 font-black uppercase text-xs sm:text-sm tracking-widest"
+              >
                 Join our Global Community
-              </button>
-              <button className="px-10 py-4 bg-white text-purple-600 border border-purple-100 rounded-2xl font-black uppercase text-sm tracking-widest hover:bg-purple-50 transition-all">
+              </HoverFillButton>
+              <HoverFillButton
+                variant="white"
+                rounded="2xl"
+                className="px-6 sm:px-10 py-3 sm:py-4 border border-purple-100 font-black uppercase text-xs sm:text-sm tracking-widest"
+              >
                 Partner with us
-              </button>
+              </HoverFillButton>
             </div>
           </motion.div>
         </div>

@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Facebook, Linkedin, House, ChevronRight } from "
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import BlogAudioPlayer from "../components/BlogAudioPlayer";
+import HoverFillLink from "../components/HoverFillLink";
 import { useBlogNarration } from "../hooks/useBlogNarration";
 import { BLOG_POSTS, type BlogPost } from "../data/blogPosts";
 import { getAllBlogPosts, getBlogPostBySlug } from "../services/blogService";
@@ -41,7 +42,6 @@ export default function BlogDetailPage() {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [mergedPosts, setMergedPosts] = useState<BlogPost[]>(() => [...BLOG_POSTS]);
-  const [activeWordIndex, setActiveWordIndex] = useState(-1);
   const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const userScrollingRef = useRef(false);
   const scrollIdleTimerRef = useRef<number | null>(null);
@@ -115,10 +115,10 @@ export default function BlogDetailPage() {
   const postId = post?.slug ?? post?.id ?? id ?? "blog";
   const narration = useBlogNarration(paragraphs, postId);
 
-  useEffect(() => {
-    const isNarrating = narration.status === "playing" || narration.status === "paused";
-    setActiveWordIndex(isNarrating ? narration.activeWordIndex : -1);
-  }, [narration.activeWordIndex, narration.status]);
+  const activeWordIndex =
+    narration.status === "playing" || narration.status === "paused"
+      ? narration.activeWordIndex
+      : -1;
 
   useEffect(() => {
     const onScroll = () => {
@@ -183,10 +183,15 @@ export default function BlogDetailPage() {
         <div>
           <h1 className="text-3xl font-bold text-gray-900 mb-3">Post Not Found</h1>
           <p className="text-gray-500 mb-8">This blog post does not exist.</p>
-          <Link to="/blog" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-purple-600 text-white font-bold">
+          <HoverFillLink
+            to="/blog"
+            variant="purple"
+            className="gap-2 px-6 py-3 font-bold"
+            labelClassName="inline-flex items-center gap-2"
+          >
             <ArrowLeft size={16} />
             Back to Blog
-          </Link>
+          </HoverFillLink>
         </div>
       </div>
     );
@@ -214,22 +219,14 @@ export default function BlogDetailPage() {
           </nav>
         </div>
 
-        <div className="grid lg:grid-cols-[1.7fr_0.8fr] gap-14">
+        <div className="grid lg:grid-cols-[1.7fr_0.8fr] gap-8 lg:gap-14">
           <article>
-            <img src={post.image} alt={post.title} className="w-full h-[360px] object-cover rounded-2xl mb-10" />
+            <img src={post.image} alt={post.title} className="w-full h-48 sm:h-64 md:h-[360px] object-cover rounded-2xl mb-10" />
             <p className="text-[11px] uppercase tracking-widest text-gray-400 font-black mb-4">{post.category} • {post.date}</p>
-            <h1 className="text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">{post.title}</h1>
-
-            <div className="sticky top-20 z-40 mb-8">
-              <BlogAudioPlayer
-                title={post.title}
-                paragraphCount={paragraphs.length}
-                narration={narration}
-              />
-            </div>
+            <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">{post.title}</h1>
 
             <p className="text-xs text-gray-400 mb-6">
-              Tap any section below to jump there while listening. Scroll freely — play and pause stay available in the bar above or at the bottom.
+              Tap any section below to jump there while listening.
             </p>
 
             <div className="space-y-7 text-base text-gray-600 leading-relaxed">
@@ -282,19 +279,28 @@ export default function BlogDetailPage() {
             </div>
           </article>
 
-          <aside className="lg:sticky lg:top-28 h-fit bg-[#e2d6ff] rounded-2xl p-8 border border-purple-200">
-            <h2 className="text-lg font-black text-gray-900 mb-3 uppercase tracking-widest">Share this Post</h2>
-            <p className="text-gray-600 text-sm mb-6">Help others discover this story and amplify the impact.</p>
-            <div className="space-y-3">
-              <a href={facebookShare} target="_blank" rel="noreferrer" className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-white text-gray-900 font-bold border border-gray-100 hover:border-purple-200">
-                <Facebook size={16} />
-                Share on Facebook
-              </a>
-              <a href={linkedInShare} target="_blank" rel="noreferrer" className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-white text-gray-900 font-bold border border-gray-100 hover:border-purple-200">
-                <Linkedin size={16} />
-                Share on LinkedIn
-              </a>
+          <aside className="lg:sticky lg:top-28 h-fit space-y-6">
+            <div className="bg-[#e2d6ff] rounded-2xl p-8 border border-purple-200">
+              <h2 className="text-lg font-black text-gray-900 mb-3 uppercase tracking-widest">Share this Post</h2>
+              <p className="text-gray-600 text-sm mb-6">Help others discover this story and amplify the impact.</p>
+              <div className="space-y-3">
+                <a href={facebookShare} target="_blank" rel="noreferrer" className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-white text-gray-900 font-bold border border-gray-100 hover:border-purple-200">
+                  <Facebook size={16} />
+                  Share on Facebook
+                </a>
+                <a href={linkedInShare} target="_blank" rel="noreferrer" className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-white text-gray-900 font-bold border border-gray-100 hover:border-purple-200">
+                  <Linkedin size={16} />
+                  Share on LinkedIn
+                </a>
+              </div>
             </div>
+
+            <BlogAudioPlayer
+              title={post.title}
+              paragraphCount={paragraphs.length}
+              narration={narration}
+              variant="sidebar"
+            />
           </aside>
         </div>
 

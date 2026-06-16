@@ -33,7 +33,7 @@ export default function Footer({ className = "", topPaddingClass = "pt-48" }: Fo
                 <div className="w-3 h-3 bg-white rounded-md" />
                 <div className="w-3 h-3 bg-white rounded-md" />
               </div>
-              <span className="text-white font-bold text-3xl tracking-tight">Light Upon Light</span>
+              <span className="text-white font-bold text-xl sm:text-2xl md:text-3xl tracking-tight">Light Upon Light</span>
             </div>
             <p className="text-gray-400 leading-relaxed text-[15px] font-medium max-w-xs">
               Uniting hearts and actions to create positive change that lasts beyond a single moment.
@@ -64,7 +64,8 @@ export default function Footer({ className = "", topPaddingClass = "pt-48" }: Fo
               {[
                 { label: 'About Us', path: '/about' },
                 { label: 'Programs', path: '/programs' },
-                { label: 'Blogs', path: '/#stories' },
+                { label: 'Blogs', path: '/blog' },
+                { label: 'Donate', path: '/donate' },
                 { label: 'Get Involved', path: '/programs' }
               ].map((link) => (
                 <li key={link.label}>
@@ -84,9 +85,11 @@ export default function Footer({ className = "", topPaddingClass = "pt-48" }: Fo
                 <MapPin className="w-5 h-5 flex-shrink-0 text-white" />
                 <span className="text-[15px] font-medium leading-tight pt-0.5">Greater Seattle Area</span>
               </li>
-              <li className="flex items-center gap-4 text-gray-400">
-                <Heart className="w-5 h-5 flex-shrink-0 text-white" />
-                <span className="text-[15px] font-medium">lightuponlight1408@gmail.com</span>
+              <li className="flex items-start gap-4 text-gray-400 min-w-0">
+                <Heart className="w-5 h-5 flex-shrink-0 text-white mt-0.5" />
+                <a href="mailto:lightuponlight1408@gmail.com" className="text-[15px] font-medium break-all">
+                  lightuponlight1408@gmail.com
+                </a>
               </li>
               <li className="flex items-center gap-4 text-gray-400">
                 <Star className="w-5 h-5 flex-shrink-0 text-white" />

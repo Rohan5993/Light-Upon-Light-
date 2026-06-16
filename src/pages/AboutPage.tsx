@@ -1,4 +1,5 @@
 import { motion } from "motion/react";
+import { useState } from "react";
 import { Youtube, Sparkles, Target } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -80,6 +81,8 @@ const TEAM_COLLABORATIONS = [
 ] as const;
 
 export default function AboutPage() {
+  const [revealedMember, setRevealedMember] = useState<string | null>(null);
+
   return (
     <div className="relative bg-white min-h-screen selection:bg-purple-100 font-sans flex flex-col">
       <Header variant="dark" />
@@ -99,7 +102,7 @@ export default function AboutPage() {
               <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
               About Light Upon Light
             </div>
-            <h1 className="text-[3rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">
+            <h1 className="text-[1.875rem] sm:text-[2.5rem] md:text-[3rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">
               A movement built on dignity, hope, and action.
             </h1>
             <p className="text-lg text-gray-500 font-medium leading-relaxed max-w-2xl">
@@ -312,14 +315,25 @@ export default function AboutPage() {
             Team / Partners / Collaborations
           </h2>
           <p className="text-gray-500 font-medium max-w-2xl mb-10">
-            Hover each headshot to view an image of what they like.
+            Tap or hover each headshot to view an image of what they like.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {TEAM_COLLABORATIONS.map((person) => (
+            {TEAM_COLLABORATIONS.map((person) => {
+              const isRevealed = revealedMember === person.name;
+
+              return (
               <article
                 key={person.name}
                 tabIndex={0}
-                className="group rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm hover:shadow-lg transition-shadow outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2"
+                role="button"
+                onClick={() => setRevealedMember(isRevealed ? null : person.name)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setRevealedMember(isRevealed ? null : person.name);
+                  }
+                }}
+                className="group rounded-2xl border border-gray-100 bg-white overflow-hidden shadow-sm hover:shadow-lg transition-shadow outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 cursor-pointer"
               >
                 <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
                   <img
@@ -330,7 +344,9 @@ export default function AboutPage() {
                     onError={(e) => {
                       e.currentTarget.src = `https://ui-avatars.com/api/?name=${person.name.replace(/\s+/g, "+")}&size=600&background=ede9fe&color=6d28d9`;
                     }}
-                    className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 group-hover:opacity-0 group-focus-within:opacity-0"
+                    className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ${
+                      isRevealed ? "opacity-0" : "opacity-100 group-hover:opacity-0 group-focus-within:opacity-0"
+                    }`}
                   />
                   <img
                     src={person.hobbyImage}
@@ -340,7 +356,9 @@ export default function AboutPage() {
                     onError={(e) => {
                       e.currentTarget.src = person.image;
                     }}
-                    className="absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-500 group-hover:opacity-100 group-focus-within:opacity-100"
+                    className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 ${
+                      isRevealed ? "opacity-100" : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
+                    }`}
                   />
                 </div>
                 <div className="p-3 md:p-4">
@@ -349,7 +367,8 @@ export default function AboutPage() {
                   <p className="text-[10px] uppercase tracking-widest text-gray-400 mt-1">{person.organization}</p>
                 </div>
               </article>
-            ))}
+            );
+            })}
           </div>
         </div>
       </motion.section>

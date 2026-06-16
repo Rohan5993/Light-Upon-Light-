@@ -108,6 +108,8 @@ export function useBlogNarration(paragraphs: string[], postId: string): BlogNarr
   const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
   const tickIntervalRef = useRef<number | null>(null);
   const tickerLocalWordRef = useRef(0);
+  const progressThrottleRef = useRef<number | null>(null);
+  const lastDisplayedProgressRef = useRef(0);
 
   const estimatedDurationSec = useMemo(
     () => (totalWords / WORDS_PER_MINUTE) * 60,
@@ -123,15 +125,45 @@ export function useBlogNarration(paragraphs: string[], postId: string): BlogNarr
 
   const msPerWord = useCallback(() => (60000 / WORDS_PER_MINUTE) / rateRef.current, []);
 
+  const updateProgressDisplay = useCallback(
+    (pct: number, immediate = false) => {
+      if (progressThrottleRef.current !== null) {
+        window.clearTimeout(progressThrottleRef.current);
+        progressThrottleRef.current = null;
+      }
+
+      if (immediate || statusRef.current !== "playing") {
+        lastDisplayedProgressRef.current = pct;
+        setProgressPercent(pct);
+        return;
+      }
+
+      if (Math.abs(pct - lastDisplayedProgressRef.current) >= 1.5) {
+        lastDisplayedProgressRef.current = pct;
+        setProgressPercent(pct);
+        return;
+      }
+
+      progressThrottleRef.current = window.setTimeout(() => {
+        progressThrottleRef.current = null;
+        const currentPct =
+          totalWords > 0 ? Math.min(100, (resumeWordIndexRef.current / totalWords) * 100) : 0;
+        lastDisplayedProgressRef.current = currentPct;
+        setProgressPercent(currentPct);
+      }, 450);
+    },
+    [totalWords],
+  );
+
   const persistPosition = useCallback(
-    (nextWordIndex: number) => {
+    (nextWordIndex: number, immediateProgress = false) => {
       const clamped = Math.max(0, Math.min(nextWordIndex, totalWords));
       resumeWordIndexRef.current = clamped;
       const pct = totalWords > 0 ? Math.min(100, (clamped / totalWords) * 100) : 0;
-      setProgressPercent(pct);
+      updateProgressDisplay(pct, immediateProgress);
       saveProgress(postId, { wordIndex: clamped, progressPercent: pct });
     },
-    [postId, totalWords],
+    [postId, totalWords, updateProgressDisplay],
   );
 
   const highlightWord = useCallback(
@@ -181,7 +213,7 @@ export function useBlogNarration(paragraphs: string[], postId: string): BlogNarr
         return;
       }
 
-      cancelledRef.current = false;
+      cancelledRef.current = true;
       usedNativePauseRef.current = false;
       clearTicker();
       window.speechSynthesis.cancel();
@@ -190,47 +222,58 @@ export function useBlogNarration(paragraphs: string[], postId: string): BlogNarr
       const text = remaining.join(" ");
       const wordCount = remaining.length;
 
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.rate = rateRef.current;
-      utterance.volume = volumeRef.current;
-      utterance.pitch = 1;
-      if (voiceRef.current) utterance.voice = voiceRef.current;
+      window.setTimeout(() => {
+        cancelledRef.current = false;
 
-      utterance.onstart = () => {
-        if (cancelledRef.current) return;
-        setStatus("playing");
-        statusRef.current = "playing";
-        startTicker(startWordIndex, wordCount, 0);
-      };
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = rateRef.current;
+        utterance.volume = volumeRef.current;
+        utterance.pitch = 1;
+        if (voiceRef.current) utterance.voice = voiceRef.current;
 
-      utterance.onboundary = (event) => {
-        if (cancelledRef.current || event.charIndex < 0) return;
-        const localWord = charIndexToLocalWordIndex(text, event.charIndex);
-        const globalWord = Math.min(startWordIndex + localWord, totalWords - 1);
-        tickerLocalWordRef.current = localWord + 1;
-        highlightWord(globalWord);
-      };
+        utterance.onstart = () => {
+          if (cancelledRef.current) return;
+          setStatus("playing");
+          statusRef.current = "playing";
+          startTicker(startWordIndex, wordCount, 0);
+        };
 
-      utterance.onend = () => {
-        if (cancelledRef.current) return;
-        clearTicker();
-        persistPosition(totalWords);
-        setActiveWordIndex(totalWords - 1);
-        setStatus("ended");
-        statusRef.current = "ended";
-      };
+        utterance.onboundary = (event) => {
+          if (cancelledRef.current || event.charIndex < 0) return;
+          const localWord = charIndexToLocalWordIndex(text, event.charIndex);
+          const globalWord = Math.min(startWordIndex + localWord, totalWords - 1);
+          tickerLocalWordRef.current = localWord + 1;
+          highlightWord(globalWord);
+        };
 
-      utterance.onerror = () => {
-        if (cancelledRef.current) return;
-        clearTicker();
-        setStatus("paused");
-        statusRef.current = "paused";
-      };
+        utterance.onend = () => {
+          if (cancelledRef.current) return;
+          clearTicker();
+          persistPosition(totalWords);
+          setActiveWordIndex(totalWords - 1);
+          setStatus("ended");
+          statusRef.current = "ended";
+        };
 
-      window.speechSynthesis.speak(utterance);
+        utterance.onerror = () => {
+          if (cancelledRef.current) return;
+          clearTicker();
+          setStatus("paused");
+          statusRef.current = "paused";
+        };
+
+        window.speechSynthesis.speak(utterance);
+      }, 0);
     },
     [clearTicker, persistPosition, startTicker, totalWords, words],
   );
+
+  const restartAtCurrentWord = useCallback(() => {
+    const resumeFrom =
+      speakingWordIndexRef.current >= 0 ? speakingWordIndexRef.current : resumeWordIndexRef.current;
+    usedNativePauseRef.current = false;
+    speakFromWord(Math.max(0, Math.min(resumeFrom, totalWords - 1)));
+  }, [speakFromWord, totalWords]);
 
   const play = useCallback(
     (fromWordIndex?: number) => {
@@ -388,27 +431,49 @@ export function useBlogNarration(paragraphs: string[], postId: string): BlogNarr
     return () => {
       cancelledRef.current = true;
       clearTicker();
+      if (progressThrottleRef.current !== null) {
+        window.clearTimeout(progressThrottleRef.current);
+      }
       window.speechSynthesis.cancel();
       window.speechSynthesis.onvoiceschanged = null;
     };
   }, [clearTicker, postId, totalWords]);
 
-  const prevRateRef = useRef(rate);
-  const prevVolumeRef = useRef(volume);
+  const setPlaybackRate = useCallback(
+    (newRate: number) => {
+      if (rateRef.current === newRate) return;
+      rateRef.current = newRate;
+      setRate(newRate);
+      if (statusRef.current === "playing") {
+        updateProgressDisplay(
+          totalWords > 0
+            ? Math.min(100, (resumeWordIndexRef.current / totalWords) * 100)
+            : 0,
+          true,
+        );
+        restartAtCurrentWord();
+      }
+    },
+    [restartAtCurrentWord, totalWords, updateProgressDisplay],
+  );
 
-  useEffect(() => {
-    const rateChanged = prevRateRef.current !== rate;
-    const volumeChanged = prevVolumeRef.current !== volume;
-    prevRateRef.current = rate;
-    prevVolumeRef.current = volume;
-    if (!rateChanged && !volumeChanged) return;
-    if (statusRef.current !== "playing") return;
-
-    const resumeFrom =
-      speakingWordIndexRef.current >= 0 ? speakingWordIndexRef.current : resumeWordIndexRef.current;
-    usedNativePauseRef.current = false;
-    speakFromWord(Math.max(0, Math.min(resumeFrom, totalWords - 1)));
-  }, [rate, volume, speakFromWord, totalWords]);
+  const setPlaybackVolume = useCallback(
+    (newVolume: number) => {
+      if (volumeRef.current === newVolume) return;
+      volumeRef.current = newVolume;
+      setVolume(newVolume);
+      if (statusRef.current === "playing") {
+        updateProgressDisplay(
+          totalWords > 0
+            ? Math.min(100, (resumeWordIndexRef.current / totalWords) * 100)
+            : 0,
+          true,
+        );
+        restartAtCurrentWord();
+      }
+    },
+    [restartAtCurrentWord, totalWords, updateProgressDisplay],
+  );
 
   return {
     status,
@@ -417,8 +482,8 @@ export function useBlogNarration(paragraphs: string[], postId: string): BlogNarr
     rate,
     volume,
     estimatedDurationSec,
-    setRate,
-    setVolume,
+    setRate: setPlaybackRate,
+    setVolume: setPlaybackVolume,
     play,
     pause,
     togglePlay,
