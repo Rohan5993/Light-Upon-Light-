@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Facebook, Linkedin, House, ChevronRight } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import BlogAudioPlayer from "../components/BlogAudioPlayer";
+import { useBlogNarration } from "../hooks/useBlogNarration";
 import { BLOG_POSTS, type BlogPost } from "../data/blogPosts";
 import { getAllBlogPosts, getBlogPostBySlug } from "../services/blogService";
 
@@ -39,6 +41,10 @@ export default function BlogDetailPage() {
   const [post, setPost] = useState<BlogPost | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [mergedPosts, setMergedPosts] = useState<BlogPost[]>(() => [...BLOG_POSTS]);
+  const [activeWordIndex, setActiveWordIndex] = useState(-1);
+  const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const userScrollingRef = useRef(false);
+  const scrollIdleTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -101,6 +107,63 @@ export default function BlogDetailPage() {
     return buildLongContent(seed || post.excerpt, post.title);
   }, [post]);
 
+  const paragraphs = useMemo(
+    () => content.split("\n\n").map((p) => p.trim()).filter(Boolean),
+    [content],
+  );
+
+  const postId = post?.slug ?? post?.id ?? id ?? "blog";
+  const narration = useBlogNarration(paragraphs, postId);
+
+  useEffect(() => {
+    const isNarrating = narration.status === "playing" || narration.status === "paused";
+    setActiveWordIndex(isNarrating ? narration.activeWordIndex : -1);
+  }, [narration.activeWordIndex, narration.status]);
+
+  useEffect(() => {
+    const onScroll = () => {
+      userScrollingRef.current = true;
+      if (scrollIdleTimerRef.current !== null) {
+        window.clearTimeout(scrollIdleTimerRef.current);
+      }
+      scrollIdleTimerRef.current = window.setTimeout(() => {
+        userScrollingRef.current = false;
+      }, 1200);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (scrollIdleTimerRef.current !== null) {
+        window.clearTimeout(scrollIdleTimerRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (narration.status !== "playing" || activeWordIndex < 0 || userScrollingRef.current) return;
+    const el = wordRefs.current[activeWordIndex];
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const margin = 80;
+    const inView = rect.top >= margin && rect.bottom <= window.innerHeight - margin;
+    if (!inView) {
+      el.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  }, [activeWordIndex, narration.status]);
+
+  const wordOffsetForParagraph = (paragraphIndex: number) =>
+    paragraphs
+      .slice(0, paragraphIndex)
+      .reduce((sum, p) => sum + p.split(/\s+/).filter(Boolean).length, 0);
+
+  const handleParagraphClick = (paragraphIndex: number) => {
+    const wordIndex = wordOffsetForParagraph(paragraphIndex);
+    narration.seekToWord(wordIndex);
+    if (narration.status !== "playing") {
+      narration.play(wordIndex);
+    }
+  };
+
   const moreBlogs = useMemo(() => {
     if (!id) return [];
     return mergedPosts.filter((p) => !postMatchesRouteParam(p, id)).slice(0, 3);
@@ -136,7 +199,7 @@ export default function BlogDetailPage() {
   return (
     <div className="relative bg-[#f8f5ff] min-h-screen selection:bg-purple-100 font-sans flex flex-col">
       <Header variant="dark" />
-      <main className="max-w-7xl mx-auto w-full px-6">
+      <main className="max-w-7xl mx-auto w-full px-6 pb-24 md:pb-0">
         <div className="mt-8 mb-10">
           <nav className="flex flex-wrap items-center gap-2 text-sm text-gray-500 font-bold">
             <Link to="/" className="inline-flex items-center text-purple-600 hover:text-purple-700 transition-colors">
@@ -155,11 +218,67 @@ export default function BlogDetailPage() {
           <article>
             <img src={post.image} alt={post.title} className="w-full h-[360px] object-cover rounded-2xl mb-10" />
             <p className="text-[11px] uppercase tracking-widest text-gray-400 font-black mb-4">{post.category} • {post.date}</p>
-            <h1 className="text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight mb-8">{post.title}</h1>
+            <h1 className="text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">{post.title}</h1>
+
+            <div className="sticky top-20 z-40 mb-8">
+              <BlogAudioPlayer
+                title={post.title}
+                paragraphCount={paragraphs.length}
+                narration={narration}
+              />
+            </div>
+
+            <p className="text-xs text-gray-400 mb-6">
+              Tap any section below to jump there while listening. Scroll freely — play and pause stay available in the bar above or at the bottom.
+            </p>
+
             <div className="space-y-7 text-base text-gray-600 leading-relaxed">
-              {content.split("\n\n").map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
+              {paragraphs.map((paragraph, paragraphIndex) => {
+                let wordCursor = wordOffsetForParagraph(paragraphIndex);
+
+                return (
+                  <p
+                    key={paragraphIndex}
+                    id={`blog-paragraph-${paragraphIndex}`}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => handleParagraphClick(paragraphIndex)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        handleParagraphClick(paragraphIndex);
+                      }
+                    }}
+                    className="rounded-lg -mx-2 px-2 py-1 cursor-pointer hover:bg-purple-50/80 transition-colors"
+                    aria-label={`Listen from section ${paragraphIndex + 1}`}
+                  >
+                    {paragraph.split(/(\s+)/).map((token, tokenIndex) => {
+                      if (!token.trim()) {
+                        return <span key={tokenIndex}>{token}</span>;
+                      }
+
+                      const globalWordIndex = wordCursor;
+                      wordCursor += 1;
+
+                      return (
+                        <span
+                          key={tokenIndex}
+                          ref={(el) => {
+                            wordRefs.current[globalWordIndex] = el;
+                          }}
+                          className={`transition-colors duration-150 rounded px-0.5 box-decoration-clone ${
+                            activeWordIndex === globalWordIndex
+                              ? "bg-[#E2D6FF] text-gray-900 font-medium"
+                              : ""
+                          }`}
+                        >
+                          {token}
+                        </span>
+                      );
+                    })}
+                  </p>
+                );
+              })}
             </div>
           </article>
 
