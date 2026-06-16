@@ -52,14 +52,14 @@ export default function Header({ variant = "light" }: HeaderProps) {
 
   return (
     <>
-      <div className="h-14 sm:h-[88px] md:h-[148px] lg:h-[132px]" aria-hidden="true" />
+      <div className="h-[50px] sm:h-[88px] md:h-[148px] lg:h-[132px]" aria-hidden="true" />
       <header
-        className={`fixed top-0 left-0 w-full z-50 pointer-events-none px-3 py-2.5 sm:px-6 sm:py-3 md:px-16 lg:px-6 lg:pt-[20px] ${mobileHeaderGlass} lg:bg-transparent lg:backdrop-blur-none lg:backdrop-saturate-100 lg:border-b-0 lg:shadow-none ${
+        className={`fixed top-0 left-0 w-full z-50 pointer-events-none h-[50px] lg:h-auto px-3 lg:px-6 lg:py-0 md:px-16 lg:pt-[20px] flex items-center ${mobileHeaderGlass} lg:bg-transparent lg:backdrop-blur-none lg:backdrop-saturate-100 lg:border-b-0 lg:shadow-none ${
           isScrolled ? "lg:pb-3" : "lg:pb-8"
         }`}
       >
         <div
-          className={`flex items-center w-full min-w-0 gap-2 pointer-events-auto max-w-7xl mx-auto ${
+          className={`flex items-center w-full min-w-0 gap-2 pointer-events-auto max-w-7xl mx-auto h-full lg:h-auto ${
             isScrolled ? "justify-between lg:justify-center" : "justify-between"
           }`}
         >
@@ -74,7 +74,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
               <div className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${logoDotClass} rounded-full`} />
             </div>
             <span
-              className={`${logoTextClass} font-bold text-sm sm:text-base md:text-xl tracking-tight truncate min-w-0`}
+              className={`${logoTextClass} font-bold text-xs sm:text-base md:text-xl tracking-tight truncate min-w-0`}
             >
               Light Upon Light
             </span>
@@ -115,8 +115,8 @@ export default function Header({ variant = "light" }: HeaderProps) {
             {isScrolled && (
               <HoverFillLink
                 to="/donate"
-                variant="white"
-                className="px-6 py-2 ml-1 text-sm font-black whitespace-nowrap"
+                variant="purple"
+                className="h-10 px-6 ml-1 text-sm font-black whitespace-nowrap uppercase tracking-wide"
               >
                 Donate Now
               </HoverFillLink>
@@ -127,7 +127,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
             <HoverFillLink
               to="/donate"
               variant="white"
-              className={`px-2.5 py-1.5 sm:px-4 sm:py-2 md:px-8 md:py-3 text-[11px] sm:text-xs md:text-sm font-black whitespace-nowrap lg:px-8 lg:py-3 ${isScrolled ? "lg:hidden" : ""}`}
+              className={`h-9 sm:h-10 md:h-11 px-3 sm:px-5 md:px-8 text-[10px] sm:text-xs md:text-sm font-black whitespace-nowrap uppercase tracking-wide sm:tracking-wider lg:px-8 ${isScrolled ? "lg:hidden" : ""}`}
             >
               <span className="sm:hidden">Donate</span>
               <span className="hidden sm:inline">Donate Now</span>
@@ -136,7 +136,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
             <button
               type="button"
               onClick={() => setMobileOpen((open) => !open)}
-              className={`lg:hidden flex items-center justify-center w-9 h-9 sm:w-11 sm:h-11 rounded-full transition-colors shrink-0 ${mobileMenuButtonClass}`}
+              className={`lg:hidden flex items-center justify-center w-8 h-8 sm:w-11 sm:h-11 rounded-full transition-colors shrink-0 ${mobileMenuButtonClass}`}
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav-menu"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
@@ -157,7 +157,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
 
       <nav
         id="mobile-nav-menu"
-        className={`fixed top-14 sm:top-[4.25rem] left-3 right-3 sm:left-4 sm:right-4 z-50 lg:hidden rounded-2xl bg-white shadow-2xl border border-gray-100 p-3 sm:p-4 transition-all duration-300 origin-top max-h-[calc(100dvh-4rem)] overflow-y-auto ${
+        className={`fixed top-[50px] sm:top-[4.25rem] left-3 right-3 sm:left-4 sm:right-4 z-50 lg:hidden rounded-2xl bg-white shadow-2xl border border-gray-100 p-3 sm:p-4 transition-all duration-300 origin-top max-h-[calc(100dvh-3.125rem)] overflow-y-auto ${
           mobileOpen ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
         }`}
         aria-hidden={!mobileOpen}
@@ -183,7 +183,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
             <HoverFillLink
               to="/donate"
               variant="white"
-              className="w-full py-3 text-sm font-black"
+              className="w-full h-11 text-sm font-black uppercase tracking-wider"
               labelClassName="w-full text-center"
               onClick={() => setMobileOpen(false)}
             >
