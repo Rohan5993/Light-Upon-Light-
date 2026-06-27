@@ -12,9 +12,11 @@ import BlogDetailPage from "./pages/BlogDetailPage";
 import DonatePage from "./pages/DonatePage";
 import AboutPage from "./pages/AboutPage";
 
+const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, "");
+
 export default function App() {
   return (
-    <Router>
+    <Router basename={routerBasename || undefined}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/programs" element={<ProgramsPage />} />

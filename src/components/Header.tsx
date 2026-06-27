@@ -116,7 +116,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
               <HoverFillLink
                 to="/donate"
                 variant="purple"
-                className="h-10 px-6 ml-1 text-sm font-black whitespace-nowrap uppercase tracking-wide"
+                className="h-10 px-6 ml-1 text-sm font-black whitespace-nowrap uppercase tracking-wide border-2 border-purple-700"
               >
                 Donate Now
               </HoverFillLink>
@@ -127,7 +127,9 @@ export default function Header({ variant = "light" }: HeaderProps) {
             <HoverFillLink
               to="/donate"
               variant="white"
-              className={`h-9 sm:h-10 md:h-11 px-3 sm:px-5 md:px-8 text-[10px] sm:text-xs md:text-sm font-black whitespace-nowrap uppercase tracking-wide sm:tracking-wider lg:px-8 ${isScrolled ? "lg:hidden" : ""}`}
+              className={`h-9 sm:h-10 md:h-11 px-3 sm:px-5 md:px-8 text-[10px] sm:text-xs md:text-sm font-black whitespace-nowrap uppercase tracking-wide sm:tracking-wider lg:px-8 border-2 max-lg:border-white lg:border-purple-600 max-lg:!bg-transparent max-lg:shadow-none ${
+                isDark ? "max-lg:text-purple-600" : "max-lg:text-white"
+              } ${isScrolled ? "lg:hidden" : ""}`}
             >
               <span className="sm:hidden">Donate</span>
               <span className="hidden sm:inline">Donate Now</span>
@@ -183,7 +185,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
             <HoverFillLink
               to="/donate"
               variant="white"
-              className="w-full h-11 text-sm font-black uppercase tracking-wider"
+              className="w-full h-11 text-sm font-black uppercase tracking-wider border-2 border-purple-600"
               labelClassName="w-full text-center"
               onClick={() => setMobileOpen(false)}
             >

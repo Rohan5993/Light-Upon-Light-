@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Facebook, Linkedin, House, ChevronRight } from "lucide-react";
 import Header from "../components/Header";
@@ -45,6 +45,17 @@ export default function BlogDetailPage() {
   const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const userScrollingRef = useRef(false);
   const scrollIdleTimerRef = useRef<number | null>(null);
+  const contentSectionRef = useRef<HTMLDivElement>(null);
+  const sidebarAnchorRef = useRef<HTMLElement>(null);
+  const sidebarPanelRef = useRef<HTMLDivElement>(null);
+  const moreBlogsRef = useRef<HTMLElement>(null);
+  const sidebarNaturalHeightRef = useRef(380);
+  const [sidebarPanelLayout, setSidebarPanelLayout] = useState<{
+    top: number;
+    left: number;
+    width: number;
+    maxHeight: number;
+  } | null>(null);
 
   useEffect(() => {
     let isMounted = true;
@@ -111,6 +122,116 @@ export default function BlogDetailPage() {
     () => content.split("\n\n").map((p) => p.trim()).filter(Boolean),
     [content],
   );
+
+  const SIDEBAR_TOP_OFFSET = 144;
+  const MORE_BLOGS_GAP = 16;
+  const MIN_SIDEBAR_HEIGHT = 100;
+
+  useLayoutEffect(() => {
+    const mdQuery = window.matchMedia("(min-width: 768px)");
+
+    const updateSidebarPanelLayout = () => {
+      if (!mdQuery.matches) {
+        setSidebarPanelLayout(null);
+        return;
+      }
+
+      const section = contentSectionRef.current;
+      const anchor = sidebarAnchorRef.current;
+      if (!section || !anchor) {
+        setSidebarPanelLayout(null);
+        return;
+      }
+
+      const sectionRect = section.getBoundingClientRect();
+      const anchorRect = anchor.getBoundingClientRect();
+      const sidebarEl = sidebarPanelRef.current;
+      if (sidebarEl) {
+        const measuredHeight = Math.max(
+          sidebarEl.scrollHeight,
+          sidebarEl.getBoundingClientRect().height,
+        );
+        if (measuredHeight > 0) {
+          sidebarNaturalHeightRef.current = measuredHeight;
+        }
+      }
+      const moreBlogsRect = moreBlogsRef.current?.getBoundingClientRect();
+
+      if (anchorRect.width <= 0) {
+        setSidebarPanelLayout(null);
+        return;
+      }
+
+      if (sectionRect.bottom <= SIDEBAR_TOP_OFFSET || sectionRect.top >= window.innerHeight) {
+        setSidebarPanelLayout(null);
+        return;
+      }
+
+      const naturalHeight = sidebarNaturalHeightRef.current;
+
+      let top = SIDEBAR_TOP_OFFSET;
+      if (sectionRect.top > top) {
+        top = sectionRect.top;
+      }
+
+      const maxTop = sectionRect.bottom - naturalHeight;
+      if (maxTop < top) {
+        top = maxTop;
+      }
+
+      let maxHeight = Math.min(
+        window.innerHeight - top - 16,
+        sectionRect.bottom - top,
+      );
+
+      if (moreBlogsRect && moreBlogsRect.top < window.innerHeight) {
+        const spaceAboveMoreBlogs = moreBlogsRect.top - top - MORE_BLOGS_GAP;
+        maxHeight = Math.min(maxHeight, spaceAboveMoreBlogs);
+
+        if (maxHeight < naturalHeight) {
+          setSidebarPanelLayout(null);
+          return;
+        }
+      }
+
+      if (maxHeight < MIN_SIDEBAR_HEIGHT) {
+        setSidebarPanelLayout(null);
+        return;
+      }
+
+      setSidebarPanelLayout({
+        top,
+        left: anchorRect.left,
+        width: anchorRect.width,
+        maxHeight,
+      });
+    };
+
+    updateSidebarPanelLayout();
+
+    const resizeObserver = new ResizeObserver(updateSidebarPanelLayout);
+    if (contentSectionRef.current) resizeObserver.observe(contentSectionRef.current);
+    if (sidebarAnchorRef.current) resizeObserver.observe(sidebarAnchorRef.current);
+
+    if (moreBlogsRef.current) resizeObserver.observe(moreBlogsRef.current);
+
+    const measureFrame = requestAnimationFrame(() => {
+      if (sidebarPanelRef.current) resizeObserver.observe(sidebarPanelRef.current);
+      updateSidebarPanelLayout();
+    });
+
+    window.addEventListener("resize", updateSidebarPanelLayout);
+    window.addEventListener("scroll", updateSidebarPanelLayout, { passive: true });
+    mdQuery.addEventListener("change", updateSidebarPanelLayout);
+
+    return () => {
+      cancelAnimationFrame(measureFrame);
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", updateSidebarPanelLayout);
+      window.removeEventListener("scroll", updateSidebarPanelLayout);
+      mdQuery.removeEventListener("change", updateSidebarPanelLayout);
+    };
+  }, [post]);
 
   const postId = post?.slug ?? post?.id ?? id ?? "blog";
   const narration = useBlogNarration(paragraphs, postId);
@@ -201,6 +322,32 @@ export default function BlogDetailPage() {
   const facebookShare = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(shareText)}`;
   const linkedInShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`;
 
+  const sidebarPanels = (
+  <>
+    <div className="bg-[#e2d6ff] rounded-2xl p-8 border border-purple-200">
+      <h2 className="text-lg font-black text-gray-900 mb-3 uppercase tracking-widest">Share this Post</h2>
+      <p className="text-gray-600 text-sm mb-6">Help others discover this story and amplify the impact.</p>
+      <div className="space-y-3">
+        <a href={facebookShare} target="_blank" rel="noreferrer" className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-white text-gray-900 font-bold border border-gray-100 hover:border-purple-200">
+          <Facebook size={16} />
+          Share on Facebook
+        </a>
+        <a href={linkedInShare} target="_blank" rel="noreferrer" className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-white text-gray-900 font-bold border border-gray-100 hover:border-purple-200">
+          <Linkedin size={16} />
+          Share on LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <BlogAudioPlayer
+      title={post.title}
+      paragraphCount={paragraphs.length}
+      narration={narration}
+      variant="sidebar"
+    />
+  </>
+  );
+
   return (
     <div className="relative bg-[#f8f5ff] min-h-screen selection:bg-purple-100 font-sans flex flex-col">
       <Header variant="dark" />
@@ -219,8 +366,9 @@ export default function BlogDetailPage() {
           </nav>
         </div>
 
-        <div className="grid lg:grid-cols-[1.7fr_0.8fr] gap-8 lg:gap-14">
-          <article>
+        <div ref={contentSectionRef} className="relative">
+          <div className="grid md:grid-cols-[1.7fr_0.8fr] gap-8 md:gap-10 lg:gap-14">
+            <article className="min-w-0">
             <img src={post.image} alt={post.title} className="w-full h-48 sm:h-64 md:h-[360px] object-cover rounded-2xl mb-10" />
             <p className="text-[11px] uppercase tracking-widest text-gray-400 font-black mb-4">{post.category} • {post.date}</p>
             <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">{post.title}</h1>
@@ -279,33 +427,29 @@ export default function BlogDetailPage() {
             </div>
           </article>
 
-          <aside className="lg:sticky lg:top-28 h-fit space-y-6">
-            <div className="bg-[#e2d6ff] rounded-2xl p-8 border border-purple-200">
-              <h2 className="text-lg font-black text-gray-900 mb-3 uppercase tracking-widest">Share this Post</h2>
-              <p className="text-gray-600 text-sm mb-6">Help others discover this story and amplify the impact.</p>
-              <div className="space-y-3">
-                <a href={facebookShare} target="_blank" rel="noreferrer" className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-white text-gray-900 font-bold border border-gray-100 hover:border-purple-200">
-                  <Facebook size={16} />
-                  Share on Facebook
-                </a>
-                <a href={linkedInShare} target="_blank" rel="noreferrer" className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-xl bg-white text-gray-900 font-bold border border-gray-100 hover:border-purple-200">
-                  <Linkedin size={16} />
-                  Share on LinkedIn
-                </a>
-              </div>
-            </div>
-
-            <BlogAudioPlayer
-              title={post.title}
-              paragraphCount={paragraphs.length}
-              narration={narration}
-              variant="sidebar"
-            />
+          <aside ref={sidebarAnchorRef} className="w-full min-w-0" aria-hidden={!!sidebarPanelLayout}>
+            <div className="md:hidden space-y-6">{sidebarPanels}</div>
           </aside>
+          </div>
+
+          {sidebarPanelLayout ? (
+            <div
+              ref={sidebarPanelRef}
+              className="hidden md:block fixed z-20 space-y-6 overflow-y-auto overscroll-contain"
+              style={{
+                top: sidebarPanelLayout.top,
+                left: sidebarPanelLayout.left,
+                width: sidebarPanelLayout.width,
+                maxHeight: sidebarPanelLayout.maxHeight,
+              }}
+            >
+              {sidebarPanels}
+            </div>
+          ) : null}
         </div>
 
         {moreBlogs.length > 0 ? (
-          <section className="mt-20 pt-16 pb-4 border-t border-purple-200/60" aria-labelledby="more-blogs-heading">
+          <section ref={moreBlogsRef} className="relative z-30 mt-20 pt-16 pb-4 border-t border-purple-200/60 bg-[#f8f5ff]" aria-labelledby="more-blogs-heading">
             <div className="flex flex-wrap items-center justify-between gap-4 mb-10">
               <h2 id="more-blogs-heading" className="text-2xl font-bold text-gray-900 tracking-tight">
                 More blogs

@@ -218,7 +218,13 @@ function BlogAudioPlayer({
     seekToPercent,
   } = narration;
 
+  const isSidebar = variant === "sidebar";
+
   useEffect(() => {
+    if (isSidebar) {
+      setShowFloating(false);
+      return;
+    }
     const el = mainRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
@@ -227,12 +233,11 @@ function BlogAudioPlayer({
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [isSidebar]);
 
   const shell =
     "border border-purple-200/80 text-gray-900 shadow-lg shadow-purple-200/30";
 
-  const isSidebar = variant === "sidebar";
   const isCompact = isSidebar;
 
   const bodyProps: PlayerBodyProps = {
