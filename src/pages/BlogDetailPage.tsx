@@ -8,6 +8,7 @@ import HoverFillLink from "../components/HoverFillLink";
 import { useBlogNarration } from "../hooks/useBlogNarration";
 import { BLOG_POSTS, type BlogPost } from "../data/blogPosts";
 import { getAllBlogPosts, getBlogPostBySlug } from "../services/blogService";
+import { resolveMediaUrl } from "../lib/publicUrl";
 
 function buildLongContent(seed: string, title: string) {
   const blocks = [
@@ -369,7 +370,7 @@ export default function BlogDetailPage() {
         <div ref={contentSectionRef} className="relative">
           <div className="grid md:grid-cols-[1.7fr_0.8fr] gap-8 md:gap-10 lg:gap-14">
             <article className="min-w-0">
-            <img src={post.image} alt={post.title} className="w-full h-48 sm:h-64 md:h-[360px] object-cover rounded-2xl mb-10" />
+            <img src={resolveMediaUrl(post.image)} alt={post.title} className="w-full h-48 sm:h-64 md:h-[360px] object-cover rounded-2xl mb-10" />
             <p className="text-[11px] uppercase tracking-widest text-gray-400 font-black mb-4">{post.category} • {post.date}</p>
             <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">{post.title}</h1>
 
@@ -471,7 +472,7 @@ export default function BlogDetailPage() {
                   <Link to={`/blog/${item.slug ?? item.id}`}>
                     <div className="aspect-[16/10] overflow-hidden">
                       <img
-                        src={item.image}
+                        src={resolveMediaUrl(item.image)}
                         alt={item.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                       />

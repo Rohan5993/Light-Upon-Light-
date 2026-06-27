@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
 import { BLOG_POSTS, type BlogPost } from "../data/blogPosts";
 import Header from "../components/Header";
-import { publicUrl } from "../lib/publicUrl";
+import { siteImages } from "../assets/siteImages";
+import { resolveMediaUrl } from "../lib/publicUrl";
 import Footer from "../components/Footer";
 import HoverFillButton from "../components/HoverFillButton";
 import HoverFillLink from "../components/HoverFillLink";
@@ -150,7 +151,7 @@ export default function HomePage() {
         {/* Background Hero Image with Vertical Ribbon Effect */}
         <div className="absolute inset-0 z-0">
           <img
-            src={publicUrl("/hero-wheelchair.png")}
+            src={siteImages.heroWheelchair}
             alt="Radiant Hope"
             className="w-full h-full object-cover object-[10%_center]"
           />
@@ -248,7 +249,7 @@ export default function HomePage() {
 
           <div className="aspect-[21/9] rounded-2xl overflow-hidden shadow-2xl mb-16 border border-gray-100">
             <img
-              src={publicUrl("/wheelchair-meeting.jpg")}
+              src={siteImages.wheelchairMeeting}
               alt="Community Action"
               className="w-full h-full object-cover"
             />
@@ -288,7 +289,7 @@ export default function HomePage() {
           <div className="relative mx-auto md:mx-0 w-full max-w-sm overflow-hidden">
             <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border border-gray-100 max-w-sm">
               <img
-                src={publicUrl("/founder.png")}
+                src={siteImages.founder}
                 alt="Radiant Founder"
                 className="w-full h-full object-cover"
               />
@@ -404,7 +405,7 @@ export default function HomePage() {
                       >
                         <div className={`rounded-2xl overflow-hidden mb-6 shadow-md transition-all duration-700 ease-in-out ${isActive ? 'aspect-[4/3.6]' : 'aspect-[4/3.1]'}`}>
                           <img
-                            src={event.img}
+                            src={resolveMediaUrl(event.img)}
                             alt={event.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                             referrerPolicy="no-referrer"
@@ -480,7 +481,7 @@ export default function HomePage() {
               <div key={i} className="min-w-full md:min-w-[45%] bg-white p-10 rounded-2xl flex flex-col md:flex-row items-center md:items-start gap-8 shadow-xl shadow-black/5 hover:scale-[1.01] transition-all border border-white/10 group">
                 <div className="relative flex-shrink-0">
                   <div className="w-24 h-24 rounded-full border-4 border-[#A788FA]/20 shadow-lg overflow-hidden transition-transform group-hover:scale-105">
-                    <img src={item.img} alt={item.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                    <img src={resolveMediaUrl(item.img)} alt={item.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                   </div>
                 </div>
                 <div className="flex-1 text-center md:text-left">
@@ -533,7 +534,7 @@ export default function HomePage() {
                 >
                   <div className="relative aspect-[21/9] rounded-2xl overflow-hidden mb-6 border border-gray-100 shadow-sm">
                     <img
-                      src={post!.image}
+                      src={resolveMediaUrl(post!.image)}
                       alt={post!.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
                     />
@@ -582,7 +583,7 @@ export default function HomePage() {
                   className={`relative overflow-hidden flex flex-col md:flex-row gap-6 p-6 rounded-2xl border border-gray-100 hover:border-purple-100 hover:shadow-xl hover:shadow-purple-500/5 transition-all group cursor-pointer ${cardBgClass}`}
                 >
                   <div className="w-full md:w-28 h-28 rounded-xl overflow-hidden flex-shrink-0">
-                    <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" />
+                    <img src={resolveMediaUrl(post.image)} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" />
                   </div>
                   <div className="flex flex-col justify-center flex-1">
                     <span className="text-[9px] font-bold text-gray-300 uppercase tracking-widest mb-2">

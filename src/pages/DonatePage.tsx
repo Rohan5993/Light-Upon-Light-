@@ -2,7 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { CheckCircle2, ChevronLeft, ChevronRight, HeartHandshake, Lock, ShieldCheck, Sparkles, Users } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { publicUrl } from "../lib/publicUrl";
+import { siteImages } from "../assets/siteImages";
+import { resolveMediaUrl } from "../lib/publicUrl";
 import HoverFillButton from "../components/HoverFillButton";
 import HoverFillLink from "../components/HoverFillLink";
 
@@ -99,7 +100,7 @@ export default function DonatePage() {
 
               <div className="relative rounded-[1.75rem] overflow-hidden border border-purple-100 shadow-sm mb-8 max-w-2xl">
                 <img
-                  src={publicUrl("/donation.png")}
+                  src={siteImages.donation}
                   alt="Community support through donations"
                   className="w-full h-56 md:h-64 object-cover"
                 />
@@ -272,23 +273,23 @@ export default function DonatePage() {
                 title: "Education Access",
                 percent: "40%",
                 desc: "School materials, mentorship, and learning support for youth.",
-                image: "/hero-wheelchair.png",
+                image: siteImages.heroWheelchair,
               },
               {
                 title: "Health & Wellbeing",
                 percent: "35%",
                 desc: "Community wellness initiatives and essential care access.",
-                image: "/wheelchair-meeting.jpg",
+                image: siteImages.wheelchairMeeting,
               },
               {
                 title: "Community Relief",
                 percent: "25%",
                 desc: "Direct aid, emergency response, and family stabilization.",
-                image: "/donation.png",
+                image: siteImages.donation,
               },
             ].map((item) => (
               <article key={item.title} className="rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden">
-                <img src={publicUrl(item.image)} alt={item.title} className="w-full h-40 object-cover" />
+                <img src={item.image} alt={item.title} className="w-full h-40 object-cover" />
                 <div className="p-6">
                   <p className="text-[11px] uppercase tracking-widest text-purple-600 font-black mb-3">{item.percent}</p>
                   <h3 className="text-xl font-black text-gray-900 mb-2">{item.title}</h3>
@@ -305,7 +306,7 @@ export default function DonatePage() {
             <div className="relative z-10 grid lg:grid-cols-[1.3fr_0.7fr] gap-10 items-center">
               <div className="grid md:grid-cols-[88px_1fr] gap-4 items-start">
                 <img
-                  src={activeStory.image}
+                  src={resolveMediaUrl(activeStory.image)}
                   alt="Donor portrait"
                   className="w-[72px] h-[72px] md:w-[88px] md:h-[88px] rounded-2xl object-cover border border-white/20"
                 />

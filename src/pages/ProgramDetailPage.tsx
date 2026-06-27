@@ -5,6 +5,7 @@ import { PROGRAMS } from "../data/programs";
 import { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { resolveMediaUrl } from "../lib/publicUrl";
 import HoverFillLink from "../components/HoverFillLink";
 
 
@@ -67,7 +68,7 @@ export default function ProgramDetailPage() {
       {/* Hero Section */}
       <div className="relative h-[45vh] sm:h-[55vh] md:h-[60vh] min-h-[280px] sm:min-h-[320px] overflow-hidden">
         <img
-          src={program.img}
+          src={resolveMediaUrl(program.img)}
           alt={program.title}
           className="w-full h-full object-cover"
           referrerPolicy="no-referrer"

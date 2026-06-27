@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { resolveMediaUrl } from "../lib/publicUrl";
 import { BLOG_POSTS } from "../data/blogPosts";
 import { getAllBlogPosts } from "../services/blogService";
 
@@ -82,7 +83,7 @@ export default function BlogPage() {
             >
               <Link to={`/blog/${post.slug ?? post.id}`}>
                 <div className="aspect-[16/10] overflow-hidden">
-                  <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <img src={resolveMediaUrl(post.image)} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
                 </div>
                 <div className="p-6">
                   <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">{post.category}</p>

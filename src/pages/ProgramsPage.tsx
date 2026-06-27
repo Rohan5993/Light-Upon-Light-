@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { resolveMediaUrl } from "../lib/publicUrl";
 import { useEffect } from "react";
 
 
@@ -54,7 +55,7 @@ export default function ProgramsPage() {
               >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <img
-                  src={program.img}
+                  src={resolveMediaUrl(program.img)}
                   alt={program.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   referrerPolicy="no-referrer"

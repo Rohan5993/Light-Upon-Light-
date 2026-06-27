@@ -3,7 +3,8 @@ import { useState } from "react";
 import { Youtube, Sparkles, Target } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import { publicUrl } from "../lib/publicUrl";
+import { siteImages } from "../assets/siteImages";
+import { resolveMediaUrl } from "../lib/publicUrl";
 
 const HISTORY = [
   { year: "2020", title: "Spark of Purpose", text: "A small volunteer circle began hosting support meetups and neighborhood drives." },
@@ -13,12 +14,12 @@ const HISTORY = [
 ];
 
 const GALLERY = [
-  "/wheelchair-meeting.jpg",
-  "/hero-wheelchair.png",
-  "/founder.png",
-  "/hero-wheelchair.png",
-  "/wheelchair-meeting.jpg",
-  "/founder.png",
+  siteImages.wheelchairMeeting,
+  siteImages.heroWheelchair,
+  siteImages.founder,
+  siteImages.heroWheelchair,
+  siteImages.wheelchairMeeting,
+  siteImages.founder,
 ];
 
 /** Eight members — each card has a headshot and a hobby image shown on hover. */
@@ -111,7 +112,7 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border border-white">
-            <img src={publicUrl("/hero-wheelchair.png")} alt="Light Upon Light community work" className="w-full h-full object-cover" />
+            <img src={siteImages.heroWheelchair} alt="Light Upon Light community work" className="w-full h-full object-cover" />
           </div>
         </div>
       </motion.section>
@@ -255,7 +256,7 @@ export default function AboutPage() {
       >
         <div className="max-w-7xl mx-auto grid lg:grid-cols-[340px_1fr] gap-10 items-center">
           <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-xl border border-white">
-            <img src={publicUrl("/founder.png")} alt="Founder portrait" className="w-full h-full object-cover" />
+            <img src={siteImages.founder} alt="Founder portrait" className="w-full h-full object-cover" />
           </div>
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-5">About Founder</h2>
@@ -338,7 +339,7 @@ export default function AboutPage() {
               >
                 <div className="relative aspect-square overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
                   <img
-                    src={person.image}
+                    src={resolveMediaUrl(person.image)}
                     alt={person.name}
                     loading="lazy"
                     decoding="async"
@@ -350,12 +351,12 @@ export default function AboutPage() {
                     }`}
                   />
                   <img
-                    src={person.hobbyImage}
+                    src={resolveMediaUrl(person.hobbyImage)}
                     alt={`${person.name} hobby`}
                     loading="lazy"
                     decoding="async"
                     onError={(e) => {
-                      e.currentTarget.src = person.image;
+                      e.currentTarget.src = resolveMediaUrl(person.image);
                     }}
                     className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 ${
                       isRevealed ? "opacity-100" : "opacity-0 group-hover:opacity-100 group-focus-within:opacity-100"
@@ -387,7 +388,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {GALLERY.map((src, i) => (
               <div key={`${src}-${i}`} className="aspect-[4/3] rounded-xl overflow-hidden border border-white shadow-sm">
-                <img src={publicUrl(src)} alt={`Gallery ${i + 1}`} className="w-full h-full object-cover" />
+                <img src={src} alt={`Gallery ${i + 1}`} className="w-full h-full object-cover" />
               </div>
             ))}
           </div>
