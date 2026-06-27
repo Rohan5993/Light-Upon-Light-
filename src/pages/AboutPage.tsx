@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Youtube, Sparkles, Target } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { publicUrl } from "../lib/publicUrl";
 
 const HISTORY = [
   { year: "2020", title: "Spark of Purpose", text: "A small volunteer circle began hosting support meetups and neighborhood drives." },
@@ -110,7 +111,7 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border border-white">
-            <img src="/hero-wheelchair.png" alt="Light Upon Light community work" className="w-full h-full object-cover" />
+            <img src={publicUrl("/hero-wheelchair.png")} alt="Light Upon Light community work" className="w-full h-full object-cover" />
           </div>
         </div>
       </motion.section>
@@ -254,7 +255,7 @@ export default function AboutPage() {
       >
         <div className="max-w-7xl mx-auto grid lg:grid-cols-[340px_1fr] gap-10 items-center">
           <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-xl border border-white">
-            <img src="/founder.png" alt="Founder portrait" className="w-full h-full object-cover" />
+            <img src={publicUrl("/founder.png")} alt="Founder portrait" className="w-full h-full object-cover" />
           </div>
           <div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-5">About Founder</h2>
@@ -386,7 +387,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {GALLERY.map((src, i) => (
               <div key={`${src}-${i}`} className="aspect-[4/3] rounded-xl overflow-hidden border border-white shadow-sm">
-                <img src={src} alt={`Gallery ${i + 1}`} className="w-full h-full object-cover" />
+                <img src={publicUrl(src)} alt={`Gallery ${i + 1}`} className="w-full h-full object-cover" />
               </div>
             ))}
           </div>

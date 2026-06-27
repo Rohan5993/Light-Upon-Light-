@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
 import { BLOG_POSTS, type BlogPost } from "../data/blogPosts";
 import Header from "../components/Header";
+import { publicUrl } from "../lib/publicUrl";
 import Footer from "../components/Footer";
 import HoverFillButton from "../components/HoverFillButton";
 import HoverFillLink from "../components/HoverFillLink";
@@ -149,7 +150,7 @@ export default function HomePage() {
         {/* Background Hero Image with Vertical Ribbon Effect */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/hero-wheelchair.png"
+            src={publicUrl("/hero-wheelchair.png")}
             alt="Radiant Hope"
             className="w-full h-full object-cover object-[10%_center]"
           />
@@ -247,7 +248,7 @@ export default function HomePage() {
 
           <div className="aspect-[21/9] rounded-2xl overflow-hidden shadow-2xl mb-16 border border-gray-100">
             <img
-              src="/wheelchair-meeting.jpg"
+              src={publicUrl("/wheelchair-meeting.jpg")}
               alt="Community Action"
               className="w-full h-full object-cover"
             />
@@ -287,7 +288,7 @@ export default function HomePage() {
           <div className="relative mx-auto md:mx-0 w-full max-w-sm overflow-hidden">
             <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border border-gray-100 max-w-sm">
               <img
-                src="/founder.png"
+                src={publicUrl("/founder.png")}
                 alt="Radiant Founder"
                 className="w-full h-full object-cover"
               />

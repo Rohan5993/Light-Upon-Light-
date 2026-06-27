@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { CheckCircle2, ChevronLeft, ChevronRight, HeartHandshake, Lock, ShieldCheck, Sparkles, Users } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { publicUrl } from "../lib/publicUrl";
 import HoverFillButton from "../components/HoverFillButton";
 import HoverFillLink from "../components/HoverFillLink";
 
@@ -98,7 +99,7 @@ export default function DonatePage() {
 
               <div className="relative rounded-[1.75rem] overflow-hidden border border-purple-100 shadow-sm mb-8 max-w-2xl">
                 <img
-                  src="/donation.png"
+                  src={publicUrl("/donation.png")}
                   alt="Community support through donations"
                   className="w-full h-56 md:h-64 object-cover"
                 />
@@ -287,7 +288,7 @@ export default function DonatePage() {
               },
             ].map((item) => (
               <article key={item.title} className="rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden">
-                <img src={item.image} alt={item.title} className="w-full h-40 object-cover" />
+                <img src={publicUrl(item.image)} alt={item.title} className="w-full h-40 object-cover" />
                 <div className="p-6">
                   <p className="text-[11px] uppercase tracking-widest text-purple-600 font-black mb-3">{item.percent}</p>
                   <h3 className="text-xl font-black text-gray-900 mb-2">{item.title}</h3>
