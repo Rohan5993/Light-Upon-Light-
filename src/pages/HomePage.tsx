@@ -183,25 +183,33 @@ export default function HomePage() {
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             className="max-w-4xl"
           >
-            <h1 className="text-[2rem] md:text-7xl font-bold text-white leading-[1.05] tracking-tight mb-8">
-              Igniting Hope,<br />
-              Radiating Impact.
+            <h1 className="text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-8">
+              Their Light Is<br />
+              Already There.<br />
+              Help Us Let It Shine.
             </h1>
-            <p className="text-base md:text-xl text-white/90 leading-relaxed mb-10 md:mb-14 max-w-2xl font-medium">
-            Building resilience and hope through action, providing sustainable support that turns small acts into lasting change.
+            <p className="text-base md:text-xl text-white/90 leading-[1.75] md:leading-[1.8] mb-10 md:mb-14 max-w-2xl font-medium">
+              Differently-abled individuals carry greatness within them but an unequal world of barriers and silence dims it. Your donation funds advocacy, accessibility, and equality - giving them the rights, dignity, and opportunities they&apos;ve always deserved.
             </p>
 
-            <motion.button
+            <motion.div
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="group flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-5 bg-white pl-4 sm:pl-10 pr-2 sm:pr-3 py-2 sm:py-3 rounded-full text-slate-900 font-bold shadow-2xl hover:shadow-white/20 transition-all max-w-full"
             >
-              <span className="text-sm sm:text-lg">Join The Movement</span>
-              <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-purple-600 flex items-center justify-center text-white group-hover:bg-purple-700 transition-colors shrink-0">
-                <ArrowUpRight size={20} strokeWidth={2.5} className="sm:hidden" />
-                <ArrowUpRight size={24} strokeWidth={2.5} className="hidden sm:block" />
-              </div>
-            </motion.button>
+              <Link
+                to="/donate"
+                className="group inline-flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-5 bg-white pl-4 sm:pl-10 pr-2 sm:pr-3 py-2 sm:py-3 rounded-full text-slate-900 font-bold shadow-2xl hover:shadow-white/20 transition-all max-w-full"
+              >
+                <span className="text-sm sm:text-lg">Donate & Shine a Light</span>
+                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-purple-600 flex items-center justify-center text-white group-hover:bg-purple-700 transition-colors shrink-0">
+                  <ArrowUpRight size={20} strokeWidth={2.5} className="sm:hidden" />
+                  <ArrowUpRight size={24} strokeWidth={2.5} className="hidden sm:block" />
+                </div>
+              </Link>
+            </motion.div>
+            <p className="mt-5 text-sm md:text-base text-white/80 font-medium max-w-2xl">
+              Your generosity = real access, real equality, real change
+            </p>
           </motion.div>
         </main>
 
@@ -226,24 +234,26 @@ export default function HomePage() {
                 <div className="w-1 h-1 rounded-full bg-gray-300" />
                 About
               </div>
-              <h2 className="font-medium text-gray-900 leading-[1.3] tracking-tight max-w-2xl">
-                Light Upon Light is a purpose-driven platform that creates impactful charity events, bringing people together to support causes that truly matter.
+              <h2 className="font-medium text-gray-900 leading-[1.3] tracking-tight max-w-2xl mb-6">
+                Differently-abled individuals are not their disability.
               </h2>
+              <p className="text-lg text-gray-500 font-medium leading-relaxed max-w-2xl mb-6">
+                They are human beings — with dreams, potential, and so much to give. But society&apos;s negative perceptions, limited resources, and lack of support have quietly stolen opportunities they were always owed.
+              </p>
+              <p className="text-lg font-bold text-gray-900 leading-relaxed max-w-2xl">
+                That ends here.
+              </p>
             </div>
             <div className="pt-14">
-              <p className="text-lg text-gray-500 font-medium leading-relaxed mb-12">
-                Social good thrives when people unite and contribute together. We create simple ways for anyone to be part of meaningful change.
+              <p className="text-lg text-gray-900 font-bold leading-relaxed mb-6">
+                Light Upon Light is here to make that change happen.
               </p>
-              <div className="grid grid-cols-2 gap-8">
-                <div>
-                  <p className="text-3xl sm:text-5xl font-bold text-gray-900 mb-2">120<span className="text-purple-600">+</span></p>
-                  <p className="text-sm text-gray-400 font-bold uppercase tracking-wider leading-snug">Charity Events <br /> Organized</p>
-                </div>
-                <div>
-                  <p className="text-3xl sm:text-5xl font-bold text-gray-900 mb-2">8,000<span className="text-purple-600">+</span></p>
-                  <p className="text-sm text-gray-400 font-bold uppercase tracking-wider leading-snug">Active <br /> Volunteers</p>
-                </div>
-              </div>
+              <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6">
+                We directly support differently-abled individuals through advocacy, accessibility, and equality — making sure they get the rights, care, and opportunities they deserve.
+              </p>
+              <p className="text-lg text-gray-500 font-medium leading-relaxed">
+                And we educate society — shifting the way the world sees, treats, and values differently-abled people. Because they are not their diagnosis. They are simply human. Just like you. Just like me.
+              </p>
             </div>
           </div>
 
@@ -256,21 +266,21 @@ export default function HomePage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            <div className="space-y-10">
-              <h4 className="text-lg font-bold text-gray-900">01. Community</h4>
-              <p className="text-gray-500 font-medium leading-relaxed">People are at the heart of every change we create.</p>
-            </div>
-            <div className="space-y-7">
-              <h4 className="text-lg font-bold text-gray-900">02. Transparency</h4>
-              <p className="text-gray-500 font-medium leading-relaxed">Open actions, honest reporting, clear results.</p>
+            <div className="space-y-4">
+              <h4 className="text-lg font-bold text-gray-900">01. Advocacy</h4>
+              <p className="text-gray-500 font-medium leading-relaxed">Fighting for their rights, dignity, and equal treatment — always.</p>
             </div>
             <div className="space-y-4">
-              <h4 className="text-lg font-bold text-gray-900">03. Collaboration</h4>
-              <p className="text-gray-500 font-medium leading-relaxed">Strong partnerships create stronger impact.</p>
+              <h4 className="text-lg font-bold text-gray-900">02. Accessibility</h4>
+              <p className="text-gray-500 font-medium leading-relaxed">Breaking barriers so they access the care they deserve.</p>
             </div>
             <div className="space-y-4">
-              <h4 className="text-lg font-bold text-gray-900">04. Impact-Driven</h4>
-              <p className="text-gray-500 font-medium leading-relaxed">Every effort leads to measurable good.</p>
+              <h4 className="text-lg font-bold text-gray-900">03. Education</h4>
+              <p className="text-gray-500 font-medium leading-relaxed">Shifting how the world sees, treats, and values them.</p>
+            </div>
+            <div className="space-y-4">
+              <h4 className="text-lg font-bold text-gray-900">04. Equality</h4>
+              <p className="text-gray-500 font-medium leading-relaxed">Same rights. Same dignity. No one left behind.</p>
             </div>
           </div>
         </div>
