@@ -11,6 +11,7 @@ const NAV_LINKS = [
   { to: "/", label: "Home", isActive: (pathname: string, hash: string) => pathname === "/" && hash !== "#our-mission" },
   { to: "/about", label: "About Us", isActive: (pathname: string) => pathname.startsWith("/about") },
   { to: "/programs", label: "Programs", isActive: (pathname: string) => pathname.startsWith("/programs") },
+  { to: "/volunteer", label: "Volunteer", isActive: (pathname: string) => pathname.startsWith("/volunteer") },
   { to: "/blog", label: "Blogs", isActive: (pathname: string) => pathname.startsWith("/blog") },
 ] as const;
 

@@ -9,8 +9,8 @@ type FooterProps = {
 export default function Footer({ className = "", topPaddingClass = "pt-48" }: FooterProps) {
   return (
     <footer className={`relative bg-[#270E32] ${topPaddingClass} pb-14 px-6 md:px-16 overflow-hidden ${className}`}>
-      {/* Vertical ribbon overlay */}
-      <div className="absolute inset-0 flex pointer-events-none">
+      {/* Vertical ribbon overlay — desktop only */}
+      <div className="absolute inset-0 hidden lg:flex pointer-events-none">
         {[...Array(12)].map((_, i) => (
           <div
             key={i}
@@ -23,9 +23,9 @@ export default function Footer({ className = "", topPaddingClass = "pt-48" }: Fo
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-24 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-24 mb-12">
           {/* Logo & Description */}
-          <div className="space-y-8">
+          <div className="space-y-8 md:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-3">
               <div className="grid grid-cols-2 gap-1">
                 <div className="w-3 h-3 bg-white rounded-md" />

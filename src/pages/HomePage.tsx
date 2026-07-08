@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowUpRight, Heart, Star, ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowUpRight, Heart, Star, ArrowLeft, ArrowRight, Scale, Accessibility, BookOpen, Equal } from "lucide-react";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
@@ -12,6 +12,54 @@ import HoverFillButton from "../components/HoverFillButton";
 import HoverFillLink from "../components/HoverFillLink";
 import { getAllBlogPosts } from "../services/blogService";
 
+
+const PILLARS = [
+  {
+    title: "Advocacy",
+    desc: "Fighting for dignity, representation, and lasting change.",
+    icon: Scale,
+    accent: "sky" as const,
+  },
+  {
+    title: "Accessibility",
+    desc: "Creating more accessible public spaces and communities.",
+    icon: Accessibility,
+    accent: "violet" as const,
+  },
+  {
+    title: "Education",
+    desc: "Changing perceptions through education and awareness.",
+    icon: BookOpen,
+    accent: "amber" as const,
+  },
+  {
+    title: "Equality",
+    desc: "Equal rights, equal dignity, and equal opportunities.",
+    icon: Equal,
+    accent: "sky" as const,
+  },
+];
+
+const pillarAccent = {
+  sky: { icon: "bg-sky-100 text-sky-600", border: "border-sky-100" },
+  violet: { icon: "bg-violet-100 text-violet-600", border: "border-violet-100" },
+  amber: { icon: "bg-amber-100 text-amber-700", border: "border-amber-100" },
+};
+
+function SectionBadge({
+  label,
+  dotClass = "bg-violet-400",
+}: {
+  label: string;
+  dotClass?: string;
+}) {
+  return (
+    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white">
+      <span className={`w-1.5 h-1.5 rounded-full ${dotClass}`} />
+      {label}
+    </span>
+  );
+}
 
 const TESTIMONIALS = [
   {
@@ -49,7 +97,6 @@ const TESTIMONIALS = [
 export default function HomePage() {
   const [activeProgram, setActiveProgram] = useState(0);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const [progress, setProgress] = useState(0);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(BLOG_POSTS);
   const programsRef = useRef<HTMLDivElement>(null);
   const testimonialsRef = useRef<HTMLDivElement>(null);
@@ -57,13 +104,12 @@ export default function HomePage() {
   const scrollToProgram = useCallback((index: number) => {
     if (programsRef.current) {
       const isMobile = window.innerWidth < 768;
-      const cardWidth = programsRef.current.scrollWidth / (PROGRAMS.length + 2);
-      const j = index + 1;
-      const scrollPos = isMobile ? j * cardWidth : (j - 1) * cardWidth;
+      const containerWidth = programsRef.current.offsetWidth;
+      const cardWidth = isMobile ? containerWidth : containerWidth / 3;
 
       programsRef.current.scrollTo({
-        left: scrollPos,
-        behavior: 'smooth'
+        left: index * cardWidth,
+        behavior: "smooth",
       });
     }
   }, []);
@@ -84,25 +130,15 @@ export default function HomePage() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) return 100;
-        return prev + 0.4;
-      });
-    }, 25);
+      setActiveTestimonial(prev => (prev + 1) % TESTIMONIALS.length);
+    }, 5000);
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    if (progress >= 100) {
-      setActiveProgram(curr => (curr + 1) % PROGRAMS.length);
-      setProgress(0);
-    }
-  }, [progress]);
-
-  useEffect(() => {
     const interval = setInterval(() => {
-      setActiveTestimonial(prev => (prev + 1) % TESTIMONIALS.length);
-    }, 5000);
+      setActiveProgram((prev) => (prev + 1) % PROGRAMS.length);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
@@ -186,10 +222,13 @@ export default function HomePage() {
             <h1 className="text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-8">
               Their Light Is<br />
               Already There.<br />
-              Help Us Let It Shine.
+              Help Us Let It Shine
             </h1>
+            <p className="text-sm md:text-base font-bold text-white mb-3 tracking-tight">
+              Our Mission?
+            </p>
             <p className="text-base md:text-xl text-white/90 leading-[1.75] md:leading-[1.8] mb-10 md:mb-14 max-w-2xl font-medium">
-              Differently-abled individuals carry greatness within them but an unequal world of barriers and silence dims it. Your donation funds advocacy, accessibility, and equality - giving them the rights, dignity, and opportunities they&apos;ve always deserved.
+              We help differently-abled people through advocacy, accessibility, and equality while changing society&apos;s perception of these honorable individuals through education.
             </p>
 
             <motion.div
@@ -208,7 +247,7 @@ export default function HomePage() {
               </Link>
             </motion.div>
             <p className="mt-5 text-sm md:text-base text-white/80 font-medium max-w-2xl">
-              Your generosity = real access, real equality, real change
+              Your generosity = real access. Real equality. Real change.
             </p>
           </motion.div>
         </main>
@@ -218,227 +257,202 @@ export default function HomePage() {
       </div>
 
 
-      {/* Purpose-Driven Platform Section */}
-      <section className="bg-white py-24 px-6 relative overflow-hidden">
-        {/* Subtle Grid Background */}
-        <div className="absolute inset-0 flex pointer-events-none opacity-[0.03]">
-          {[...Array(12)].map((_, i) => (
-            <div key={i} className="h-full flex-1 border-r border-black" />
-          ))}
-        </div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid lg:grid-cols-[1.5fr_1fr] gap-12 mb-16">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-gray-200 text-[10px] font-bold text-gray-400 mb-8 uppercase tracking-widest bg-white">
-                <div className="w-1 h-1 rounded-full bg-gray-300" />
-                About
+      {/* About + Pillars */}
+      <section className="bg-[#FAFCFF] py-14 md:py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 mb-10 items-stretch">
+            <div className="rounded-[2rem] bg-white border border-slate-100 p-6 md:p-8 shadow-[0_4px_32px_rgba(148,163,184,0.08)] flex flex-col justify-center">
+              <SectionBadge label="About" dotClass="bg-sky-400" />
+              <div className="mt-6 space-y-4">
+                <p className="text-lg text-slate-500 font-medium leading-relaxed">
+                  Differently-abled individuals have dreams and so much to give - yet barriers have stolen opportunities they always deserved.
+                </p>
+                <p className="text-lg font-bold text-slate-800 leading-relaxed">
+                  That changes now.
+                </p>
+                <p className="text-base text-slate-500 font-medium leading-relaxed">
+                  Light Upon Light fights for differently-abled individuals through advocacy, accessibility, and equality making sure they get the rights and dignity they deserve.
+                </p>
+                <p className="text-base text-slate-500 font-medium leading-relaxed">
+                  We educate society because real change begins when people see the humanity of differently-abled individuals before their disabilities or diagnoses.
+                </p>
+                <p className="text-base font-bold text-slate-800 leading-relaxed pt-2 border-t border-slate-100">
+                  They are human beings. Just like you and everyone else.
+                </p>
               </div>
-              <h2 className="font-medium text-gray-900 leading-[1.3] tracking-tight max-w-2xl mb-6">
-                Differently-abled individuals are not their disability.
-              </h2>
-              <p className="text-lg text-gray-500 font-medium leading-relaxed max-w-2xl mb-6">
-                They are human beings — with dreams, potential, and so much to give. But society&apos;s negative perceptions, limited resources, and lack of support have quietly stolen opportunities they were always owed.
-              </p>
-              <p className="text-lg font-bold text-gray-900 leading-relaxed max-w-2xl">
-                That ends here.
-              </p>
             </div>
-            <div className="pt-14">
-              <p className="text-lg text-gray-900 font-bold leading-relaxed mb-6">
-                Light Upon Light is here to make that change happen.
-              </p>
-              <p className="text-lg text-gray-500 font-medium leading-relaxed mb-6">
-                We directly support differently-abled individuals through advocacy, accessibility, and equality — making sure they get the rights, care, and opportunities they deserve.
-              </p>
-              <p className="text-lg text-gray-500 font-medium leading-relaxed">
-                And we educate society — shifting the way the world sees, treats, and values differently-abled people. Because they are not their diagnosis. They are simply human. Just like you. Just like me.
-              </p>
-            </div>
-          </div>
 
-          <div className="aspect-[21/9] rounded-2xl overflow-hidden shadow-2xl mb-16 border border-gray-100">
-            <img
-              src={siteImages.wheelchairMeeting}
-              alt="Community Action"
-              className="w-full h-full object-cover"
-            />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            <div className="space-y-4">
-              <h4 className="text-lg font-bold text-gray-900">01. Advocacy</h4>
-              <p className="text-gray-500 font-medium leading-relaxed">Fighting for their rights, dignity, and equal treatment — always.</p>
-            </div>
-            <div className="space-y-4">
-              <h4 className="text-lg font-bold text-gray-900">02. Accessibility</h4>
-              <p className="text-gray-500 font-medium leading-relaxed">Breaking barriers so they access the care they deserve.</p>
-            </div>
-            <div className="space-y-4">
-              <h4 className="text-lg font-bold text-gray-900">03. Education</h4>
-              <p className="text-gray-500 font-medium leading-relaxed">Shifting how the world sees, treats, and values them.</p>
-            </div>
-            <div className="space-y-4">
-              <h4 className="text-lg font-bold text-gray-900">04. Equality</h4>
-              <p className="text-gray-500 font-medium leading-relaxed">Same rights. Same dignity. No one left behind.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* The Narrative of Light Section */}
-      <section id="our-mission" className="bg-[#e6f1fe] py-24 px-6 relative overflow-hidden">
-        {/* Subtle Vertical Lines Background */}
-        <div className="absolute inset-0 flex pointer-events-none opacity-[0.05]">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="h-full flex-1 border-r border-blue-900/10" />
-          ))}
-        </div>
-
-        <div className="max-w-7xl mx-auto grid md:grid-cols-[auto_1fr] gap-10 md:gap-20 items-center relative z-10">
-          <div className="relative mx-auto md:mx-0 w-full max-w-sm overflow-hidden">
-            <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border border-gray-100 max-w-sm">
-              <img
-                src={siteImages.founder}
-                alt="Radiant Founder"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="absolute bottom-4 right-4 sm:-bottom-6 sm:-right-6 bg-white p-4 sm:p-6 rounded-2xl shadow-xl border border-gray-50 flex items-center gap-3 sm:gap-4 max-w-[calc(100%-2rem)]">
-              <div className="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
-                <Heart className="w-6 h-6 fill-purple-600" />
-              </div>
-              <div>
-                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Founded in</p>
-                <p className="text-xl font-black text-gray-900">2024</p>
+            <div className="rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.1)]">
+              <div className="rounded-[1.85rem] overflow-hidden h-full min-h-[280px] lg:min-h-0">
+                <img
+                  src={siteImages.wheelchairMeeting}
+                  alt="Community Action"
+                  className="w-full h-full object-cover aspect-[4/3] lg:aspect-auto lg:h-full min-h-[280px]"
+                />
               </div>
             </div>
           </div>
 
-          <div>
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 text-[10px] font-bold text-gray-500 mb-6 uppercase tracking-widest bg-white">
-              <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
-              About Us
-            </div>
-            <h2 className="font-bold text-gray-900 mb-8 leading-tight tracking-tight">
-              The Narrative of <span className="text-purple-600">Light</span>
+          <div className="mt-14 pt-14 border-t border-slate-200/80">
+            <SectionBadge label="Pillars" dotClass="bg-amber-400" />
+            <h2 className="mt-4 text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
+              What We Stand For
             </h2>
-            <div className="space-y-6">
-              <p className="text-xl text-gray-500 font-medium leading-relaxed">
-                What began as a personal journey through adversity evolved into a global movement of empowerment. Our founder believed that every individual, regardless of their path, deserves access to a community that fosters strength and radiates hope.
-              </p>
-              <p className="text-xl text-gray-500 font-medium leading-relaxed">
-                Through "Light Upon Light," we've transformed physical spaces into sanctuaries of innovation, ensuring that the light of opportunity reaches every corner of our community.
-              </p>
-            </div>
+            <p className="text-slate-500 font-medium max-w-2xl mt-3 mb-10">
+              Four commitments guide every program, partnership, and decision we make for differently-abled individuals and their communities.
+            </p>
 
-            <a
-              href="#journey"
-              className="inline-flex items-center gap-2 mt-10 text-gray-900 font-black hover:gap-3 transition-all group uppercase text-xs tracking-widest"
-            >
-              Explore More
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </a>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {PILLARS.map((pillar) => {
+                const accent = pillarAccent[pillar.accent];
+                const Icon = pillar.icon;
+                return (
+                  <article
+                    key={pillar.title}
+                    className={`rounded-2xl bg-white border ${accent.border} p-6 shadow-sm hover:shadow-md transition-shadow`}
+                  >
+                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${accent.icon}`}>
+                      <Icon size={20} strokeWidth={2.25} />
+                    </div>
+                    <h4 className="text-lg font-bold text-slate-800 mb-2">{pillar.title}</h4>
+                    <p className="text-slate-600 text-sm leading-relaxed">{pillar.desc}</p>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Our Radiant Programs Section */}
-      <section id="programs" className="bg-white py-24 px-6 relative overflow-hidden">
-        {/* Subtle Vertical Lines Background */}
-        <div className="absolute inset-0 flex pointer-events-none opacity-[0.03]">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="h-full flex-1 border-r border-black" />
-          ))}
-        </div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="relative mb-16 flex flex-col items-center text-center">
-            <div className="flex flex-col items-center">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-200 text-[10px] font-bold text-gray-500 mb-6 uppercase tracking-widest bg-white">
-                <div className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                Programs
+      {/* Founder */}
+      <section id="our-mission" className="px-6 py-14 md:py-20">
+        <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-6 md:p-10 lg:p-12">
+          <div className="grid lg:grid-cols-[auto_1fr] gap-8 lg:gap-12 items-center">
+            <div className="relative mx-auto lg:mx-0 w-full max-w-xs">
+              <div className="rounded-[1.5rem] overflow-hidden shadow-xl border-4 border-white aspect-[4/5]">
+                <img
+                  src={siteImages.founder}
+                  alt="Founder and CEO of Light Upon Light"
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <h2 className="font-bold text-gray-900 tracking-tight leading-tight">Our Radiant Programs</h2>
+              <div className="absolute -bottom-4 -right-4 bg-white px-5 py-4 rounded-2xl shadow-lg border border-slate-100 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full bg-violet-100 flex items-center justify-center text-violet-600">
+                  <Heart className="w-5 h-5 fill-violet-600" />
+                </div>
+                <div>
+                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Founded in</p>
+                  <p className="text-lg font-black text-slate-800">2024</p>
+                </div>
+              </div>
             </div>
 
-            <div className="md:absolute right-0 bottom-0 flex gap-3 mt-8 md:mt-0">
+            <div>
+              <SectionBadge label="Founder" dotClass="bg-violet-500" />
+              <h2 className="mt-4 text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight leading-tight">
+                Led by Someone Who Truly Understands.
+              </h2>
+              <div className="space-y-5">
+                <p className="text-base md:text-lg text-slate-600 font-medium leading-relaxed">
+                  Our Founder and CEO isn&apos;t just passionate about this cause. She has lived it. As a differently-abled woman herself, she knows the pain, the overlooked moments, and what it feels like to be denied basic dignity.
+                </p>
+                <p className="text-base md:text-lg text-slate-600 font-medium leading-relaxed">
+                  It started when she was denied something as simple as a cup of tea. That one small, deeply unfair moment sparked everything. And she made sure it would never happen to anyone else.
+                </p>
+                <p className="text-base md:text-lg text-slate-600 font-medium leading-relaxed">
+                  From her wheelchair she rises, leading Light Upon Light with a fire that cannot be dimmed, fighting every single day so that no differently-abled individual ever feels unseen, unheard, or unworthy again.
+                </p>
+                <p className="text-base md:text-lg font-bold text-slate-800 leading-relaxed pt-2 border-t border-violet-100">
+                  Because everyone deserves a cup of tea.
+                </p>
+              </div>
+              <Link
+                to="/about#youtube"
+                className="inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-full bg-white border border-violet-200 text-slate-800 font-bold text-sm hover:bg-violet-50 hover:border-violet-300 transition-colors group"
+              >
+                Know More About Her
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Programs */}
+      <section id="programs" className="bg-white py-14 md:py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
+            <div>
+              <SectionBadge label="Programs" dotClass="bg-sky-400" />
+              <h2 className="mt-4 text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
+                Our Radiant Programs
+              </h2>
+              <p className="mt-3 text-slate-500 font-medium max-w-lg">
+                Hands-on initiatives that turn compassion into measurable impact for differently-abled individuals and their communities.
+              </p>
+            </div>
+            <div className="flex gap-3 shrink-0">
               <button
-                onClick={() => {
-                  setActiveProgram(prev => (prev - 1 + PROGRAMS.length) % PROGRAMS.length);
-                  setProgress(0);
-                }}
-                className="w-12 h-12 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-50 hover:text-gray-900 transition-all shadow-sm bg-white"
+                type="button"
+                onClick={() => setActiveProgram((prev) => (prev - 1 + PROGRAMS.length) % PROGRAMS.length)}
+                className="w-11 h-11 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-slate-800 transition-all bg-white shadow-sm"
+                aria-label="Previous program"
               >
                 <ArrowLeft className="w-5 h-5" />
               </button>
               <button
-                onClick={() => {
-                  setActiveProgram(prev => (prev + 1) % PROGRAMS.length);
-                  setProgress(0);
-                }}
-                className="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center text-white hover:bg-purple-700 transition-all shadow-lg shadow-purple-200"
+                type="button"
+                onClick={() => setActiveProgram((prev) => (prev + 1) % PROGRAMS.length)}
+                className="w-11 h-11 rounded-full bg-violet-600 flex items-center justify-center text-white hover:bg-violet-700 transition-all shadow-lg shadow-violet-200"
+                aria-label="Next program"
               >
                 <ArrowRight className="w-5 h-5" />
               </button>
             </div>
           </div>
 
-          <div className="relative group/scroll overflow-hidden">
-            <div
-              ref={programsRef}
-              className="flex items-start overflow-x-hidden scroll-smooth pb-6"
-            >
-              {/* Infinite-like feel by padding with clones */}
-              {[PROGRAMS[PROGRAMS.length - 1], ...PROGRAMS, PROGRAMS[0]].map((event, i) => {
-                const originalIndex = (i - 1 + PROGRAMS.length) % PROGRAMS.length;
-                const isActive = activeProgram === originalIndex;
-                const cardBgClass =
-                  originalIndex % 3 === 0
-                    ? "bg-sky-50/90"
-                    : originalIndex % 3 === 1
-                      ? "bg-purple-50/90"
-                      : "bg-amber-50/90";
+          <div className="relative overflow-hidden rounded-[1.5rem] border border-slate-100 bg-slate-50/40 p-3 md:p-4">
+            <div ref={programsRef} className="flex overflow-x-hidden scroll-smooth">
+            {PROGRAMS.map((event, i) => {
+              const stripeClass =
+                i % 3 === 0
+                  ? "bg-sky-400"
+                  : i % 3 === 1
+                    ? "bg-violet-400"
+                    : "bg-amber-400";
 
-                return (
-                  <motion.div
-                    key={i}
-                    animate={{
-                      opacity: 1,
-                    }}
-                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                    className="min-w-full md:min-w-[33.333%] group cursor-pointer flex flex-col px-6 origin-top"
-                  >
-                    <Link to={`/programs/${event.id}`}>
-                      <div
-                        className={`rounded-2xl p-5 md:p-6 border border-white/60 shadow-sm ${cardBgClass} transition-colors duration-500`}
-                      >
-                        <div className={`rounded-2xl overflow-hidden mb-6 shadow-md transition-all duration-700 ease-in-out ${isActive ? 'aspect-[4/3.6]' : 'aspect-[4/3.1]'}`}>
-                          <img
-                            src={resolveMediaUrl(event.img)}
-                            alt={event.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                            referrerPolicy="no-referrer"
-                          />
-                        </div>
-                        <div className="flex items-center justify-start mb-4">
-                          <span className="px-2 py-1 rounded bg-white/80 text-gray-500 border border-gray-100/80 text-[9px] uppercase tracking-wider font-bold">{event.tag}</span>
-                        </div>
-                        <h3 className="font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-all duration-500 text-lg">{event.title}</h3>
-                        <p className="text-gray-500 text-xs leading-relaxed line-clamp-2">{event.desc}</p>
-                        <div className={`group/btn mt-8 flex items-center gap-2 uppercase text-[10px] tracking-widest transition-all duration-500 hover:gap-3 w-fit ${isActive ? 'text-purple-600 font-semibold' : 'text-gray-900 font-bold hover:text-purple-600'}`}>
-                          Explore
-                          <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-1" />
-                        </div>
+              return (
+                <Link key={event.id} to={`/programs/${event.id}`} className="group min-w-full md:min-w-[33.333%] p-1.5">
+                  <article className="h-full rounded-[1.25rem] bg-white border border-slate-100 overflow-hidden shadow-sm hover:shadow-lg hover:shadow-slate-200/60 hover:-translate-y-0.5 transition-all duration-300">
+                    <div className={`h-1.5 w-full ${stripeClass}`} />
+                    <div className="p-5">
+                      <div className="rounded-xl overflow-hidden mb-4 aspect-[4/3]">
+                        <img
+                          src={resolveMediaUrl(event.img)}
+                          alt={event.title}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                          referrerPolicy="no-referrer"
+                        />
                       </div>
-                    </Link>
-                  </motion.div>
-                );
-              })}
+                      <span className="inline-block px-2.5 py-1 rounded-full bg-slate-50 border border-slate-100 text-[9px] uppercase tracking-wider font-bold text-slate-500 mb-3">
+                        {event.tag}
+                      </span>
+                      <h3 className="font-bold text-slate-800 mb-2 group-hover:text-violet-600 transition-colors text-lg leading-snug">
+                        {event.title}
+                      </h3>
+                      <p className="text-slate-500 text-sm leading-relaxed line-clamp-2">{event.desc}</p>
+                      <span className="mt-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-violet-600 group-hover:gap-3 transition-all">
+                        Explore <ArrowRight className="w-3.5 h-3.5" />
+                      </span>
+                    </div>
+                  </article>
+                </Link>
+              );
+            })}
             </div>
           </div>
 
-          <div className="mt-12 text-center">
+          <div className="mt-8 text-center">
             <HoverFillLink
               to="/programs"
               variant="purple"
@@ -452,217 +466,231 @@ export default function HomePage() {
         </div>
       </section>
 
-
-      {/* Voices from Our Community Section */}
-      <section id="stories" className="bg-[#ede7fe] py-32 px-6 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto">
-          <div className="relative mb-20 flex flex-col items-center text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-gray-300 text-[10px] font-bold text-gray-900 mb-6 uppercase tracking-widest bg-white/50">
-              <div className="w-1.5 h-1.5 rounded-full bg-purple-600" />
-              Testimonials
+      {/* Testimonials */}
+      <section id="stories" className="px-6 py-14 md:py-20">
+        <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-6 md:p-10">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
+            <div>
+              <SectionBadge label="Testimonials" dotClass="bg-violet-500" />
+              <h2 className="mt-4 text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
+                Voices from Our Community
+              </h2>
             </div>
-            <h2 className="font-bold text-gray-900 tracking-tight leading-tight">Voices from Our Community</h2>
-
-            <div className="md:absolute right-0 bottom-0 flex gap-3 mt-8 md:mt-0">
+            <div className="flex gap-2">
               <button
-                onClick={() => {
-                  setActiveTestimonial(prev => (prev === 0 ? 1 : 0));
-                }}
-                className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center text-gray-400 hover:bg-white hover:text-gray-900 transition-all shadow-sm bg-white/50"
+                type="button"
+                onClick={() => setActiveTestimonial((prev) => (prev === 0 ? TESTIMONIALS.length - 1 : prev - 1))}
+                className="w-9 h-9 rounded-full border-2 border-violet-200 bg-white text-violet-600 flex items-center justify-center hover:bg-violet-50 transition-colors"
+                aria-label="Previous testimonial"
               >
-                <ArrowLeft className="w-5 h-5" />
+                <ArrowLeft size={16} />
               </button>
               <button
-                onClick={() => {
-                  setActiveTestimonial(prev => (prev === 0 ? 1 : 0));
-                }}
-                className="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center text-white hover:bg-purple-700 transition-all shadow-lg shadow-purple-200"
+                type="button"
+                onClick={() => setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length)}
+                className="w-9 h-9 rounded-full border-2 border-violet-200 bg-white text-violet-600 flex items-center justify-center hover:bg-violet-50 transition-colors"
+                aria-label="Next testimonial"
               >
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight size={16} />
               </button>
             </div>
           </div>
 
-          <div
-            ref={testimonialsRef}
-            className="flex items-start overflow-x-hidden scroll-smooth pb-6 gap-8"
-          >
+          <div ref={testimonialsRef} className="flex overflow-x-hidden scroll-smooth gap-6">
             {TESTIMONIALS.map((item, i) => (
-              <div key={i} className="min-w-full md:min-w-[45%] bg-white p-10 rounded-2xl flex flex-col md:flex-row items-center md:items-start gap-8 shadow-xl shadow-black/5 hover:scale-[1.01] transition-all border border-white/10 group">
-                <div className="relative flex-shrink-0">
-                  <div className="w-24 h-24 rounded-full border-4 border-[#A788FA]/20 shadow-lg overflow-hidden transition-transform group-hover:scale-105">
-                    <img src={resolveMediaUrl(item.img)} alt={item.name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+              <div
+                key={i}
+                className="min-w-full md:min-w-[calc(50%-12px)] rounded-2xl bg-white border border-slate-100 p-6 md:p-8 shadow-sm flex flex-col sm:flex-row gap-5 items-start"
+              >
+                <img
+                  src={resolveMediaUrl(item.img)}
+                  alt={item.name}
+                  className="w-20 h-20 rounded-2xl object-cover border-2 border-violet-100 shrink-0"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="flex-1">
+                  <div className="flex gap-0.5 mb-4">
+                    {[...Array(5)].map((_, j) => (
+                      <Star key={j} className="w-4 h-4 text-amber-400 fill-amber-400" />
+                    ))}
                   </div>
-                </div>
-                <div className="flex-1 text-center md:text-left">
-                  <div className="flex justify-center md:justify-start gap-0.5 mb-4">
-                    {[...Array(5)].map((_, j) => <Star key={j} className="w-4 h-4 text-[#A788FA] fill-[#A788FA]" />)}
-                  </div>
-                  <p className="text-[17px] text-gray-600 font-medium italic mb-6 leading-relaxed">"{item.quote}"</p>
-                  <div>
-                    <p className="font-bold text-gray-900 text-sm">{item.name}</p>
-                    <p className="text-[10px] font-bold text-[#A788FA] tracking-widest mt-1 uppercase">{item.role}</p>
-                  </div>
+                  <p className="text-base md:text-lg text-slate-600 font-medium leading-relaxed mb-5">
+                    &ldquo;{item.quote}&rdquo;
+                  </p>
+                  <p className="font-bold text-slate-800 text-sm">{item.name}</p>
+                  <p className="text-[10px] font-bold text-violet-500 tracking-widest mt-1 uppercase">{item.role}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
-      {/* Blog Section - Layout from Screenshot */}
-      <section id="blog" className="bg-white pt-20 pb-32 px-6 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto relative z-10">
-          {/* Header */}
-          <div className="grid md:grid-cols-[1.5fr_1fr] gap-8 mb-16 items-start">
+
+      {/* Blog */}
+      <section id="blog" className="bg-white py-12 md:py-16 px-6 mb-10 md:mb-14">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
             <div>
-              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-gray-100 text-[9px] font-bold text-gray-400 mb-6 uppercase tracking-widest bg-gray-50/50">
-                <div className="w-1 h-1 rounded-full bg-gray-300" />
-                Blog
-              </div>
-              <h2 className="font-bold text-slate-900 tracking-tight leading-tight">
-                Stories that Inspires Action
+              <SectionBadge label="Blog" dotClass="bg-amber-400" />
+              <h2 className="mt-3 text-xl md:text-2xl font-bold text-slate-800 tracking-tight">
+                Stories that Inspire Action
               </h2>
-            </div>
-            <div className="pt-6">
-              <p className="text-gray-400 font-medium leading-relaxed max-w-sm">
+              <p className="mt-2 text-sm md:text-base text-slate-500 font-medium max-w-md">
                 Insights, updates, and stories from our events and communities.
               </p>
             </div>
+            <HoverFillLink
+              to="/blog"
+              variant="purple"
+              className="gap-2 px-6 py-3 font-bold text-xs uppercase tracking-widest shrink-0"
+              labelClassName="inline-flex items-center gap-2"
+            >
+              View All Stories
+              <ArrowUpRight size={16} />
+            </HoverFillLink>
           </div>
 
-          <div className="grid lg:grid-cols-[1.6fr_1fr] gap-12">
-            {/* Featured Post (Left) */}
-            <div>
-              {[featuredBlogPost].filter(Boolean).map(post => (
-                <motion.div
-                  key={post!.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 1 }}
-                  className="group"
-                >
-                  <div className="relative aspect-[21/9] rounded-2xl overflow-hidden mb-6 border border-gray-100 shadow-sm">
-                    <img
-                      src={resolveMediaUrl(post!.image)}
-                      alt={post!.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000"
-                    />
-                  </div>
-                  <div>
-                    <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest block mb-4">
-                      {post!.category}
-                    </span>
-                    <h3 className="text-[1.5rem] font-bold text-slate-900 mb-6 group-hover:text-purple-600 transition-colors tracking-tight leading-snug">
-                      {post!.title}
-                    </h3>
-                    <p className="text-gray-400 font-medium leading-relaxed mb-3 text-[1rem]">
-                      {post!.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between pt-6 border-t border-gray-50">
-                      <span className="text-[10px] font-bold text-gray-300 uppercase tracking-[0.2em]">
-                        {post!.date}
-                      </span>
-                      <Link to={`/blog/${post!.id}`} className="flex items-center gap-3 text-purple-600 font-black text-sm hover:gap-4 transition-all">
-                        Read More <ArrowRight size={20} />
-                      </Link>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Sidebar Posts (Right) */}
-            <div className="space-y-4">
-              {homepageSidebarPosts.map((post, i) => (
-                (() => {
-                  const cardBgClass =
-                    i % 3 === 0
-                      ? "bg-amber-50/90"
-                      : i % 3 === 1
-                        ? "bg-purple-50/90"
-                        : "bg-sky-50/90";
-
-                  return (
-                <Link key={post.id} to={`/blog/${post.slug ?? post.id}`} className="block mb-5 last:mb-0">
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.1, duration: 0.8 }}
-                  className={`relative overflow-hidden flex flex-col md:flex-row gap-6 p-6 rounded-2xl border border-gray-100 hover:border-purple-100 hover:shadow-xl hover:shadow-purple-500/5 transition-all group cursor-pointer ${cardBgClass}`}
-                >
-                  <div className="w-full md:w-28 h-28 rounded-xl overflow-hidden flex-shrink-0">
-                    <img src={resolveMediaUrl(post.image)} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" />
-                  </div>
-                  <div className="flex flex-col justify-center flex-1">
-                    <span className="text-[9px] font-bold text-gray-300 uppercase tracking-widest mb-2">
-                      {post.category}
-                    </span>
-                    <h4 className="text-lg font-bold text-slate-900 mb-2 leading-snug group-hover:text-purple-600 transition-colors">
-                      {post.title}
-                    </h4>
-                    <p className="text-gray-400 text-xs font-medium mb-4 line-clamp-1">
-                      {post.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between">
-                      <span className="text-[8px] font-bold text-gray-300 uppercase tracking-widest">
-                        {post.date}
-                      </span>
-                      <div className="flex items-center gap-1.5 text-[9px] font-black uppercase text-slate-900 group-hover:text-purple-600">
-                        Read More <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          <div className="grid lg:grid-cols-12 gap-4 lg:h-[460px]">
+            {featuredBlogPost && (
+              <Link
+                to={`/blog/${featuredBlogPost.id}`}
+                className="group lg:col-span-7 block h-full min-h-[320px] md:min-h-[360px] lg:min-h-0"
+              >
+                <div className="rounded-2xl p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 h-full shadow-[0_12px_40px_rgba(139,92,246,0.12)]">
+                  <article className="rounded-[1.35rem] bg-white h-full overflow-hidden flex flex-col sm:flex-row">
+                    <div className="relative sm:w-[44%] min-h-[200px] sm:min-h-0 shrink-0 overflow-hidden">
+                      <img
+                        src={resolveMediaUrl(featuredBlogPost.image)}
+                        alt={featuredBlogPost.title}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute top-4 left-4">
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur text-[10px] font-bold text-violet-600 uppercase tracking-widest shadow-sm">
+                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                          {featuredBlogPost.category}
+                        </span>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-                </Link>
-                  );
-                })()
-              ))}
+
+                    <div className="flex flex-col justify-center flex-1 p-6 md:p-8 bg-gradient-to-br from-white via-white to-violet-50/40">
+                      <span className="text-[10px] font-black uppercase tracking-[0.25em] text-sky-500 mb-3">
+                        Featured Story
+                      </span>
+                      <h3 className="text-xl md:text-2xl font-bold text-slate-800 leading-snug tracking-tight mb-4 group-hover:text-violet-600 transition-colors line-clamp-3">
+                        {featuredBlogPost.title}
+                      </h3>
+                      <p className="text-slate-500 font-medium leading-relaxed line-clamp-3 mb-6 text-sm md:text-base">
+                        {featuredBlogPost.excerpt}
+                      </p>
+                      <div className="mt-auto flex items-center justify-between pt-5 border-t border-slate-100">
+                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                          {featuredBlogPost.date}
+                        </span>
+                        <span className="inline-flex items-center gap-2 text-sm font-bold text-violet-600 group-hover:gap-3 transition-all">
+                          Read Story
+                          <span className="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center group-hover:bg-violet-600 group-hover:text-white transition-colors">
+                            <ArrowRight size={16} />
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+              </Link>
+            )}
+
+            <div className="lg:col-span-5 flex flex-col gap-3 h-full min-h-0">
+              {homepageSidebarPosts.map((post, i) => {
+                const accent =
+                  i % 3 === 0
+                    ? { ring: "ring-sky-200", tag: "text-sky-600 bg-sky-50" }
+                    : i % 3 === 1
+                      ? { ring: "ring-violet-200", tag: "text-violet-600 bg-violet-50" }
+                      : { ring: "ring-amber-200", tag: "text-amber-700 bg-amber-50" };
+
+                return (
+                  <Link
+                    key={post.id}
+                    to={`/blog/${post.slug ?? post.id}`}
+                    className="group block flex-1 min-h-0"
+                  >
+                    <article
+                      className={`h-full min-h-[120px] rounded-xl overflow-hidden bg-[#FAFCFF] border border-slate-100 ring-1 ${accent.ring} hover:shadow-lg hover:shadow-slate-200/60 transition-all duration-300 flex flex-row`}
+                    >
+                      <div className="w-28 sm:w-32 shrink-0 self-stretch overflow-hidden">
+                        <img
+                          src={resolveMediaUrl(post.image)}
+                          alt={post.title}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                        />
+                      </div>
+                      <div className="flex flex-col justify-center py-4 px-4 flex-1 min-w-0">
+                        <span
+                          className={`inline-flex w-fit px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest mb-2 ${accent.tag}`}
+                        >
+                          {post.category}
+                        </span>
+                        <h4 className="text-sm md:text-base font-bold text-slate-800 leading-snug mb-1.5 group-hover:text-violet-600 transition-colors line-clamp-2">
+                          {post.title}
+                        </h4>
+                        <p className="text-slate-500 text-xs font-medium leading-relaxed line-clamp-1 mb-2 hidden sm:block">
+                          {post.excerpt}
+                        </p>
+                        <div className="flex items-center justify-between gap-2 mt-auto">
+                          <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                            {post.date}
+                          </span>
+                          <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-violet-600 opacity-0 group-hover:opacity-100 transition-opacity">
+                            Read <ArrowUpRight size={12} />
+                          </span>
+                        </div>
+                      </div>
+                    </article>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Branding Banner / CTA */}
-      <section className="relative px-6 -mb-24 z-20">
+      {/* CTA */}
+      <section className="relative px-6 pt-4 pb-6 -mb-16 z-20">
         <div className="max-w-7xl mx-auto">
           <motion.div
-            initial={{ opacity: 1, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="bg-gradient-to-br from-blue-100 via-white to-purple-100 rounded-2xl p-8 sm:p-12 md:p-24 text-center shadow-2xl shadow-purple-900/10 overflow-hidden relative border border-purple-200/50"
+            transition={{ duration: 0.6 }}
+            className="rounded-[2rem] bg-gradient-to-br from-sky-100 via-violet-50 to-amber-100 border border-violet-200/60 p-8 md:p-12 text-center shadow-xl shadow-violet-200/20 overflow-hidden relative"
           >
-            {/* Ambient light effects inside white box */}
-            <div className="absolute inset-0 opacity-50 pointer-events-none">
-              <div className="absolute top-0 left-0 w-64 h-64 bg-purple-100 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2" />
-              <div className="absolute bottom-0 right-0 w-96 h-96 bg-blue-50 rounded-full blur-[120px] translate-x-1/2 translate-y-1/2" />
-            </div>
+            <div className="absolute top-0 left-1/4 w-64 h-64 bg-sky-200/40 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-amber-200/40 rounded-full blur-3xl pointer-events-none" />
 
-            <h2 className="text-2xl sm:text-4xl md:text-6xl font-black tracking-wide sm:tracking-widest mb-0 flex flex-col items-center gap-4">
-              <span className="text-gray-300 text-[9px] sm:text-[10px] md:text-xs tracking-[0.35em] sm:tracking-[1em] mb-2 sm:mb-4 text-center px-2">
-                THE GLOBAL MISSION OF
-              </span>
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
-                LIGHT UPON LIGHT
-              </span>
+            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-[0.3em] mb-4 relative">
+              The global mission of
+            </p>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-800 tracking-tight relative">
+              Light Upon <span className="text-violet-600">Light</span>
             </h2>
+            <p className="mt-5 text-slate-600 font-medium max-w-xl mx-auto relative">
+              Join a community committed to advocacy, accessibility, and equality for differently-abled individuals everywhere.
+            </p>
 
-            <div className="mt-12 flex flex-wrap justify-center gap-6 relative z-10">
+            <div className="mt-10 flex flex-wrap justify-center gap-4 relative">
+              <Link
+                to="/donate"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-amber-300 hover:bg-amber-400 text-amber-950 font-black text-sm uppercase tracking-widest transition-colors"
+              >
+                Donate Now
+                <ArrowUpRight size={18} />
+              </Link>
               <HoverFillButton
                 variant="purple"
                 rounded="2xl"
-                className="px-6 sm:px-10 py-3 sm:py-4 font-black uppercase text-xs sm:text-sm tracking-widest"
+                className="px-8 py-3.5 font-black text-sm uppercase tracking-widest"
               >
-                Join our Global Community
-              </HoverFillButton>
-              <HoverFillButton
-                variant="white"
-                rounded="2xl"
-                className="px-6 sm:px-10 py-3 sm:py-4 border border-purple-100 font-black uppercase text-xs sm:text-sm tracking-widest"
-              >
-                Partner with us
+                Partner With Us
               </HoverFillButton>
             </div>
           </motion.div>

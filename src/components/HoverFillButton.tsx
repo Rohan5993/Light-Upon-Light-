@@ -29,9 +29,10 @@ const hoverBorderStyles: Record<FillVariant, string> = {
   white: "",
 };
 
-interface HoverFillButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface HoverFillButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "className"> {
   variant: FillVariant;
   rounded?: FillRounded;
+  className?: string;
   labelClassName?: string;
   children: ReactNode;
 }

@@ -1,11 +1,18 @@
 import { useEffect, useMemo, useState } from "react";
-import { CheckCircle2, ChevronLeft, ChevronRight, HeartHandshake, Lock, ShieldCheck, Sparkles, Users } from "lucide-react";
+import {
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
+  Lock,
+  ShieldCheck,
+  Sparkles,
+  Users,
+  HeartHandshake,
+} from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { siteImages } from "../assets/siteImages";
 import { resolveMediaUrl } from "../lib/publicUrl";
-import HoverFillButton from "../components/HoverFillButton";
-import HoverFillLink from "../components/HoverFillLink";
 
 const ONE_TIME_AMOUNTS = [25, 50, 100, 250];
 const MONTHLY_AMOUNTS = [15, 30, 60, 100];
@@ -40,6 +47,57 @@ const DONOR_STORIES = [
   },
 ];
 
+const ALLOCATION = [
+  {
+    title: "Education Access",
+    percent: "40%",
+    percentValue: 40,
+    desc: "School materials, mentorship, and learning support for youth.",
+    image: siteImages.heroWheelchair,
+    color: "blue" as const,
+  },
+  {
+    title: "Health & Wellbeing",
+    percent: "35%",
+    percentValue: 35,
+    desc: "Community wellness initiatives and essential care access.",
+    image: siteImages.wheelchairMeeting,
+    color: "purple" as const,
+  },
+  {
+    title: "Community Relief",
+    percent: "25%",
+    percentValue: 25,
+    desc: "Direct aid, emergency response, and family stabilization.",
+    image: siteImages.donation,
+    color: "yellow" as const,
+  },
+];
+
+const palette = {
+  blue: {
+    chip: "bg-sky-100 text-sky-700 border-sky-200",
+    dot: "bg-sky-400",
+    heading: "text-sky-600",
+    card: "bg-sky-50 border-sky-100",
+    icon: "bg-sky-100 text-sky-600",
+  },
+  purple: {
+    chip: "bg-violet-100 text-violet-700 border-violet-200",
+    dot: "bg-violet-400",
+    heading: "text-violet-600",
+    card: "bg-violet-50 border-violet-100",
+    icon: "bg-violet-100 text-violet-600",
+  },
+  yellow: {
+    chip: "bg-amber-100 text-amber-800 border-amber-200",
+    dot: "bg-amber-400",
+    heading: "text-amber-600",
+    card: "bg-amber-50 border-amber-100",
+    icon: "bg-amber-100 text-amber-700",
+  },
+};
+
 type Frequency = "monthly" | "onetime";
 
 export default function DonatePage() {
@@ -52,16 +110,12 @@ export default function DonatePage() {
 
   const finalAmount = useMemo(() => {
     const parsedCustom = Number(customAmount);
-    if (!Number.isNaN(parsedCustom) && parsedCustom > 0) {
-      return parsedCustom;
-    }
+    if (!Number.isNaN(parsedCustom) && parsedCustom > 0) return parsedCustom;
     return selectedAmount;
   }, [customAmount, selectedAmount]);
 
   const ctaText =
-    frequency === "monthly"
-      ? `Donate $${finalAmount}/month`
-      : `Donate $${finalAmount} now`;
+    frequency === "monthly" ? `Give $${finalAmount}/month` : `Give $${finalAmount} today`;
   const activeStory = DONOR_STORIES[activeStoryIndex];
 
   useEffect(() => {
@@ -72,306 +126,344 @@ export default function DonatePage() {
   }, []);
 
   return (
-    <div className="relative bg-[#f8f5ff] min-h-screen selection:bg-purple-100 font-sans flex flex-col">
+    <div className="min-h-screen font-sans flex flex-col bg-[#FAFCFF] selection:bg-violet-100">
       <Header variant="dark" />
 
-      <main className="w-full">
-        <section className="relative overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none opacity-[0.04]">
-            <div className="absolute inset-0 flex">
-              {[...Array(8)].map((_, i) => (
-                <div key={i} className="h-full flex-1 border-r border-black" />
-              ))}
-            </div>
-          </div>
+      <main className="flex-1">
+        {/* Bento hero */}
+        <section className="px-6 pt-10 pb-16 md:pt-14 md:pb-20">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-12 gap-5 md:gap-6 auto-rows-auto">
+              {/* Headline block */}
+              <div className="lg:col-span-7 rounded-[2rem] bg-white border border-slate-100 p-8 md:p-10 shadow-[0_4px_32px_rgba(148,163,184,0.1)] relative overflow-hidden">
+                <div className="absolute -top-16 -right-16 w-48 h-48 bg-violet-100/60 rounded-full blur-2xl pointer-events-none" />
+                <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-sky-100/70 rounded-full blur-2xl pointer-events-none" />
 
-          <div className="max-w-7xl mx-auto px-6 py-1 md:py-3 grid lg:grid-cols-[1.1fr_0.9fr] gap-10 items-start lg:items-end">
-            <div>
-              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-purple-200 text-[10px] font-bold text-gray-500 uppercase tracking-widest bg-white mb-6">
-                <Sparkles size={12} className="text-purple-600" />
-                Give Hope Today
+                <div className="relative">
+                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 border border-amber-200 text-[10px] font-bold text-amber-800 uppercase tracking-widest mb-6">
+                    <Sparkles size={11} className="text-violet-500" />
+                    Give Hope Today
+                  </span>
+                  <h1 className="text-[1.75rem] sm:text-[2.25rem] md:text-[2.65rem] font-bold text-slate-800 leading-[1.12] tracking-tight mb-5">
+                    Turn your{" "}
+                    <span className="text-violet-500">compassion</span> into{" "}
+                    <span className="text-sky-500">real change</span> for families who need it.
+                  </h1>
+                  <p className="text-slate-500 text-base md:text-lg leading-relaxed max-w-xl mb-8">
+                    Every gift funds education, health, and community care. Pick an amount that feels right, monthly or one-time.
+                  </p>
+
+                  <div className="flex flex-wrap gap-3">
+                    {[
+                      { value: "8K+", label: "Volunteers", key: "blue" as const },
+                      { value: "120+", label: "Events", key: "purple" as const },
+                      { value: "501(c)(3)", label: "Tax-deductible", key: "yellow" as const },
+                    ].map((stat) => (
+                      <div
+                        key={stat.label}
+                        className={`rounded-2xl border px-5 py-3 ${palette[stat.key].card}`}
+                      >
+                        <p className={`text-xl font-black ${palette[stat.key].heading}`}>{stat.value}</p>
+                        <p className="text-xs font-semibold text-slate-500 mt-0.5">{stat.label}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[2.25rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">
-                Your generosity turns compassion into real, measurable impact.
-              </h1>
-              <p className="text-lg text-gray-600 leading-relaxed max-w-2xl mb-8">
-                Every donation helps us fund education support, health initiatives, and community care for families who need it most. Choose a gift that feels right for you and help us continue this work.
-              </p>
 
-              <div className="relative rounded-[1.75rem] overflow-hidden border border-purple-100 shadow-sm mb-8 max-w-2xl">
+              {/* Donate form */}
+              <div
+                id="top-donate-card"
+                className="lg:col-span-5 lg:row-span-2 rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.12)]"
+              >
+                <div className="rounded-[calc(2rem-3px)] bg-white h-full flex flex-col overflow-hidden">
+                  <div className="px-7 pt-7 pb-5 border-b border-slate-100 bg-gradient-to-r from-sky-50/80 via-white to-amber-50/80">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="w-2 h-2 rounded-full bg-sky-400" />
+                      <span className="w-2 h-2 rounded-full bg-violet-400" />
+                      <span className="w-2 h-2 rounded-full bg-amber-400" />
+                    </div>
+                    <h2 className="text-xl font-black text-slate-800">Make a gift</h2>
+                    <p className="text-sm text-slate-500 mt-1">Select frequency and amount below.</p>
+                  </div>
+
+                  <div className="p-7 md:p-8 flex flex-col flex-1">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3">
+                      Gift frequency
+                    </p>
+                    <div className="grid grid-cols-2 gap-3 mb-6">
+                      {(["monthly", "onetime"] as const).map((mode) => {
+                        const active = frequency === mode;
+                        const isMonthly = mode === "monthly";
+                        return (
+                          <button
+                            key={mode}
+                            type="button"
+                            onClick={() => {
+                              setFrequency(mode);
+                              setSelectedAmount(isMonthly ? MONTHLY_AMOUNTS[1] : ONE_TIME_AMOUNTS[1]);
+                              setCustomAmount("");
+                            }}
+                            className={`rounded-2xl border-2 px-4 py-4 text-left transition-all ${
+                              active
+                                ? isMonthly
+                                  ? "border-sky-300 bg-sky-50 shadow-sm"
+                                  : "border-violet-300 bg-violet-50 shadow-sm"
+                                : "border-slate-100 bg-slate-50/50 hover:border-slate-200"
+                            }`}
+                          >
+                            <p
+                              className={`text-sm font-black ${
+                                active
+                                  ? isMonthly
+                                    ? "text-sky-600"
+                                    : "text-violet-600"
+                                  : "text-slate-500"
+                              }`}
+                            >
+                              {isMonthly ? "Monthly" : "One-Time"}
+                            </p>
+                            <p className="text-[11px] text-slate-400 mt-0.5">
+                              {isMonthly ? "Steady year-round support" : "Give once today"}
+                            </p>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3">
+                      Select amount
+                    </p>
+                    <div className="flex flex-wrap gap-2 mb-5">
+                      {amountOptions.map((amount) => {
+                        const active = !customAmount && selectedAmount === amount;
+                        const recommended = amount === amountOptions[1];
+                        return (
+                          <button
+                            key={amount}
+                            type="button"
+                            onClick={() => {
+                              setCustomAmount("");
+                              setSelectedAmount(amount);
+                            }}
+                            className={`relative min-w-[4.5rem] flex-1 rounded-full border-2 px-4 py-2.5 font-black text-base transition-all ${
+                              active
+                                ? "border-amber-400 bg-amber-100 text-amber-900"
+                                : "border-slate-100 bg-white text-slate-600 hover:border-sky-200 hover:bg-sky-50"
+                            }`}
+                          >
+                            ${amount}
+                            {recommended && (
+                              <span className="absolute -top-2.5 right-1 text-[7px] px-1.5 py-0.5 rounded-full bg-violet-500 text-white font-black uppercase">
+                                Best
+                              </span>
+                            )}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1.5">
+                      Or enter custom amount
+                    </label>
+                    <div className="relative mb-6">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-violet-400 font-black text-lg">
+                        $
+                      </span>
+                      <input
+                        value={customAmount}
+                        onChange={(e) => setCustomAmount(e.target.value.replace(/[^\d]/g, ""))}
+                        inputMode="numeric"
+                        placeholder="0"
+                        className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 py-3.5 pl-10 pr-4 text-xl font-black text-slate-800 focus:outline-none focus:border-violet-300 focus:bg-white"
+                      />
+                    </div>
+
+                    <div className="rounded-2xl bg-gradient-to-r from-sky-50 via-violet-50 to-amber-50 border border-violet-100 px-5 py-4 mb-5 text-center">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-violet-500 mb-1">
+                        Your gift total
+                      </p>
+                      <p className="text-3xl font-black text-slate-800">
+                        ${finalAmount}
+                        {frequency === "monthly" && (
+                          <span className="text-lg font-bold text-violet-500">/month</span>
+                        )}
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      className="w-full rounded-2xl py-4 font-black text-sm uppercase tracking-wider bg-amber-400 hover:bg-amber-500 text-amber-950 transition-colors shadow-md shadow-amber-200/80"
+                    >
+                      {ctaText}
+                    </button>
+                    <p className="mt-3 text-center text-xs text-slate-400">
+                      {frequency === "monthly"
+                        ? "Update or pause anytime."
+                        : "Goes where help is needed most."}
+                    </p>
+                    <div className="mt-3 inline-flex items-center justify-center gap-2 mx-auto px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-[11px] text-slate-500">
+                      <Lock size={12} className="text-sky-500" />
+                      Secure form. Payment coming soon.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Image bento */}
+              <div className="lg:col-span-7 rounded-[2rem] overflow-hidden border-2 border-sky-100 bg-sky-50/50 min-h-[220px] md:min-h-[260px] relative">
                 <img
                   src={siteImages.donation}
-                  alt="Community support through donations"
-                  className="w-full h-56 md:h-64 object-cover"
+                  alt="Community support"
+                  className="absolute inset-0 w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-transparent" />
-                <div className="absolute left-5 bottom-5 text-white">
-                  <p className="text-[11px] uppercase tracking-widest font-black text-purple-200 mb-1">Why Donate Today</p>
-                  <p className="text-lg md:text-xl font-bold max-w-md">Because a timely gift can fund real help for a family this week.</p>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div className="rounded-2xl bg-white border border-gray-100 p-5">
-                  <p className="text-2xl font-black text-gray-900">8,000+</p>
-                  <p className="text-sm text-gray-500 font-medium">Volunteers activated</p>
-                </div>
-                <div className="rounded-2xl bg-white border border-gray-100 p-5">
-                  <p className="text-2xl font-black text-gray-900">120+</p>
-                  <p className="text-sm text-gray-500 font-medium">Community events hosted</p>
-                </div>
-                <div className="rounded-2xl bg-white border border-gray-100 p-5">
-                  <p className="text-2xl font-black text-gray-900">501(c)(3)</p>
-                  <p className="text-sm text-gray-500 font-medium">Tax-deductible giving</p>
-                </div>
-              </div>
-            </div>
-
-            <div id="top-donate-card" className="bg-white rounded-[2rem] border border-gray-100 shadow-md p-7 md:p-8 lg:min-h-[620px] flex flex-col">
-              <div>
-              <div className="mb-5">
-                <h2 className="text-xl font-black text-gray-900">Choose your gift</h2>
-              </div>
-              <p className="text-sm text-gray-500 mb-5">
-                Most supporters choose monthly giving for steady, year-round support that helps families consistently.
-              </p>
-
-              <div className="grid grid-cols-2 bg-gray-100 rounded-xl p-1 mb-6">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFrequency("monthly");
-                    setSelectedAmount(MONTHLY_AMOUNTS[1]);
-                    setCustomAmount("");
-                  }}
-                  className={`rounded-lg py-2.5 text-sm font-black transition-all ${
-                    frequency === "monthly" ? "bg-white text-purple-600 shadow-sm" : "text-gray-500"
-                  }`}
-                >
-                  Monthly
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFrequency("onetime");
-                    setSelectedAmount(ONE_TIME_AMOUNTS[1]);
-                    setCustomAmount("");
-                  }}
-                  className={`rounded-lg py-2.5 text-sm font-black transition-all ${
-                    frequency === "onetime" ? "bg-white text-purple-600 shadow-sm" : "text-gray-500"
-                  }`}
-                >
-                  One-Time
-                </button>
-              </div>
-
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                {amountOptions.map((amount) => {
-                  const isActive = !customAmount && selectedAmount === amount;
-                  const isRecommended = amount === amountOptions[1];
-                  return (
-                    <button
-                      key={amount}
-                      type="button"
-                      onClick={() => {
-                        setCustomAmount("");
-                        setSelectedAmount(amount);
-                      }}
-                      className={`relative rounded-xl border px-4 py-3 text-left transition-all ${
-                        isActive
-                          ? "border-purple-400 bg-purple-50"
-                          : "border-gray-200 bg-white hover:border-purple-200"
-                      }`}
-                    >
-                      <p className="text-lg font-black text-gray-900">${amount}</p>
-                      {isRecommended && (
-                        <span className="absolute -top-2 right-2 text-[10px] px-2 py-0.5 rounded-full bg-purple-600 text-white font-black uppercase tracking-wide">
-                          Most Impact
-                        </span>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <label className="block text-xs uppercase tracking-widest font-black text-gray-400 mb-2">
-                Custom amount
-              </label>
-              <div className="relative mb-6">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-black">$</span>
-                <input
-                  value={customAmount}
-                  onChange={(e) => setCustomAmount(e.target.value.replace(/[^\d]/g, ""))}
-                  inputMode="numeric"
-                  placeholder="Enter amount"
-                  className="w-full rounded-xl border border-gray-200 bg-white py-3.5 pl-9 pr-4 text-gray-900 font-bold focus:outline-none focus:ring-2 focus:ring-purple-300"
-                />
-              </div>
-              </div>
-
-              <div className="pt-4">
-                <HoverFillButton
-                  type="button"
-                  variant="purple"
-                  className="w-full py-4 font-black text-sm uppercase tracking-wider"
-                >
-                  {ctaText}
-                </HoverFillButton>
-
-                <p className="mt-3 text-center text-xs text-gray-500">
-                  {frequency === "monthly"
-                    ? "You can pause or update your monthly gift anytime."
-                    : "One-time gifts provide immediate support where needed most."}
-                </p>
-
-                <div className="mt-5 flex items-center justify-center gap-2 text-xs text-gray-500 font-medium">
-                  <Lock size={14} className="text-purple-500" />
-                  Secure donation form - payment integration coming next
+                <div className="absolute inset-0 bg-gradient-to-t from-sky-900/50 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-amber-200 mb-1">
+                    Why give today
+                  </p>
+                  <p className="text-white font-bold text-lg md:text-xl max-w-md leading-snug">
+                    A single gift can put real help in a family&apos;s hands this week.
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section className="max-w-7xl mx-auto px-6 mt-4 mb-10 py-4 md:py-6">
-          <div className="rounded-[2rem] border border-purple-100 bg-white p-7 md:p-8 grid md:grid-cols-3 gap-6">
-            <div className="flex items-start gap-3">
-              <ShieldCheck className="text-purple-600 mt-0.5" size={20} />
-              <div>
-                <p className="font-black text-gray-900">Trusted nonprofit</p>
-                <p className="text-sm text-gray-500">Registered 501(c)(3), EIN 99-2690459.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <Users className="text-purple-600 mt-0.5" size={20} />
-              <div>
-                <p className="font-black text-gray-900">Community-powered</p>
-                <p className="text-sm text-gray-500">Local teams deliver support where it matters most.</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-3">
-              <HeartHandshake className="text-purple-600 mt-0.5" size={20} />
-              <div>
-                <p className="font-black text-gray-900">Transparent impact</p>
-                <p className="text-sm text-gray-500">Clear outcomes and regular impact reporting.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section className="max-w-7xl mx-auto px-6 py-10 md:py-12 mb-10">
-          <div className="mb-8">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">Where your donation goes</h2>
-            <p className="text-gray-500 mt-3 max-w-2xl">
-              We direct every contribution to practical programs that deliver immediate help and long-term resilience.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-6">
+        {/* Trust band */}
+        <section className="bg-gradient-to-r from-sky-50 via-violet-50 to-amber-50 border-y border-white py-10 px-6">
+          <div className="max-w-7xl mx-auto grid sm:grid-cols-3 gap-6">
             {[
-              {
-                title: "Education Access",
-                percent: "40%",
-                desc: "School materials, mentorship, and learning support for youth.",
-                image: siteImages.heroWheelchair,
-              },
-              {
-                title: "Health & Wellbeing",
-                percent: "35%",
-                desc: "Community wellness initiatives and essential care access.",
-                image: siteImages.wheelchairMeeting,
-              },
-              {
-                title: "Community Relief",
-                percent: "25%",
-                desc: "Direct aid, emergency response, and family stabilization.",
-                image: siteImages.donation,
-              },
-            ].map((item) => (
-              <article key={item.title} className="rounded-2xl border border-gray-100 bg-white shadow-sm overflow-hidden">
-                <img src={item.image} alt={item.title} className="w-full h-40 object-cover" />
-                <div className="p-6">
-                  <p className="text-[11px] uppercase tracking-widest text-purple-600 font-black mb-3">{item.percent}</p>
-                  <h3 className="text-xl font-black text-gray-900 mb-2">{item.title}</h3>
-                  <p className="text-gray-500 leading-relaxed">{item.desc}</p>
+              { icon: ShieldCheck, title: "Trusted nonprofit", desc: "501(c)(3), EIN 99-2690459.", color: "blue" as const },
+              { icon: Users, title: "Community-powered", desc: "Local teams where it matters.", color: "purple" as const },
+              { icon: HeartHandshake, title: "Transparent impact", desc: "Clear outcomes, regular updates.", color: "yellow" as const },
+            ].map(({ icon: Icon, title, desc, color }) => (
+              <div
+                key={title}
+                className={`flex items-start gap-4 rounded-2xl border p-5 bg-white/70 backdrop-blur-sm ${palette[color].card}`}
+              >
+                <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${palette[color].icon}`}>
+                  <Icon size={20} />
                 </div>
-              </article>
+                <div>
+                  <p className="font-bold text-slate-800">{title}</p>
+                  <p className="text-sm text-slate-500 mt-0.5">{desc}</p>
+                </div>
+              </div>
             ))}
           </div>
         </section>
 
-        <section className="max-w-7xl mx-auto px-6 pb-14">
-          <div className="bg-[#270E32] rounded-[2.5rem] p-9 md:p-12 text-white relative overflow-hidden">
-            <div className="absolute -top-20 -right-20 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
-            <div className="relative z-10 grid lg:grid-cols-[1.3fr_0.7fr] gap-10 items-center">
-              <div className="grid md:grid-cols-[88px_1fr] gap-4 items-start">
+        {/* Allocation */}
+        <section className="px-6 py-16 md:py-20">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-violet-500 mb-2">Your impact</p>
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-800">Where your donation goes</h2>
+              </div>
+              <p className="text-slate-500 text-sm max-w-xs">
+                Practical programs with immediate help and long-term resilience.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-3 gap-5">
+              {ALLOCATION.map((item) => {
+                const c = palette[item.color];
+                return (
+                  <article
+                    key={item.title}
+                    className="rounded-[1.5rem] bg-white border border-slate-100 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <div className="h-2 w-full bg-slate-100">
+                      <div
+                        className={`h-full ${c.dot}`}
+                        style={{ width: `${item.percentValue}%` }}
+                      />
+                    </div>
+                    <img src={item.image} alt={item.title} className="w-full h-44 object-cover" />
+                    <div className="p-6">
+                      <span className={`inline-block text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border mb-3 ${c.chip}`}>
+                        {item.percent}
+                      </span>
+                      <h3 className="font-bold text-slate-800 text-lg mb-2">{item.title}</h3>
+                      <p className="text-slate-500 text-sm leading-relaxed">{item.desc}</p>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* Donor story */}
+        <section className="px-6 pb-16 md:pb-20">
+          <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-8 md:p-12">
+            <div className="grid lg:grid-cols-[1fr_auto] gap-10 items-start">
+              <div className="flex gap-5">
                 <img
                   src={resolveMediaUrl(activeStory.image)}
-                  alt="Donor portrait"
-                  className="w-[72px] h-[72px] md:w-[88px] md:h-[88px] rounded-2xl object-cover border border-white/20"
+                  alt=""
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-2xl object-cover border-2 border-violet-200 shrink-0"
                 />
                 <div>
-                <p className="text-[11px] uppercase tracking-widest font-black text-purple-200 mb-3">Donor Story</p>
-                <blockquote className="text-lg sm:text-xl md:text-2xl leading-snug font-bold mb-4">
-                  “{activeStory.quote}”
-                </blockquote>
-                <p className="text-purple-100 font-medium">— {activeStory.name}, {activeStory.role}</p>
-                <div className="mt-5 flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setActiveStoryIndex((prev) =>
-                        prev === 0 ? DONOR_STORIES.length - 1 : prev - 1
-                      )
-                    }
-                    className="w-8 h-8 rounded-full border border-white/30 text-white hover:bg-white/10 transition-colors inline-flex items-center justify-center"
-                    aria-label="Previous donor story"
-                  >
-                    <ChevronLeft size={16} />
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setActiveStoryIndex((prev) => (prev + 1) % DONOR_STORIES.length)
-                    }
-                    className="w-8 h-8 rounded-full border border-white/30 text-white hover:bg-white/10 transition-colors inline-flex items-center justify-center"
-                    aria-label="Next donor story"
-                  >
-                    <ChevronRight size={16} />
-                  </button>
-                </div>
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-violet-500 mb-3">Donor story</p>
+                  <blockquote className="text-lg md:text-xl font-bold text-slate-700 leading-snug mb-4">
+                    &ldquo;{activeStory.quote}&rdquo;
+                  </blockquote>
+                  <p className="text-sm font-semibold text-violet-600">
+                    {activeStory.name}, {activeStory.role}
+                  </p>
+                  <div className="mt-4 flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setActiveStoryIndex((prev) => (prev === 0 ? DONOR_STORIES.length - 1 : prev - 1))
+                      }
+                      className="w-9 h-9 rounded-full border-2 border-violet-200 bg-white text-violet-600 flex items-center justify-center hover:bg-violet-50 transition-colors"
+                      aria-label="Previous story"
+                    >
+                      <ChevronLeft size={16} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setActiveStoryIndex((prev) => (prev + 1) % DONOR_STORIES.length)}
+                      className="w-9 h-9 rounded-full border-2 border-violet-200 bg-white text-violet-600 flex items-center justify-center hover:bg-violet-50 transition-colors"
+                      aria-label="Next story"
+                    >
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
                 </div>
               </div>
-              <div className="bg-white/10 rounded-2xl p-6 border border-white/15">
-                <p className="text-sm text-purple-100 mb-4">When you donate today, your support helps us reach more families this month.</p>
+
+              <div className="rounded-2xl bg-white border border-slate-100 p-6 shadow-sm min-w-[260px]">
                 <ul className="space-y-3 mb-6">
-                  <li className="flex items-start gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-purple-200 mt-0.5" />
-                    <span>Fast deployment to active community programs</span>
-                  </li>
-                  <li className="flex items-start gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-purple-200 mt-0.5" />
-                    <span>Tax-deductible contribution receipt</span>
-                  </li>
-                  <li className="flex items-start gap-2 text-sm">
-                    <CheckCircle2 size={16} className="text-purple-200 mt-0.5" />
-                    <span>Impact updates from the field</span>
-                  </li>
+                  {[
+                    "Fast deployment to programs",
+                    "Tax-deductible receipt",
+                    "Field impact updates",
+                  ].map((text) => (
+                    <li key={text} className="flex items-start gap-2 text-sm text-slate-600">
+                      <CheckCircle2 size={16} className="text-sky-500 shrink-0 mt-0.5" />
+                      {text}
+                    </li>
+                  ))}
                 </ul>
-                <HoverFillLink
+                <a
                   href="#top-donate-card"
-                  variant="white"
-                  className="w-full py-3 font-black"
+                  className="block w-full text-center rounded-2xl py-3.5 font-black text-sm bg-amber-300 hover:bg-amber-400 text-amber-950 transition-colors"
                 >
                   Donate Now
-                </HoverFillLink>
+                </a>
               </div>
             </div>
           </div>
         </section>
       </main>
 
-      <Footer className="mt-20 pb-10" topPaddingClass="pt-[80px]" />
+      <Footer className="mt-0" topPaddingClass="pt-12" />
     </div>
   );
 }
