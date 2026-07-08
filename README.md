@@ -12,7 +12,16 @@ View your app in AI Studio: https://ai.studio/apps/87fd0d22-f9a4-487f-99c0-d1a8d
 
 **https://rohan5993.github.io/Light-Upon-Light-/**
 
-Use the trailing slash in the URL. Pushes to `main` deploy automatically via GitHub Actions to the `gh-pages` branch.
+| Page | URL |
+| --- | --- |
+| Home | https://rohan5993.github.io/Light-Upon-Light-/ |
+| About | https://rohan5993.github.io/Light-Upon-Light-/about |
+| Programs | https://rohan5993.github.io/Light-Upon-Light-/programs |
+| Volunteer | https://rohan5993.github.io/Light-Upon-Light-/volunteer |
+| Blog | https://rohan5993.github.io/Light-Upon-Light-/blog |
+| Donate | https://rohan5993.github.io/Light-Upon-Light-/donate |
+
+Use the trailing slash on the home URL. Pushes to `main` deploy automatically via GitHub Actions to the `gh-pages` branch.
 
 ## Run Locally
 
