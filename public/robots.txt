@@ -1,0 +1,5 @@
+# https://rohan5993.github.io/Light-Upon-Light-/
+User-agent: *
+Allow: /
+
+Sitemap: https://rohan5993.github.io/Light-Upon-Light-/sitemap.xml

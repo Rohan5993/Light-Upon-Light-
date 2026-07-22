@@ -293,7 +293,7 @@ export default function DonatePage() {
 
                     <button
                       type="button"
-                      className="w-full rounded-2xl py-4 font-black text-sm uppercase tracking-wider bg-amber-400 hover:bg-amber-500 text-amber-950 transition-colors shadow-md shadow-amber-200/80"
+                      className="w-full rounded-2xl py-4 font-black text-sm uppercase tracking-wider bg-sky-500 hover:bg-sky-600 text-white transition-colors shadow-md shadow-sky-200/80"
                     >
                       {ctaText}
                     </button>
@@ -382,7 +382,7 @@ export default function DonatePage() {
                         style={{ width: `${item.percentValue}%` }}
                       />
                     </div>
-                    <img src={item.image} alt={item.title} className="w-full h-44 object-cover" />
+                    <img src={resolveMediaUrl(item.image)} alt={item.title} className="w-full h-44 object-cover" />
                     <div className="p-6">
                       <span className={`inline-block text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border mb-3 ${c.chip}`}>
                         {item.percent}
@@ -438,7 +438,7 @@ export default function DonatePage() {
                 </div>
               </div>
 
-              <div className="rounded-2xl bg-white border border-slate-100 p-6 shadow-sm min-w-[260px]">
+              <div className="rounded-2xl bg-white border border-slate-100 p-6 shadow-sm w-full md:w-auto md:min-w-[260px] max-w-full">
                 <ul className="space-y-3 mb-6">
                   {[
                     "Fast deployment to programs",

@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowRight, Calendar, MapPin } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
 import Header from "../components/Header";
@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import { resolveMediaUrl } from "../lib/publicUrl";
 import { useEffect } from "react";
 
+const stripeClasses = ["bg-sky-400", "bg-violet-400", "bg-amber-400"] as const;
 
 export default function ProgramsPage() {
   useEffect(() => {
@@ -16,89 +17,74 @@ export default function ProgramsPage() {
   return (
     <div className="relative bg-white min-h-screen selection:bg-purple-100 font-sans flex flex-col">
       <Header variant="dark" />
-      {/* Subtle Vertical Lines Background */}
-      <div className="absolute inset-0 flex pointer-events-none opacity-[0.03]">
-        {[...Array(6)].map((_, i) => (
-          <div key={i} className="h-full flex-1 border-r border-black" />
-        ))}
-      </div>
 
-      <div className="max-w-7xl mx-auto relative z-10 px-6">
-        <div className="mb-16">
-          <div className="flex flex-col">
-
-            <div className="inline-flex w-fit items-center gap-2 px-3 py-1.5 rounded-full border border-purple-200 text-[10px] font-bold text-gray-500 mb-6 uppercase tracking-widest bg-white">
-              <div className="w-1.5 h-1.5 rounded-full bg-purple-600" />
-              Impactful Initiatives
-            </div>
-            <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight">
-              Our Radiant Programs
-            </h1>
-            <p className="text-xl text-gray-500 font-medium mt-6 max-w-3xl">
-              Explore our diverse range of programs designed to empower communities, foster health, and ignite hope through sustainable action.
-            </p>
+      <section className="px-6 pt-6 pb-14 md:pb-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-violet-50 via-white to-sky-50" />
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="inline-flex w-fit items-center gap-2 px-3 py-1.5 rounded-full border border-violet-200 text-[10px] font-bold text-violet-600 mb-6 uppercase tracking-widest bg-white">
+            <div className="w-1.5 h-1.5 rounded-full bg-violet-500" />
+            Our Radiant Programs
           </div>
+          <h1 className="text-[1.75rem] sm:text-[2.25rem] md:text-[2.75rem] font-bold text-slate-900 tracking-tight leading-tight max-w-3xl">
+            Our Radiant Programs
+          </h1>
+          <p className="text-lg md:text-xl text-slate-500 font-medium mt-5 max-w-3xl leading-relaxed">
+            Every program at Light Upon Light was developed from lived experience to remove barriers, educate society, and build a future where differently-abled people are valued, included, and given the same opportunities as everyone else.
+          </p>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+      <section className="px-6 pb-20">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {PROGRAMS.map((program, i) => (
             <Link
               key={program.id}
               to={`/programs/${program.id}`}
-              className="block rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-300"
+              className="block rounded-[1.5rem] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-300"
             >
-              <motion.div
+              <motion.article
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1, duration: 0.6 }}
-                className="group flex flex-col bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden h-full"
+                transition={{ delay: i * 0.08, duration: 0.55 }}
+                className="group h-full flex flex-col bg-white rounded-[1.5rem] border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 overflow-hidden"
               >
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <img
-                  src={resolveMediaUrl(program.img)}
-                  alt={program.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute top-6 left-6">
-                  <span className="px-4 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-purple-600 border border-white/20 text-[10px] uppercase tracking-wider font-black shadow-lg">
-                    {program.tag}
+                <div className={`h-1.5 w-full ${stripeClasses[i % 3]}`} />
+                <div className="relative aspect-[16/10] overflow-hidden">
+                  <img
+                    src={resolveMediaUrl(program.img)}
+                    alt={program.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <span className="px-3 py-1 rounded-full bg-white/95 backdrop-blur-sm text-violet-600 border border-white text-[10px] uppercase tracking-wider font-bold shadow-sm">
+                      {program.tag}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-6 flex flex-col flex-1">
+                  <h3 className="text-xl font-bold text-slate-900 mb-1.5 group-hover:text-violet-600 transition-colors leading-snug">
+                    {program.title}
+                  </h3>
+                  <p className="text-slate-800 font-semibold text-sm leading-snug mb-2">
+                    {program.headline}
+                  </p>
+                  <p className="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-6 flex-1">
+                    {program.desc}
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-violet-600 group-hover:gap-3 transition-all">
+                    Learn More
+                    <ArrowRight size={14} />
                   </span>
                 </div>
-              </div>
-              
-              <div className="p-8 flex flex-col flex-1">
-                <div className="flex items-center gap-4 text-gray-400 text-[11px] font-bold uppercase tracking-widest mb-4">
-                  <div className="flex items-center gap-1.5">
-                    <Calendar size={14} className="text-purple-400" />
-                    {program.date}
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <MapPin size={14} className="text-purple-400" />
-                    {program.location}
-                  </div>
-                </div>
-                
-                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-purple-600 transition-colors">
-                  {program.title}
-                </h3>
-                
-                <p className="text-gray-500 leading-relaxed mb-8 flex-1">
-                  {program.desc}
-                </p>
-                
-                <span className="inline-flex items-center gap-2 text-gray-900 font-black uppercase text-[10px] tracking-widest hover:text-purple-600 group/btn transition-all hover:gap-3">
-                  View Program Details
-                  <ArrowRight size={16} className="transition-transform group-hover/btn:translate-x-1" />
-                </span>
-              </div>
-              </motion.div>
+              </motion.article>
             </Link>
           ))}
         </div>
-      </div>
-      <Footer className="mt-20 pb-10" topPaddingClass="pt-[80px]" />
+      </section>
+
+      <Footer className="mt-4" topPaddingClass="pt-24" />
     </div>
   );
 }
-

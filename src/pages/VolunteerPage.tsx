@@ -18,25 +18,25 @@ import { siteImages } from "../assets/siteImages";
 const OPPORTUNITIES = [
   {
     title: "Event & Program Support",
-    desc: "Help at health fairs, education drives, food programs, and community gatherings that bring resources directly to people who need them.",
+    desc: "Help bring our programs to life by supporting community events, workshops, resource drives, and activities that directly serve differently-abled individuals, their families, and the broader community.",
     icon: CalendarHeart,
     accent: "sky" as const,
   },
   {
-    title: "Mentorship & Companionship",
-    desc: "Walk alongside differently-abled individuals, seniors, and families through regular visits, encouragement, and practical support.",
-    icon: HandHeart,
-    accent: "violet" as const,
-  },
-  {
-    title: "Advocacy & Awareness",
-    desc: "Share stories, support outreach, and help educate communities about dignity, accessibility, and inclusion.",
+    title: "Advocacy & Public Education",
+    desc: "Help educate the public, raise awareness, and encourage conversations that promote dignity, accessibility, and inclusion.",
     icon: Megaphone,
     accent: "amber" as const,
   },
   {
+    title: "Mentorship & Companionship",
+    desc: "Build meaningful relationships by offering encouragement, friendship, and support to differently-abled individuals and their families.",
+    icon: HandHeart,
+    accent: "violet" as const,
+  },
+  {
     title: "Community Partnerships",
-    desc: "Represent Light Upon Light at schools, local organizations, and partner events across the Greater Seattle Area.",
+    desc: "Represent Light Upon Light at schools, businesses, community events, and local organizations while helping expand our impact.",
     icon: Users,
     accent: "violet" as const,
   },
@@ -49,9 +49,18 @@ const opportunityAccent = {
 };
 
 const STEPS = [
-  "Tell us about yourself and how you'd like to help.",
-  "We'll connect you with the right program or team lead.",
-  "Get oriented, trained, and start making a real difference.",
+  {
+    title: "Complete the Volunteer Form",
+    desc: "Tell us a little about yourself and why you'd like to volunteer with Light Upon Light.",
+  },
+  {
+    title: "Meet With Our Team",
+    desc: "We'll schedule a brief in-person or virtual meeting to get to know you, discuss your interests and availability, and answer any questions you may have.",
+  },
+  {
+    title: "Find Your Place & Make a Difference",
+    desc: "We'll connect you with the volunteer opportunity that's the best fit for you. Then you'll become part of the Light Upon Light family and start making a meaningful impact.",
+  },
 ];
 
 export default function VolunteerPage() {
@@ -92,10 +101,10 @@ export default function VolunteerPage() {
               Volunteer
             </div>
             <h1 className="text-[1.875rem] sm:text-[2.5rem] md:text-[3rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">
-              Your time can change someone&apos;s world.
+              Your Time Can Change Someone&apos;s World.
             </h1>
             <p className="text-lg text-gray-500 font-medium leading-relaxed max-w-xl">
-              Join a community of volunteers standing with differently-abled individuals through advocacy, programs, and everyday acts of dignity.
+              Join the Light Upon Light movement and become part of a family dedicated to creating a future where differently-abled people are valued, included, and given the same opportunities as everyone else. Every act of service helps create lasting change.
             </p>
           </div>
           <div className="rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-lg">
@@ -116,10 +125,10 @@ export default function VolunteerPage() {
           <div className="max-w-2xl mb-10">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-violet-500 mb-3">Ways to Help</p>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-3">
-              Find a role that fits your gifts.
+              Find a Role That Fits Your Gifts.
             </h2>
             <p className="text-slate-500 font-medium leading-relaxed">
-              Whether you have a few hours a month or want to lead an initiative, there is a meaningful place for you.
+              Whether you have a few hours each month or want to make a long-term commitment, there&apos;s a meaningful place for you in the Light Upon Light family.
             </p>
           </div>
 
@@ -153,20 +162,23 @@ export default function VolunteerPage() {
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-3">Get Started</p>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-6">
-              Three simple steps to join us.
+              Three Simple Steps to Join the Movement
             </h2>
             <ol className="space-y-5 mb-10">
               {STEPS.map((step, index) => (
-                <li key={step} className="flex gap-4">
+                <li key={step.title} className="flex gap-4">
                   <span className="shrink-0 w-8 h-8 rounded-full bg-violet-100 text-violet-700 text-sm font-black flex items-center justify-center">
                     {index + 1}
                   </span>
-                  <p className="text-slate-600 font-medium leading-relaxed pt-1">{step}</p>
+                  <div className="pt-0.5">
+                    <p className="text-slate-900 font-bold leading-snug mb-1">{step.title}</p>
+                    <p className="text-slate-600 font-medium leading-relaxed text-sm md:text-base">{step.desc}</p>
+                  </div>
                 </li>
               ))}
             </ol>
 
-            <div className="rounded-2xl border border-slate-100 bg-slate-50/80 p-6 space-y-4">
+            <div className="rounded-2xl border border-sky-100 bg-sky-50 p-6 space-y-4">
               <p className="text-sm font-bold text-slate-800">Prefer to reach out directly?</p>
               <a
                 href="mailto:lightuponlight1408@gmail.com"
@@ -263,7 +275,7 @@ export default function VolunteerPage() {
 
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-violet-600 text-white font-bold text-sm py-3.5 hover:bg-violet-700 transition-colors"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#990FFA] text-white font-bold text-sm py-3.5 hover:bg-[#8800e0] transition-colors"
               >
                 Send Volunteer Inquiry
                 <ArrowRight size={16} />
@@ -277,16 +289,16 @@ export default function VolunteerPage() {
       <section className="px-6 pb-20">
         <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-8 md:p-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Explore our programs</h2>
+            <h2 className="text-2xl md:text-3xl font-bold text-slate-900 mb-2">Explore Our Programs</h2>
             <p className="text-slate-600 font-medium max-w-lg">
-              See where volunteers are making the biggest impact across education, wellness, and community support.
+              Discover the programs your time and talents will help bring to life, and see the impact you&apos;ll make in the lives of the people we serve.
             </p>
           </div>
           <Link
             to="/programs"
-            className="inline-flex items-center justify-center gap-2 shrink-0 px-6 py-3 rounded-full bg-white border border-violet-200 text-slate-800 font-bold text-sm hover:bg-violet-50 transition-colors group"
+            className="inline-flex items-center justify-center gap-2 shrink-0 px-6 py-3 rounded-full bg-[#990FFA] text-white font-bold text-sm hover:bg-[#8800e0] transition-colors group"
           >
-            View Programs
+            Explore Programs
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
           </Link>
         </div>

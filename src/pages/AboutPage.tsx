@@ -6,7 +6,6 @@ import {
   ArrowRight,
   HeartHandshake,
   Ear,
-  Megaphone,
   Layers,
   ChevronDown,
   Users,
@@ -54,22 +53,22 @@ const HISTORY = [
 const APPROACH = [
   {
     step: "01",
-    title: "Listen First",
-    desc: "We start by hearing directly from differently-abled individuals and their families. Every program is shaped with the people it serves—not for them.",
+    title: "We Listen",
+    desc: "Every initiative begins by listening to differently-abled people, families, and communities so the people most affected help shape the solutions.",
     icon: Ear,
     accent: "violet" as const,
   },
   {
     step: "02",
-    title: "Educate & Advocate",
-    desc: "Real change begins when society sees humanity before disability. We raise awareness, challenge bias, and fight for the rights people deserve.",
-    icon: Megaphone,
+    title: "We Collaborate",
+    desc: "We partner with schools, businesses, organizations, and community leaders to remove barriers and expand opportunities.",
+    icon: HeartHandshake,
     accent: "sky" as const,
   },
   {
     step: "03",
-    title: "Build for the Long Term",
-    desc: "We invest in accessible spaces, lasting partnerships, and programs designed to grow with communities over time—not quick fixes.",
+    title: "We Take Action",
+    desc: "Together, we create practical, lasting solutions that improve accessibility, strengthen inclusion, and help build communities where everyone belongs.",
     icon: Layers,
     accent: "amber" as const,
   },
@@ -78,25 +77,25 @@ const APPROACH = [
 const WHO_WE_SERVE = [
   {
     title: "Differently-Abled Individuals",
-    desc: "People navigating physical, sensory, and cognitive barriers who deserve dignity, access, and real opportunity—not sympathy alone.",
+    desc: "People navigating physical, sensory, cognitive, or developmental disabilities who deserve dignity, accessibility, and equal opportunity.",
     icon: Users,
     accent: "violet" as const,
   },
   {
     title: "Families & Caregivers",
-    desc: "Loved ones who advocate every day and need trusted partners, resources, and communities that understand their journey.",
+    desc: "The people who support, advocate for, and roll or walk alongside their loved ones every day.",
     icon: HandHeart,
     accent: "sky" as const,
   },
   {
     title: "Schools & Educators",
-    desc: "Teachers and institutions working to build inclusive classrooms where every student is seen as a full human being.",
+    desc: "Creating more inclusive learning environments where every student is valued and supported.",
     icon: GraduationCap,
     accent: "amber" as const,
   },
   {
     title: "Communities & Partners",
-    desc: "Local organizations, employers, and public spaces ready to remove barriers and co-create lasting accessibility.",
+    desc: "Businesses, organizations, and community leaders committed to building a more accessible and inclusive future.",
     icon: Building2,
     accent: "violet" as const,
   },
@@ -138,42 +137,47 @@ const FAQ_ITEMS = [
   {
     question: "What is Light Upon Light?",
     answer:
-      "Light Upon Light is a 501(c)(3) nonprofit dedicated to advocacy, accessibility, education, and equality for differently-abled individuals. We were founded from lived experience and work to remove barriers that deny people dignity, opportunity, and basic respect.",
+      "Light Upon Light is a 501(c)(3) organization founded through lived experience, dedicated to building a future where differently-abled people are valued for who they are and given the same opportunities as everyone else.",
   },
   {
     question: "Who does Light Upon Light serve?",
     answer:
-      "We serve differently-abled individuals, their families, schools, and community partners. Our programs and advocacy focus on creating practical pathways to access—whether that means inclusive public spaces, educational awareness, or direct community support.",
+      "We serve differently-abled individuals of all ages, along with their families, caregivers, educators, and the communities that support them.",
   },
   {
     question: "Where are you based?",
     answer:
-      "We are rooted in the Greater Seattle Area and partner with schools, communities, and organizations locally while building a movement that can inspire change far beyond one city.",
+      "Light Upon Light is based in Everett and Redmond, Washington. Our programs and community events are held at our Redmond location.",
+    detail: {
+      title: "Program & Community Space",
+      lines: ["16305 NE 87th St, Suite 110", "Redmond, WA 98052"],
+      note: "Visits are by appointment only. Please contact us before stopping by so we can best assist you.",
+    },
   },
   {
-    question: "How can I support the mission?",
+    question: "How can I get involved?",
     answer:
-      "You can donate, explore our programs, share our stories, or partner with us. Every contribution—financial or personal—helps us expand advocacy, accessibility initiatives, and programs that open real doors for differently-abled people.",
+      "There are many ways to make a difference. You can donate, volunteer, partner with us, attend events, or help spread awareness by sharing our story.",
   },
   {
     question: "Are donations tax-deductible?",
     answer:
-      "Yes. Light Upon Light is a registered 501(c)(3) nonprofit (EIN 99-2690459). Donations are tax-deductible to the extent allowed by law. You can verify our status on the IRS website.",
+      "Yes. Light Upon Light is a registered 501(c)(3) nonprofit organization, and eligible donations are tax-deductible to the fullest extent allowed by law.",
   },
   {
     question: "How do your programs work?",
     answer:
-      "Our programs span education, wellness, community support, and accessibility initiatives. Each one is designed with input from the people it serves. Visit our Programs page to see current offerings and how to participate.",
+      "Every program at Light Upon Light was developed from lived experience. Behind every program is a personal story our Founder & CEO has lived sharing the experiences, challenges, and unmet needs that led to its creation, so others have the support, opportunities, and resources she wished had been available throughout her own journey.",
   },
   {
     question: "Can I volunteer or partner with you?",
     answer:
-      "Absolutely. We welcome volunteers, schools, community groups, and organizations that share our commitment to dignity and inclusion. Reach out at lightuponlight1408@gmail.com or call 206-766-0884 to start a conversation.",
+      "Absolutely. We welcome individuals, businesses, schools, and community organizations that want to make a difference. Visit our Volunteer or Contact page to learn how you can get involved.",
   },
   {
     question: "Why was Light Upon Light started?",
     answer:
-      "Our Founder & CEO was denied something as simple as a cup of tea because of her disability. That moment revealed how deeply everyday indignities affect differently-abled people—and became the spark for an organization committed to ensuring no one is unseen, unheard, or unworthy again.",
+      "Light Upon Light began from a deeply personal, painful, and unjust experience. After our Founder & CEO was denied something as simple as a cup of tea because of her disability, it lit a fire under her tires. That moment became the catalyst for founding Light Upon Light and building a movement dedicated to creating lasting change and a brighter future for differently-abled individuals.",
   },
 ];
 
@@ -241,10 +245,10 @@ export default function AboutPage() {
               About Light Upon Light
             </div>
             <h1 className="text-[1.875rem] sm:text-[2.5rem] md:text-[3rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">
-              A movement built on dignity, hope, and action.
+              More Than a Nonprofit. A Movement for Change.
             </h1>
             <p className="text-lg text-gray-500 font-medium leading-relaxed max-w-2xl">
-              We bring people, resources, and compassion together to create practical pathways for long-term change.
+              What began with one moment of exclusion has grown into a movement dedicated to creating a world where differently-abled people are treated with dignity and respect, valued for who they are, and given the same opportunities as everyone else.
             </p>
           </div>
           <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border border-white">
@@ -326,10 +330,10 @@ export default function AboutPage() {
           <div className="mb-10 max-w-2xl">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-violet-500 mb-3">Who We Serve</p>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
-              We stand with the people we serve.
+              We Stand & Elevate Our Chair With the People We Serve.
             </h2>
             <p className="text-slate-500 font-medium leading-relaxed mt-3">
-              Every program and partnership centers on human dignity first.
+              Every program and partnership begins with people, putting human dignity first.
             </p>
           </div>
 
@@ -417,52 +421,7 @@ export default function AboutPage() {
         </div>
       </motion.section>
 
-      {/* 5) Mission + Vision */}
-      <motion.section
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, delay: 0.05 }}
-        className="px-6 py-20 bg-white"
-      >
-        <div className="max-w-7xl mx-auto">
-          <div className="mb-10 max-w-2xl">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-3">Mission &amp; Vision</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
-              What we fight for and what we&apos;re building toward.
-            </h2>
-          </div>
-
-          <div className="space-y-5">
-            <article className="relative rounded-2xl overflow-hidden border border-slate-100 shadow-sm bg-white">
-              <div className="absolute top-0 left-0 w-full h-1 bg-sky-400" />
-              <div className="p-8 md:p-10 lg:p-12 bg-gradient-to-br from-sky-50/80 to-white">
-                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-sky-600 mb-4">Mission</p>
-                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-slate-900 leading-tight mb-4">
-                  Fight for dignity, access, and equal opportunity every day.
-                </h3>
-                <p className="text-slate-600 text-base md:text-lg leading-relaxed max-w-4xl">
-                  We advocate for differently-abled individuals, build accessible communities, educate society, and create programs that turn compassion into measurable change.
-                </p>
-              </div>
-            </article>
-
-            <article className="relative rounded-2xl overflow-hidden border border-slate-100 shadow-sm bg-white">
-              <div className="absolute top-0 left-0 w-full h-1 bg-violet-500" />
-              <div className="p-8 md:p-10 lg:p-12 bg-gradient-to-br from-violet-50/80 to-white">
-                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-violet-600 mb-4">Vision</p>
-                <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-slate-900 leading-tight mb-4">
-                  A world where differently-abled people lead with dignity and light.
-                </h3>
-                <p className="text-slate-600 text-base md:text-lg leading-relaxed max-w-4xl">
-                  We envision communities where barriers fall, perceptions shift, and every person—regardless of ability—is seen, heard, and valued as fully human.
-                </p>
-              </div>
-            </article>
-          </div>
-        </div>
-      </motion.section>
-
+      <div className="bg-[#f8f5ff] pt-10 md:pt-14">
       {/* 6) Founder Story — YouTube */}
       <motion.section
         id="youtube"
@@ -470,29 +429,32 @@ export default function AboutPage() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, delay: 0.05 }}
-        className="px-6 py-20 bg-[#270E32] scroll-mt-24"
+        className="relative px-6 py-16 md:py-20 bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 scroll-mt-24"
       >
+        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-sky-300 via-violet-400 to-amber-300" />
+        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-sky-300 via-violet-400 to-amber-300" />
+
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-[1fr_1.15fr] gap-10 lg:gap-14 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/20 text-[10px] font-bold text-white/80 mb-5 uppercase tracking-widest bg-white/10">
-                <Youtube size={12} className="text-red-400" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-200 text-[10px] font-bold text-violet-600 mb-5 uppercase tracking-widest bg-white">
+                <Youtube size={12} className="text-red-500" />
                 The Founder&apos;s Diary
               </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-white tracking-tight mb-4 leading-tight">
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4 leading-tight">
                 Hear the story behind the movement in her own words.
               </h2>
-              <p className="text-gray-300 font-medium leading-relaxed mb-6">
+              <p className="text-slate-600 font-medium leading-relaxed mb-6">
                 Watch our Founder &amp; CEO share the journey from one denied cup of tea to building an organization that fights for dignity, access, and equality every single day.
               </p>
 
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden border-2 border-white/30 shrink-0 shadow-lg">
+                <div className="w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden border-2 border-white shadow-lg shrink-0">
                   <img src={siteImages.foundersDiary} alt="Founder and CEO of Light Upon Light" className="w-full h-full object-cover object-top" />
                 </div>
                 <div>
-                  <p className="text-white font-bold">Founder &amp; CEO</p>
-                  <p className="text-gray-400 text-sm">Light Upon Light</p>
+                  <p className="text-slate-900 font-bold">Founder &amp; CEO</p>
+                  <p className="text-slate-500 text-sm">Light Upon Light</p>
                 </div>
               </div>
 
@@ -500,15 +462,15 @@ export default function AboutPage() {
                 href="https://www.youtube.com/@TheFoundersDiary24"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 text-white text-sm font-bold hover:bg-red-500 transition-colors"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 text-white text-sm font-bold hover:bg-red-500 transition-colors shadow-md shadow-red-200/60"
               >
                 <Youtube size={18} />
                 Visit YouTube Channel
               </a>
             </div>
 
-            <div className="rounded-[1.75rem] p-[3px] bg-gradient-to-br from-red-400/80 via-violet-400/60 to-sky-400/60 shadow-2xl">
-              <div className="rounded-[1.6rem] overflow-hidden bg-[#1a0a22] aspect-video">
+            <div className="rounded-[1.75rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-xl shadow-violet-200/40">
+              <div className="rounded-[1.6rem] overflow-hidden bg-white aspect-video">
                 <iframe
                   className="w-full h-full border-0"
                   src="https://www.youtube.com/embed/rZTNZ8mUCxY"
@@ -522,6 +484,8 @@ export default function AboutPage() {
           </div>
         </div>
       </motion.section>
+      </div>
+      <div className="bg-white h-10 md:h-14" aria-hidden="true" />
 
       {/* 7) Our Approach */}
       <motion.section
@@ -535,10 +499,12 @@ export default function AboutPage() {
           <div className="max-w-2xl mb-10">
             <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-3">Our Approach</p>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-3">
-              How we turn compassion into lasting change.
+              Creating Lasting Change Takes
+              <br />
+              <span className="text-sky-500">All of Us.</span>
             </h2>
-            <p className="text-slate-500 font-medium leading-relaxed">
-              Three principles guide every program, partnership, and decision we make.
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-violet-500">
+              How We Create Change
             </p>
           </div>
 
@@ -585,7 +551,7 @@ export default function AboutPage() {
                   FAQ
                 </div>
                 <h2 className="text-3xl md:text-4xl font-bold text-gray-900 tracking-tight mb-4">
-                  Questions we hear often.
+                  Frequently Asked Questions
                 </h2>
                 <p className="text-gray-500 font-medium leading-relaxed mb-6">
                   Clear answers about who we are, who we serve, and how you can be part of the movement.
@@ -632,8 +598,28 @@ export default function AboutPage() {
                       />
                     </button>
                     {isOpen && (
-                      <div className="px-5 md:px-6 pb-5 md:pb-6 -mt-1">
+                      <div className="px-5 md:px-6 pb-5 md:pb-6 -mt-1 space-y-4">
                         <p className="text-gray-600 leading-relaxed text-[15px]">{item.answer}</p>
+                        {"detail" in item && item.detail && (
+                          <div className="rounded-xl bg-white border border-violet-100 p-4">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-violet-500 mb-2">
+                              {item.detail.title}
+                            </p>
+                            <div className="flex gap-2 items-start">
+                              <MapPin size={16} className="text-sky-500 shrink-0 mt-0.5" />
+                              <div>
+                                {item.detail.lines.map((line) => (
+                                  <p key={line} className="text-slate-800 text-sm font-semibold leading-relaxed">
+                                    {line}
+                                  </p>
+                                ))}
+                              </div>
+                            </div>
+                            <p className="mt-3 text-slate-500 text-sm leading-relaxed">
+                              {item.detail.note}
+                            </p>
+                          </div>
+                        )}
                       </div>
                     )}
                   </article>

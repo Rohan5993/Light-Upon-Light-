@@ -1,43 +1,57 @@
 import { motion } from "motion/react";
-import { Calendar, MapPin, HandHeart, Users, Download, House, ChevronRight } from "lucide-react";
+import { Calendar, MapPin, House, ChevronRight, ArrowRight } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
-import { PROGRAMS } from "../data/programs";
+import { PROGRAMS, type ProgramCta } from "../data/programs";
 import { useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { resolveMediaUrl } from "../lib/publicUrl";
 import HoverFillLink from "../components/HoverFillLink";
 
+function CtaLink({
+  cta,
+  variant,
+}: {
+  cta: ProgramCta;
+  variant: "primary" | "secondary";
+}) {
+  const className =
+    variant === "primary"
+      ? "inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-violet-600 text-white font-bold text-sm hover:bg-violet-700 transition-colors"
+      : "inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white border border-violet-200 text-slate-800 font-bold text-sm hover:bg-violet-50 transition-colors";
+
+  if (cta.external) {
+    return (
+      <a href={cta.to} className={className}>
+        {cta.label}
+        <ArrowRight size={16} />
+      </a>
+    );
+  }
+
+  return (
+    <Link to={cta.to} className={className}>
+      {cta.label}
+      <ArrowRight size={16} />
+    </Link>
+  );
+}
 
 export default function ProgramDetailPage() {
   const { id } = useParams();
   const program = PROGRAMS.find((p) => p.id === id);
+  const programIndex = PROGRAMS.findIndex((p) => p.id === id);
+  const nextProgram = PROGRAMS[(programIndex + 1) % PROGRAMS.length];
+  const prevProgram =
+    PROGRAMS[(programIndex - 1 + PROGRAMS.length) % PROGRAMS.length];
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  const buildSharePayload = () => {
-    const pageUrl = window.location.href;
-    const caption = `Support ${program?.title} by Light Upon Light.\n\n${program?.desc}\n\nLearn more: ${pageUrl}\nImage: ${program?.img}`;
-    return { pageUrl, caption };
-  };
-
-  const handleFacebookShare = () => {
-    const { pageUrl, caption } = buildSharePayload();
-    const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(pageUrl)}&quote=${encodeURIComponent(caption)}`;
-    window.open(shareUrl, "_blank", "noopener,noreferrer");
-  };
-
-  const handleLinkedInShare = () => {
-    const { pageUrl } = buildSharePayload();
-    const shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(pageUrl)}`;
-    window.open(shareUrl, "_blank", "noopener,noreferrer");
-  };
+  }, [id]);
 
   if (!program) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 text-center">
+      <div className="min-h-screen flex items-center justify-center p-6 text-center bg-white">
         <div>
           <h2 className="font-bold text-gray-900 mb-4">Program Not Found</h2>
           <p className="text-gray-500 mb-8">The program you are looking for does not exist.</p>
@@ -50,176 +64,210 @@ export default function ProgramDetailPage() {
   }
 
   return (
-    <div className="relative bg-[#f5f9ff] min-h-screen selection:bg-blue-100 font-sans flex flex-col">
+    <div className="relative bg-white min-h-screen selection:bg-purple-100 font-sans flex flex-col">
       <Header variant="dark" />
-      <div className="max-w-7xl mx-auto w-full px-6 -mt-1 mb-6">
-        <nav className="flex flex-wrap items-center gap-2 text-sm text-gray-500 font-bold">
-          <Link to="/" className="inline-flex items-center text-purple-600 hover:text-purple-700 transition-colors">
+
+      <div className="max-w-7xl mx-auto w-full px-6 mb-8">
+        <nav className="flex flex-wrap items-center gap-2 text-sm text-slate-500 font-medium">
+          <Link to="/" className="inline-flex items-center text-violet-600 hover:text-violet-700 transition-colors">
             <House size={16} />
           </Link>
-          <ChevronRight size={14} className="text-gray-400" />
-          <Link to="/programs" className="text-gray-900 hover:underline transition-colors">
+          <ChevronRight size={14} className="text-slate-300" />
+          <Link to="/programs" className="hover:text-slate-800 transition-colors">
             Programs
           </Link>
-          <ChevronRight size={14} className="text-gray-400" />
-          <span className="text-gray-500 line-clamp-1">{program.title}</span>
+          <ChevronRight size={14} className="text-slate-300" />
+          <span className="text-slate-800 font-semibold line-clamp-1">{program.title}</span>
         </nav>
       </div>
-      {/* Hero Section */}
-      <div className="relative h-[45vh] sm:h-[55vh] md:h-[60vh] min-h-[280px] sm:min-h-[320px] overflow-hidden">
-        <img
-          src={resolveMediaUrl(program.img)}
-          alt={program.title}
-          className="w-full h-full object-cover"
-          referrerPolicy="no-referrer"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-        
-        <div className="absolute bottom-0 left-0 w-full p-6 md:p-16">
-          <div className="max-w-7xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-600/30 backdrop-blur-md border border-white/20 text-[10px] font-bold text-white mb-4 uppercase tracking-widest">
-              {program.tag}
+
+      {/* Hero */}
+      <section className="px-6 pb-12">
+        <div className="max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="grid lg:grid-cols-[1.05fr_0.95fr] gap-8 lg:gap-12 items-center"
+          >
+            <div>
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-200 bg-violet-50 text-[10px] font-bold text-violet-600 uppercase tracking-widest mb-5">
+                <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
+                {program.tag}
+              </span>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight mb-4">
+                {program.title}
+              </h1>
+              <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed mb-8 max-w-xl">
+                {program.headline}
+              </p>
+
+              <div className="flex flex-wrap gap-3 mb-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                  <Calendar size={16} className="text-violet-500" />
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Schedule</p>
+                    <p className="text-sm font-bold text-slate-800">{program.date}</p>
+                  </div>
+                </div>
+                <div className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                  <MapPin size={16} className="text-sky-500" />
+                  <div>
+                    <p className="text-[9px] font-bold uppercase tracking-widest text-slate-400">Location</p>
+                    <p className="text-sm font-bold text-slate-800">{program.location}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-3">
+                <CtaLink cta={program.ctaPrimary} variant="primary" />
+                <CtaLink cta={program.ctaSecondary} variant="secondary" />
+              </div>
             </div>
 
-            
-            <h1 className="text-2xl sm:text-3xl md:text-[2.5rem] font-bold text-white tracking-tight leading-tight max-w-4xl">
-              {program.title}
-            </h1>
-          </div>
+            <div className="rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.12)]">
+              <div className="rounded-[1.85rem] overflow-hidden aspect-[4/3]">
+                <img
+                  src={resolveMediaUrl(program.img)}
+                  alt={program.title}
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            </div>
+          </motion.div>
         </div>
-      </div>
+      </section>
 
-      {/* Content Section */}
-      <div className="py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-[1.5fr_1fr] gap-20">
-            {/* Main Content */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-6 sm:gap-8 mb-12 py-8 border-b border-gray-100">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600">
-                    <Calendar className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Date</p>
-                    <p className="text-lg font-black text-gray-900">{program.date}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-purple-50 flex items-center justify-center text-purple-600">
-                    <MapPin className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Location</p>
-                    <p className="text-lg font-black text-gray-900">{program.location}</p>
-                  </div>
-                </div>
+      {/* Story */}
+      <section className="relative px-6 py-20 md:py-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-sky-50 via-violet-50/40 to-white pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-200 to-transparent" />
 
-                <div className="flex items-center gap-3 sm:ml-auto">
-                  <button
-                    aria-label="Donate Now"
-                    title="Donate Now"
-                    className="w-12 h-12 rounded-2xl border border-gray-100 flex items-center justify-center text-gray-400 hover:text-purple-600 hover:bg-purple-50 transition-all"
-                  >
-                    <HandHeart size={20} />
-                  </button>
-                  <button
-                    aria-label="Volunteer"
-                    title="Volunteer"
-                    className="w-12 h-12 rounded-2xl border border-gray-100 flex items-center justify-center text-gray-400 hover:text-purple-600 hover:bg-purple-50 transition-all"
-                  >
-                    <Users size={20} />
-                  </button>
-                </div>
-              </div>
+        <div className="relative max-w-5xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55 }}
+          >
+            <div className="flex items-center gap-3 mb-10 md:mb-12">
+              <span className="w-10 h-0.5 rounded-full bg-violet-400" />
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-violet-500">
+                About the Program
+              </p>
+            </div>
 
-              <div className="prose prose-base sm:prose-lg md:prose-xl prose-purple max-w-none">
-                <h2 className="font-bold text-gray-900 mb-6">About the Program</h2>
-                <p className="text-base sm:text-lg md:text-xl text-gray-600 leading-relaxed mb-8">
-                  {program.longDesc}
-                </p>
-                <p className="text-lg text-gray-500 leading-relaxed italic">
-                  Join us as we continue to shine a light into the darkest corners of our community. Your participation makes all the difference in turning small acts into global transformations.
-                </p>
-              </div>
+            <div className="rounded-[1.75rem] bg-white/80 backdrop-blur-sm border border-white shadow-[0_8px_40px_rgba(100,80,160,0.06)] p-8 md:p-12 lg:p-14">
+              {/* Lead paragraph */}
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.45 }}
+                className="text-lg md:text-xl lg:text-[1.35rem] text-slate-800 leading-[1.85] font-medium border-l-[3px] border-violet-400 pl-5 md:pl-6 mb-10 md:mb-12"
+              >
+                {program.paragraphs[0]}
+              </motion.p>
 
-              <div className="mt-16 bg-blue-900 rounded-[2.5rem] p-10 md:p-16 text-white overflow-hidden relative">
-                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32" />
-                 <div className="relative z-10">
-                   <h3 className="text-3xl font-bold mb-6">Ready to make an impact?</h3>
-                   <p className="text-blue-200 text-lg mb-10 max-w-xl">
-                     Whether you want to volunteer, donate, or partner with us, there's a place for you in our mission to ignite hope.
-                   </p>
-                   <div className="flex flex-wrap gap-4">
-                     <button className="px-10 py-4 bg-white text-blue-900 rounded-full font-black hover:bg-blue-50 transition-all shadow-xl">
-                       Volunteer
-                     </button>
-                     <button className="px-10 py-4 border border-white/20 text-white rounded-full font-black hover:bg-white/10 transition-all">
-                       Donate to this Cause
-                     </button>
-                   </div>
-                 </div>
-              </div>
-            </motion.div>
-
-            {/* Sidebar */}
-            <div className="space-y-10">
-              <div className="bg-gray-50 rounded-[2.5rem] p-10 border border-gray-100">
-                <h4 className="text-lg font-black text-gray-900 mb-6 uppercase tracking-widest">Program Materials</h4>
-                <div className="space-y-4">
-                  {[
-                    { title: "Impact Report 2024", size: "2.4 MB" },
-                    { title: "Program Guide", size: "1.1 MB" },
-                    { title: "Volunteer Handbook", size: "3.5 MB" }
-                  ].map((doc, i) => (
-                    <button key={i} className="w-full flex items-center justify-between p-4 bg-white rounded-2xl border border-gray-100 hover:border-purple-200 hover:shadow-md transition-all group">
-                      <div className="flex items-center gap-4">
-                        <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center text-purple-600 group-hover:scale-110 transition-transform">
-                          <Download size={18} />
-                        </div>
-                        <div className="text-left">
-                          <p className="font-bold text-sm text-gray-900">{doc.title}</p>
-                          <p className="text-[10px] text-gray-400 font-bold uppercase">{doc.size}</p>
-                        </div>
-                      </div>
-                    </button>
+              {program.paragraphs.length > 1 && (
+                <div className="space-y-0 divide-y divide-slate-100">
+                  {program.paragraphs.slice(1).map((paragraph, index) => (
+                    <motion.p
+                      key={paragraph.slice(0, 48)}
+                      initial={{ opacity: 0, y: 12 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.2) }}
+                      className="text-[1.05rem] text-slate-600 leading-[1.9] py-8 md:py-9 first:pt-0 last:pb-0"
+                    >
+                      {paragraph}
+                    </motion.p>
                   ))}
                 </div>
-              </div>
+              )}
+            </div>
+          </motion.div>
+        </div>
+      </section>
 
-              <div className="bg-[#e7f0fe] rounded-[2.5rem] p-10 overflow-hidden relative">
-                <div className="relative z-10">
-                  <h4 className="text-lg font-black text-gray-900 mb-4 uppercase tracking-widest">Support this Program</h4>
-                  <p className="text-gray-600 text-sm mb-8">
-                    Help us spread the word about our programs and the impact we're making together.
-                  </p>
-                  <div className="grid grid-cols-2 gap-4">
-                    <button
-                      onClick={handleLinkedInShare}
-                      className="py-3 bg-white rounded-2xl font-bold text-gray-900 text-sm shadow-sm hover:shadow-md transition-all"
-                    >
-                      LinkedIn
-                    </button>
-                    <button
-                      onClick={handleFacebookShare}
-                      className="py-3 bg-white rounded-2xl font-bold text-gray-900 text-sm shadow-sm hover:shadow-md transition-all"
-                    >
-                      Facebook
-                    </button>
-                  </div>
+      {/* Gallery */}
+      {program.gallery.length > 0 && (
+        <section className="px-6 pb-8 md:pb-12 bg-white">
+          <div className="max-w-7xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              className="grid sm:grid-cols-2 gap-4 md:gap-5"
+            >
+              {program.gallery.map((src, index) => (
+                <div
+                  key={src}
+                  className={`rounded-2xl overflow-hidden aspect-[16/10] ${
+                    index === 0 ? "sm:col-span-1" : ""
+                  }`}
+                >
+                  <img
+                    src={resolveMediaUrl(src)}
+                    alt={`${program.title} — photo ${index + 1}`}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                    referrerPolicy="no-referrer"
+                  />
                 </div>
-              </div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+      )}
+
+      {/* CTA band */}
+      <section className="px-6 py-16 md:py-20 bg-white">
+        <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-8 md:p-12">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+            <div className="max-w-xl">
+              <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-3 tracking-tight">
+                Ready to support {program.title}?
+              </h3>
+              <p className="text-slate-600 font-medium leading-relaxed">
+                Every action helps Light Upon Light advance advocacy, accessibility, education, and equality for differently-abled individuals.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-3 shrink-0">
+              <CtaLink cta={program.ctaPrimary} variant="primary" />
+              <CtaLink cta={program.ctaSecondary} variant="secondary" />
             </div>
           </div>
         </div>
-      </div>
-      <Footer />
+      </section>
+
+      {/* Next / Prev */}
+      <section className="px-6 pb-20">
+        <div className="max-w-7xl mx-auto grid sm:grid-cols-2 gap-4">
+          <Link
+            to={`/programs/${prevProgram.id}`}
+            className="group rounded-2xl border border-slate-100 bg-white p-6 hover:border-violet-200 hover:shadow-md transition-all"
+          >
+            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Previous</p>
+            <p className="text-lg font-bold text-slate-900 group-hover:text-violet-600 transition-colors">
+              {prevProgram.title}
+            </p>
+          </Link>
+          <Link
+            to={`/programs/${nextProgram.id}`}
+            className="group rounded-2xl border border-slate-100 bg-white p-6 hover:border-violet-200 hover:shadow-md transition-all sm:text-right"
+          >
+            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">Next</p>
+            <p className="text-lg font-bold text-slate-900 group-hover:text-violet-600 transition-colors">
+              {nextProgram.title}
+            </p>
+          </Link>
+        </div>
+      </section>
+
+      <Footer topPaddingClass="pt-24" />
     </div>
   );
 }
-

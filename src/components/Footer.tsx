@@ -1,4 +1,4 @@
-import { Instagram, Facebook, Linkedin, Youtube, Music2, MapPin, Heart, Star } from "lucide-react";
+import { Instagram, Facebook, Linkedin, Youtube, Music2, MapPin, Mail, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 
 type FooterProps = {
@@ -9,19 +9,6 @@ type FooterProps = {
 export default function Footer({ className = "", topPaddingClass = "pt-48" }: FooterProps) {
   return (
     <footer className={`relative bg-[#270E32] ${topPaddingClass} pb-14 px-6 md:px-16 overflow-hidden ${className}`}>
-      {/* Vertical ribbon overlay — desktop only */}
-      <div className="absolute inset-0 hidden lg:flex pointer-events-none">
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={i}
-            className="h-full flex-1 border-r border-white/5"
-            style={{
-              backgroundColor: i % 3 === 0 ? 'rgba(139, 92, 246, 0.03)' : 'transparent',
-            }}
-          />
-        ))}
-      </div>
-
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-24 mb-12">
           {/* Logo & Description */}
@@ -86,14 +73,14 @@ export default function Footer({ className = "", topPaddingClass = "pt-48" }: Fo
                 <span className="text-[15px] font-medium leading-tight pt-0.5">Greater Seattle Area</span>
               </li>
               <li className="flex items-start gap-4 text-gray-400 min-w-0">
-                <Heart className="w-5 h-5 flex-shrink-0 text-white mt-0.5" />
+                <Mail className="w-5 h-5 flex-shrink-0 text-white mt-0.5" />
                 <a href="mailto:lightuponlight1408@gmail.com" className="text-[15px] font-medium break-all">
                   lightuponlight1408@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-4 text-gray-400">
-                <Star className="w-5 h-5 flex-shrink-0 text-white" />
-                <span className="text-[15px] font-medium">206-766-0884</span>
+                <Phone className="w-5 h-5 flex-shrink-0 text-white" />
+                <a href="tel:2067660884" className="text-[15px] font-medium">206-766-0884</a>
               </li>
             </ul>
           </div>

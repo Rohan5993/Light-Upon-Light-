@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowUpRight, Heart, Star, ArrowLeft, ArrowRight, Scale, Accessibility, BookOpen, Equal } from "lucide-react";
+import { ArrowUpRight, Heart, Star, ArrowLeft, ArrowRight, Scale, Accessibility, BookOpen, Equal, Megaphone, Handshake, Globe } from "lucide-react";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
@@ -15,26 +15,34 @@ import { getAllBlogPosts } from "../services/blogService";
 
 const PILLARS = [
   {
+    step: "01",
     title: "Advocacy",
-    desc: "Fighting for dignity, representation, and lasting change.",
+    tagline: "Every voice deserves to be heard.",
+    desc: "We stand beside differently-abled individuals and families, ensuring they are seen, respected, and represented. We challenge barriers, confront ableism, and work to create lasting change that protects dignity and expands opportunity.",
     icon: Scale,
     accent: "sky" as const,
   },
   {
+    step: "02",
     title: "Accessibility",
-    desc: "Creating more accessible public spaces and communities.",
+    tagline: "Opportunity begins with access.",
+    desc: "True inclusion begins when every school, business, park, public space, and community is designed so everyone can participate. We work to make these spaces more accessible by removing physical, social, and attitudinal barriers, creating environments where differently-abled individuals can belong, contribute, and thrive.",
     icon: Accessibility,
     accent: "violet" as const,
   },
   {
+    step: "03",
     title: "Education",
-    desc: "Changing perceptions through education and awareness.",
+    tagline: "Understanding changes everything.",
+    desc: "Inclusion begins long before adulthood, it begins in classrooms, conversations, and communities. Through education, we replace fear with understanding, misconceptions with knowledge, and judgment with compassion.",
     icon: BookOpen,
     accent: "amber" as const,
   },
   {
+    step: "04",
     title: "Equality",
-    desc: "Equal rights, equal dignity, and equal opportunities.",
+    tagline: "Every person deserves the same dignity, respect, and opportunity.",
+    desc: "Every voice matters. Every future matters. Every life matters. We believe differently-abled individuals deserve the same opportunities to pursue their dreams, contribute to their communities, and live fulfilling lives as everyone else.",
     icon: Equal,
     accent: "sky" as const,
   },
@@ -45,6 +53,29 @@ const pillarAccent = {
   violet: { icon: "bg-violet-100 text-violet-600", border: "border-violet-100" },
   amber: { icon: "bg-amber-100 text-amber-700", border: "border-amber-100" },
 };
+
+const IMPACT_ACTIONS = [
+  {
+    text: "Advance accessibility in schools, businesses, and public spaces.",
+    icon: Accessibility,
+  },
+  {
+    text: "Educate communities and challenge misconceptions.",
+    icon: BookOpen,
+  },
+  {
+    text: "Advocate for dignity, respect, and equal opportunity.",
+    icon: Megaphone,
+  },
+  {
+    text: "Build partnerships that strengthen communities and expand opportunity.",
+    icon: Handshake,
+  },
+  {
+    text: "Create opportunities for differently-abled individuals to thrive.",
+    icon: Globe,
+  },
+];
 
 function SectionBadge({
   label,
@@ -224,11 +255,8 @@ export default function HomePage() {
               Already There.<br />
               Help Us Let It Shine
             </h1>
-            <p className="text-sm md:text-base font-bold text-white mb-3 tracking-tight">
-              Our Mission?
-            </p>
             <p className="text-base md:text-xl text-white/90 leading-[1.75] md:leading-[1.8] mb-10 md:mb-14 max-w-2xl font-medium">
-              We help differently-abled people through advocacy, accessibility, and equality while changing society&apos;s perception of these honorable individuals through education.
+              We exist to help differently-abled people through advocacy, accessibility, equality, and education while changing society&apos;s perception.
             </p>
 
             <motion.div
@@ -247,7 +275,7 @@ export default function HomePage() {
               </Link>
             </motion.div>
             <p className="mt-5 text-sm md:text-base text-white/80 font-medium max-w-2xl">
-              Your generosity = real access. Real equality. Real change.
+              Your generosity creates real access, greater opportunity, and lasting change.
             </p>
           </motion.div>
         </main>
@@ -257,27 +285,21 @@ export default function HomePage() {
       </div>
 
 
-      {/* About + Pillars */}
+      {/* Our Vision + Pillars */}
       <section className="bg-[#FAFCFF] py-14 md:py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 mb-10 items-stretch">
             <div className="rounded-[2rem] bg-white border border-slate-100 p-6 md:p-8 shadow-[0_4px_32px_rgba(148,163,184,0.08)] flex flex-col justify-center">
-              <SectionBadge label="About" dotClass="bg-sky-400" />
+              <SectionBadge label="Our Vision" dotClass="bg-sky-400" />
               <div className="mt-6 space-y-4">
-                <p className="text-lg text-slate-500 font-medium leading-relaxed">
-                  Differently-abled individuals have dreams and so much to give - yet barriers have stolen opportunities they always deserved.
-                </p>
                 <p className="text-lg font-bold text-slate-800 leading-relaxed">
-                  That changes now.
+                  We envision a future where Light Upon Light no longer exists because our mission has been achieved.
                 </p>
                 <p className="text-base text-slate-500 font-medium leading-relaxed">
-                  Light Upon Light fights for differently-abled individuals through advocacy, accessibility, and equality making sure they get the rights and dignity they deserve.
-                </p>
-                <p className="text-base text-slate-500 font-medium leading-relaxed">
-                  We educate society because real change begins when people see the humanity of differently-abled individuals before their disabilities or diagnoses.
+                  A future where differently-abled people are seen, heard, and supported; with accessible and welcoming communities and public spaces; the same opportunities to contribute, thrive, and belong as everyone else; and a society that sees them for who they are, not just their disability or diagnosis.
                 </p>
                 <p className="text-base font-bold text-slate-800 leading-relaxed pt-2 border-t border-slate-100">
-                  They are human beings. Just like you and everyone else.
+                  Because every life deserves dignity, opportunity, and belonging.
                 </p>
               </div>
             </div>
@@ -296,25 +318,33 @@ export default function HomePage() {
           <div className="mt-14 pt-14 border-t border-slate-200/80">
             <SectionBadge label="Pillars" dotClass="bg-amber-400" />
             <h2 className="mt-4 text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
-              What We Stand For
+              The Four Rays of Light
             </h2>
-            <p className="text-slate-500 font-medium max-w-2xl mt-3 mb-10">
-              Four commitments guide every program, partnership, and decision we make for differently-abled individuals and their communities.
+            <p className="text-slate-500 font-medium max-w-3xl mt-3 mb-10 leading-relaxed">
+              Just as four rays of light shine brighter together, these four guiding principles fuel everything we do. They shape every program we create, strengthen every partnership we build, and guide every decision we make as we carry out our mission.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {PILLARS.map((pillar) => {
                 const accent = pillarAccent[pillar.accent];
                 const Icon = pillar.icon;
                 return (
                   <article
                     key={pillar.title}
-                    className={`rounded-2xl bg-white border ${accent.border} p-6 shadow-sm hover:shadow-md transition-shadow`}
+                    className={`rounded-2xl bg-white border ${accent.border} p-6 md:p-7 shadow-sm hover:shadow-md transition-shadow`}
                   >
-                    <div className={`w-11 h-11 rounded-xl flex items-center justify-center mb-4 ${accent.icon}`}>
-                      <Icon size={20} strokeWidth={2.25} />
+                    <div className="flex items-start justify-between gap-4 mb-4">
+                      <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${accent.icon}`}>
+                        <Icon size={20} strokeWidth={2.25} />
+                      </div>
+                      <span className="text-[11px] font-black tracking-[0.2em] text-slate-300">
+                        {pillar.step}
+                      </span>
                     </div>
-                    <h4 className="text-lg font-bold text-slate-800 mb-2">{pillar.title}</h4>
+                    <h4 className="text-lg font-bold text-slate-800 mb-1">{pillar.title}</h4>
+                    <p className="text-slate-800 font-semibold text-sm leading-relaxed mb-3">
+                      {pillar.tagline}
+                    </p>
                     <p className="text-slate-600 text-sm leading-relaxed">{pillar.desc}</p>
                   </article>
                 );
@@ -370,7 +400,7 @@ export default function HomePage() {
                 to="/about#youtube"
                 className="inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-full bg-white border border-violet-200 text-slate-800 font-bold text-sm hover:bg-violet-50 hover:border-violet-300 transition-colors group"
               >
-                Know More About Her
+                Watch Her Story
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
             </div>
@@ -387,8 +417,8 @@ export default function HomePage() {
               <h2 className="mt-4 text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
                 Our Radiant Programs
               </h2>
-              <p className="mt-3 text-slate-500 font-medium max-w-lg">
-                Hands-on initiatives that turn compassion into measurable impact for differently-abled individuals and their communities.
+              <p className="mt-3 text-slate-500 font-medium max-w-2xl leading-relaxed">
+                Every program at Light Upon Light was developed from lived experience to remove barriers, educate society, and build a future where differently-abled people are valued, included, and given the same opportunities as everyone else.
               </p>
             </div>
             <div className="flex gap-3 shrink-0">
@@ -437,12 +467,17 @@ export default function HomePage() {
                       <span className="inline-block px-2.5 py-1 rounded-full bg-slate-50 border border-slate-100 text-[9px] uppercase tracking-wider font-bold text-slate-500 mb-3">
                         {event.tag}
                       </span>
-                      <h3 className="font-bold text-slate-800 mb-2 group-hover:text-violet-600 transition-colors text-lg leading-snug">
+                      <h3 className="font-bold text-slate-800 mb-1.5 group-hover:text-violet-600 transition-colors text-lg leading-snug">
                         {event.title}
                       </h3>
-                      <p className="text-slate-500 text-sm leading-relaxed line-clamp-2">{event.desc}</p>
+                      <p className="text-slate-800 font-semibold text-sm leading-snug mb-2 line-clamp-2">
+                        {event.headline}
+                      </p>
+                      <p className="text-slate-500 text-sm leading-relaxed line-clamp-3 overflow-hidden text-ellipsis min-h-[3.75rem]">
+                        {event.desc}
+                      </p>
                       <span className="mt-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-violet-600 group-hover:gap-3 transition-all">
-                        Explore <ArrowRight className="w-3.5 h-3.5" />
+                        Learn More <ArrowRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
                   </article>
@@ -523,6 +558,89 @@ export default function HomePage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Your Light in Action */}
+      <section className="relative px-6 py-16 md:py-24 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-[#f4f0ff] via-[#f8faff] to-white" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[min(90%,48rem)] h-64 bg-violet-300/20 blur-[100px] rounded-full pointer-events-none" />
+
+        <div className="relative max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55 }}
+            className="max-w-2xl mb-12"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <span className="w-8 h-px bg-violet-400" />
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-violet-500">
+                Impact
+              </p>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
+              Your Light in Action
+            </h2>
+            <p className="mt-4 text-lg text-slate-500 font-medium leading-relaxed">
+              Every act of generosity creates lasting change.
+            </p>
+          </motion.div>
+
+          <p className="relative text-sm font-bold text-slate-800 mb-6 tracking-tight">
+            Every donation helps us:
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-12">
+            {IMPACT_ACTIONS.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <motion.article
+                  key={item.text}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.45, delay: Math.min(index * 0.07, 0.28) }}
+                  className="group relative rounded-[1.35rem] bg-white/90 backdrop-blur-sm border border-white shadow-[0_8px_30px_rgba(100,80,160,0.06)] hover:shadow-[0_16px_40px_rgba(100,80,160,0.12)] hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                >
+                  <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-violet-400 to-sky-400 opacity-80" />
+                  <div className="p-6 pl-7 flex gap-4 items-start">
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-gradient-to-br from-violet-50 to-sky-50 text-violet-600 border border-violet-100/80 group-hover:from-violet-100 group-hover:to-sky-100 transition-colors duration-300">
+                      <Icon size={22} strokeWidth={2.1} />
+                    </div>
+                    <p className="text-slate-600 text-[0.95rem] font-medium leading-relaxed pt-2">
+                      {item.text}
+                    </p>
+                  </div>
+                </motion.article>
+              );
+            })}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="relative rounded-[1.75rem] p-[1px] bg-gradient-to-r from-violet-200 via-sky-200 to-violet-200"
+          >
+            <div className="relative rounded-[calc(1.75rem-1px)] bg-white px-7 py-8 md:px-10 md:py-9 flex flex-col md:flex-row md:items-center md:justify-between gap-6 overflow-hidden">
+              <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-violet-50/80 to-transparent pointer-events-none" />
+              <div className="relative">
+                <p className="text-xl md:text-2xl font-bold text-slate-900 leading-snug tracking-tight max-w-xl">
+                  Together, we&apos;re building a future where every person has the opportunity to shine.
+                </p>
+              </div>
+              <Link
+                to="/donate"
+                className="relative inline-flex items-center justify-center gap-2 shrink-0 px-8 py-4 rounded-full bg-violet-600 text-white font-bold text-sm hover:bg-violet-700 transition-colors shadow-[0_10px_28px_rgba(124,58,237,0.28)]"
+              >
+                Donate & Shine a Light
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
 
