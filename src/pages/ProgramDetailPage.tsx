@@ -191,38 +191,6 @@ export default function ProgramDetailPage() {
         </div>
       </section>
 
-      {/* Gallery */}
-      {program.gallery.length > 0 && (
-        <section className="px-6 pb-8 md:pb-12 bg-white">
-          <div className="max-w-7xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="grid sm:grid-cols-2 gap-4 md:gap-5"
-            >
-              {program.gallery.map((src, index) => (
-                <div
-                  key={src}
-                  className={`rounded-2xl overflow-hidden aspect-[16/10] ${
-                    index === 0 ? "sm:col-span-1" : ""
-                  }`}
-                >
-                  <img
-                    src={resolveMediaUrl(src)}
-                    alt={`${program.title} — photo ${index + 1}`}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    referrerPolicy="no-referrer"
-                  />
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-      )}
-
       {/* CTA band */}
       <section className="px-6 py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-8 md:p-12">

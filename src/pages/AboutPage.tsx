@@ -252,7 +252,11 @@ export default function AboutPage() {
             </p>
           </div>
           <div className="aspect-[4/3] rounded-2xl overflow-hidden shadow-xl border border-white">
-            <img src={siteImages.heroWheelchair} alt="Light Upon Light community work" className="w-full h-full object-cover" />
+            <img
+              src={siteImages.aboutHero}
+              alt="Young girl smiling in a wheelchair in a classroom"
+              className="w-full h-full object-cover object-top"
+            />
           </div>
         </div>
       </motion.section>

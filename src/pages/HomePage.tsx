@@ -304,11 +304,11 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.1)]">
-              <div className="rounded-[1.85rem] overflow-hidden h-full min-h-[280px] lg:min-h-0">
+            <div className="rounded-[2rem] p-px bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.1)]">
+              <div className="rounded-[1.95rem] overflow-hidden h-full min-h-[280px] lg:min-h-0">
                 <img
-                  src={siteImages.wheelchairMeeting}
-                  alt="Community Action"
+                  src={siteImages.ourVision}
+                  alt="Light Upon Light community gathering outdoors"
                   className="w-full h-full object-cover aspect-[4/3] lg:aspect-auto lg:h-full min-h-[280px]"
                 />
               </div>
@@ -363,7 +363,7 @@ export default function HomePage() {
                 <img
                   src={siteImages.founder}
                   alt="Founder and CEO of Light Upon Light"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
               <div className="absolute -bottom-4 -right-4 bg-white px-5 py-4 rounded-2xl shadow-lg border border-slate-100 flex items-center gap-3">
