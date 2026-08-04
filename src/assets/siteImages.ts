@@ -6,6 +6,7 @@ import heroWheelchairRight from "./images/hero-wheelchair-right.webp";
 import wheelchairMeeting from "./images/wheelchair-meeting.webp";
 import ourVision from "./images/our-vision.webp";
 import aboutHero from "./images/about-hero.webp";
+import volunteerHero from "./images/volunteer-hero.webp";
 import programEnlighten from "./images/program-enlighten.webp";
 import programEnlighten2 from "./images/program-enlighten-2.webp";
 import programEnlighten3 from "./images/program-enlighten-3.webp";
@@ -34,6 +35,7 @@ export const siteImages = {
   wheelchairMeeting,
   ourVision,
   aboutHero,
+  volunteerHero,
   programEnlighten,
   programEnlighten2,
   programEnlighten3,

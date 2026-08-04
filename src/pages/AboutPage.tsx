@@ -425,7 +425,6 @@ export default function AboutPage() {
         </div>
       </motion.section>
 
-      <div className="bg-[#f8f5ff] pt-10 md:pt-14">
       {/* 6) Founder Story — YouTube */}
       <motion.section
         id="youtube"
@@ -433,32 +432,32 @@ export default function AboutPage() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, delay: 0.05 }}
-        className="relative px-6 py-16 md:py-20 bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 scroll-mt-24"
+        className="relative px-6 py-16 md:py-20 scroll-mt-24 overflow-hidden bg-gradient-to-br from-sky-100 via-sky-50 to-amber-50"
       >
-        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-sky-300 via-violet-400 to-amber-300" />
-        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-sky-300 via-violet-400 to-amber-300" />
+        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-sky-300 via-sky-400 to-amber-300" />
+        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-sky-300 via-sky-400 to-amber-300" />
 
-        <div className="max-w-7xl mx-auto">
+        <div className="relative max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-[1fr_1.15fr] gap-10 lg:gap-14 items-center">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-violet-200 text-[10px] font-bold text-violet-600 mb-5 uppercase tracking-widest bg-white">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-sky-300 text-[10px] font-bold text-sky-700 mb-5 uppercase tracking-widest bg-white/80 backdrop-blur-sm shadow-sm">
                 <Youtube size={12} className="text-red-500" />
                 The Founder&apos;s Diary
               </div>
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4 leading-tight">
                 Hear the story behind the movement in her own words.
               </h2>
-              <p className="text-slate-600 font-medium leading-relaxed mb-6">
+              <p className="text-slate-700 font-medium leading-relaxed mb-6">
                 Watch our Founder &amp; CEO share the journey from one denied cup of tea to building an organization that fights for dignity, access, and equality every single day.
               </p>
 
               <div className="flex items-center gap-4 mb-8">
-                <div className="w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden border-2 border-white shadow-lg shrink-0">
+                <div className="w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden border-2 border-white shadow-[0_8px_24px_rgba(14,165,233,0.18)] shrink-0">
                   <img src={siteImages.foundersDiary} alt="Founder and CEO of Light Upon Light" className="w-full h-full object-cover object-top" />
                 </div>
                 <div>
                   <p className="text-slate-900 font-bold">Founder &amp; CEO</p>
-                  <p className="text-slate-500 text-sm">Light Upon Light</p>
+                  <p className="text-slate-600 text-sm">Light Upon Light</p>
                 </div>
               </div>
 
@@ -466,19 +465,19 @@ export default function AboutPage() {
                 href="https://www.youtube.com/@TheFoundersDiary24"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 text-white text-sm font-bold hover:bg-red-500 transition-colors shadow-md shadow-red-200/60"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 text-white text-sm font-bold hover:bg-red-500 transition-colors shadow-md shadow-red-200/50"
               >
                 <Youtube size={18} />
                 Visit YouTube Channel
               </a>
             </div>
 
-            <div className="rounded-[1.75rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-xl shadow-violet-200/40">
-              <div className="rounded-[1.6rem] overflow-hidden bg-white aspect-video">
+            <div className="rounded-[1.75rem] p-[2px] bg-gradient-to-br from-sky-300 via-sky-200 to-amber-200 shadow-[0_12px_32px_rgba(14,165,233,0.12)]">
+              <div className="rounded-[1.65rem] overflow-hidden bg-white aspect-video">
                 <iframe
                   className="w-full h-full border-0"
-                  src="https://www.youtube.com/embed/rZTNZ8mUCxY"
-                  title="Light Upon Light YouTube"
+                  src="https://www.youtube.com/embed/ls7bEYWfP9w"
+                  title="The Founder's Diary — Light Upon Light"
                   loading="lazy"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
@@ -488,8 +487,6 @@ export default function AboutPage() {
           </div>
         </div>
       </motion.section>
-      </div>
-      <div className="bg-white h-10 md:h-14" aria-hidden="true" />
 
       {/* 7) Our Approach */}
       <motion.section

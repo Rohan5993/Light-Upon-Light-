@@ -10,22 +10,22 @@ const roundedStyles: Record<FillRounded, string> = {
 };
 
 const baseStyles: Record<FillVariant, string> = {
-  purple: "bg-purple-600 text-white",
-  white: "bg-white text-purple-600",
+  purple: "bg-[#7107E7] text-white",
+  white: "bg-white text-[#7107E7]",
 };
 
 const overlayStyles: Record<FillVariant, string> = {
   purple: "bg-white",
-  white: "bg-purple-600",
+  white: "bg-[#7107E7]",
 };
 
 const hoverTextStyles: Record<FillVariant, string> = {
-  purple: "group-hover:text-purple-600",
+  purple: "group-hover:text-[#7107E7]",
   white: "group-hover:text-white",
 };
 
 const hoverBorderStyles: Record<FillVariant, string> = {
-  purple: "border border-transparent transition-colors group-hover:border-purple-600",
+  purple: "border border-transparent transition-colors group-hover:border-[#7107E7]",
   white: "",
 };
 

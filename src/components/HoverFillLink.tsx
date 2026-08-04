@@ -11,28 +11,28 @@ const roundedStyles: Record<FillRounded, string> = {
 };
 
 const baseStyles: Record<FillVariant, string> = {
-  purple: "bg-purple-600 text-white",
-  white: "bg-white text-purple-600",
+  purple: "bg-[#7107E7] text-white",
+  white: "bg-white text-[#7107E7]",
   ghost: "text-slate-600",
-  outline: "bg-transparent text-black border border-[#990FFA]",
+  outline: "bg-transparent text-black border border-[#7107E7]",
 };
 
 const overlayStyles: Record<FillVariant, string> = {
   purple: "bg-white",
-  white: "bg-purple-600",
-  ghost: "bg-purple-600",
+  white: "bg-[#7107E7]",
+  ghost: "bg-[#7107E7]",
   outline: "bg-white",
 };
 
 const hoverTextStyles: Record<FillVariant, string> = {
-  purple: "group-hover:text-purple-600",
+  purple: "group-hover:text-[#7107E7]",
   white: "group-hover:text-white",
   ghost: "group-hover:text-white",
-  outline: "group-hover:text-[#990FFA]",
+  outline: "group-hover:text-[#7107E7]",
 };
 
 const hoverBorderStyles: Record<FillVariant, string> = {
-  purple: "border border-transparent transition-colors group-hover:border-purple-600",
+  purple: "border border-transparent transition-colors group-hover:border-[#7107E7]",
   white: "",
   ghost: "",
   outline: "",
@@ -62,7 +62,7 @@ export default function HoverFillLink({
 }: HoverFillLinkProps) {
   const isOutlineActive = variant === "outline" && active;
   const classes = `group relative inline-flex shrink-0 items-center justify-center overflow-hidden ${roundedStyles[rounded]} ${baseStyles[variant]} ${hoverBorderStyles[variant]} transition-[box-shadow,border-color] duration-300 ${
-    isOutlineActive ? "!bg-white !text-[#990FFA] !border-[#990FFA] shadow-sm" : "hover:border-[#990FFA]"
+    isOutlineActive ? "!bg-white !text-[#7107E7] !border-[#7107E7] shadow-sm" : "hover:border-[#7107E7]"
   } ${className}`;
   const inner = (
     <>
@@ -74,7 +74,7 @@ export default function HoverFillLink({
       />
       <span
         className={`relative z-10 transition-colors duration-300 ${
-          isOutlineActive ? "text-[#990FFA]" : hoverTextStyles[variant]
+          isOutlineActive ? "text-[#7107E7]" : hoverTextStyles[variant]
         } ${labelClassName}`}
       >
         {children}

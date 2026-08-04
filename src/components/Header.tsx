@@ -21,7 +21,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { pathname, hash } = useLocation();
 
-  const logoDotClass = isDark ? "bg-[#990FFA]" : "bg-white";
+  const logoDotClass = isDark ? "bg-[#7107E7]" : "bg-white";
   const logoTextClass = isDark ? "text-gray-900" : "text-white";
 
   const glassFull = isDark
@@ -71,7 +71,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
   );
 
   const donateClass =
-    "h-10 px-6 text-sm font-black whitespace-nowrap uppercase tracking-wide !bg-white !text-[#990FFA] !border !border-[#990FFA] shadow-[0_2px_10px_rgba(153,15,250,0.15)]";
+    "h-10 px-6 text-sm font-black whitespace-nowrap uppercase tracking-wide !bg-white !text-[#7107E7] !border !border-[#7107E7] shadow-[0_2px_10px_rgba(113,7,231,0.15)]";
 
   return (
     <>
@@ -128,7 +128,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
                       to={link.to}
                       variant="outline"
                       active={active}
-                      className={`px-4 py-2.5 ${isDark && !active ? "!border-[#990FFA]/50" : ""}`}
+                      className={`px-4 py-2.5 ${isDark && !active ? "!border-[#7107E7]/50" : ""}`}
                       labelClassName={active ? "font-black" : "font-semibold"}
                     >
                       {link.label}
@@ -145,7 +145,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
                   variant="outline"
                   active
                   className={donateClass}
-                  labelClassName="!text-[#990FFA]"
+                  labelClassName="!text-[#7107E7]"
                 >
                   Donate Now
                 </HoverFillLink>
@@ -161,7 +161,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
               className={`${donateClass} h-8 sm:h-9 md:h-10 px-3 sm:px-5 md:px-7 text-[10px] sm:text-xs md:text-sm ${
                 isScrolled ? "lg:hidden" : ""
               }`}
-              labelClassName="!text-[#990FFA]"
+              labelClassName="!text-[#7107E7]"
             >
               <span className="sm:hidden">Donate</span>
               <span className="hidden sm:inline">Donate Now</span>
@@ -206,8 +206,8 @@ export default function Header({ variant = "light" }: HeaderProps) {
                   onClick={() => setMobileOpen(false)}
                   className={`flex w-full items-center justify-center rounded-full border border-slate-200 px-4 py-3 text-base font-semibold transition-colors ${
                     active
-                      ? "bg-white text-[#990FFA] border-[#990FFA]"
-                      : "bg-transparent text-slate-800 hover:bg-[#990FFA]/5 hover:text-[#990FFA] hover:border-[#990FFA]/40"
+                      ? "bg-white text-[#7107E7] border-[#7107E7]"
+                      : "bg-transparent text-slate-800 hover:bg-[#7107E7]/5 hover:text-[#7107E7] hover:border-[#7107E7]/40"
                   }`}
                 >
                   {link.label}
@@ -219,7 +219,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
             <Link
               to="/donate"
               onClick={() => setMobileOpen(false)}
-              className="flex w-full items-center justify-center rounded-full border border-[#990FFA] bg-white text-[#990FFA] h-11 text-sm font-black uppercase tracking-wider hover:bg-[#990FFA]/5 transition-colors"
+              className="flex w-full items-center justify-center rounded-full border border-[#7107E7] bg-white text-[#7107E7] h-11 text-sm font-black uppercase tracking-wider hover:bg-[#7107E7]/5 transition-colors"
             >
               Donate Now
             </Link>

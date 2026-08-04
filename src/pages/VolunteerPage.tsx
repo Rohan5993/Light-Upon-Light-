@@ -110,8 +110,8 @@ export default function VolunteerPage() {
           <div className="rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-lg">
             <div className="rounded-[1.85rem] overflow-hidden aspect-[4/3]">
               <img
-                src={siteImages.wheelchairMeeting}
-                alt="Light Upon Light volunteers at a community event"
+                src={siteImages.volunteerHero}
+                alt="Light Upon Light community and volunteers together outdoors"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -275,7 +275,7 @@ export default function VolunteerPage() {
 
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#990FFA] text-white font-bold text-sm py-3.5 hover:bg-[#8800e0] transition-colors"
+                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#7107E7] text-white font-bold text-sm py-3.5 hover:bg-[#5c06bb] transition-colors"
               >
                 Send Volunteer Inquiry
                 <ArrowRight size={16} />
@@ -296,7 +296,7 @@ export default function VolunteerPage() {
           </div>
           <Link
             to="/programs"
-            className="inline-flex items-center justify-center gap-2 shrink-0 px-6 py-3 rounded-full bg-[#990FFA] text-white font-bold text-sm hover:bg-[#8800e0] transition-colors group"
+            className="inline-flex items-center justify-center gap-2 shrink-0 px-6 py-3 rounded-full bg-[#7107E7] text-white font-bold text-sm hover:bg-[#5c06bb] transition-colors group"
           >
             Explore Programs
             <ArrowRight size={16} className="transition-transform group-hover:translate-x-1" />
