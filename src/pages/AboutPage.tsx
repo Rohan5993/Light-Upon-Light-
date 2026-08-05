@@ -226,8 +226,9 @@ export default function AboutPage() {
   }, [hash]);
 
   return (
-    <div className="relative bg-white min-h-screen selection:bg-purple-100 font-sans flex flex-col">
+    <>
       <Header variant="dark" />
+      <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col">
 
       {/* 1) Hero Section */}
       <motion.section
@@ -312,8 +313,8 @@ export default function AboutPage() {
             <div className="relative mx-auto w-full max-w-md lg:max-w-none">
               <div className="rounded-[1.5rem] overflow-hidden shadow-xl border-4 border-white aspect-[4/3]">
                 <img
-                  src={siteImages.wheelchairMeeting}
-                  alt="Light Upon Light community gathering"
+                  src={siteImages.ourStory}
+                  alt="It started with a cup of tea — Light Upon Light origin story"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -684,5 +685,6 @@ export default function AboutPage() {
 
       <Footer topPaddingClass="pt-24" />
     </div>
+    </>
   );
 }

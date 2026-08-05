@@ -126,8 +126,9 @@ export default function DonatePage() {
   }, []);
 
   return (
-    <div className="min-h-screen font-sans flex flex-col bg-[#FAFCFF] selection:bg-violet-100">
+    <>
       <Header variant="dark" />
+      <div className="min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] font-sans flex flex-col bg-[#FAFCFF] selection:bg-violet-100">
 
       <main className="flex-1">
         {/* Bento hero */}
@@ -465,5 +466,6 @@ export default function DonatePage() {
 
       <Footer className="mt-0" topPaddingClass="pt-12" />
     </div>
+    </>
   );
 }

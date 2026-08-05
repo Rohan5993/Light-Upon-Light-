@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowUpRight, Heart, Star, ArrowLeft, ArrowRight, Scale, Accessibility, BookOpen, Equal, Megaphone, Handshake, Globe } from "lucide-react";
+import { ArrowUpRight, Heart, Star, ArrowLeft, ArrowRight, Scale, Accessibility, BookOpen, Equal, Megaphone, Handshake, Globe, Users, Leaf } from "lucide-react";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
@@ -8,7 +8,6 @@ import Header from "../components/Header";
 import { siteImages } from "../assets/siteImages";
 import { resolveMediaUrl } from "../lib/publicUrl";
 import Footer from "../components/Footer";
-import HoverFillButton from "../components/HoverFillButton";
 import HoverFillLink from "../components/HoverFillLink";
 import { getAllBlogPosts } from "../services/blogService";
 
@@ -213,75 +212,73 @@ export default function HomePage() {
 
   return (
     <>
-      <div className="relative min-h-screen min-h-[100dvh] overflow-hidden selection:bg-purple-100 font-sans flex flex-col">
-        <Header variant="light" />
-        {/* Background Hero Image with Vertical Ribbon Effect */}
+      <Header variant="light" />
+      <div className="relative min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] overflow-hidden selection:bg-purple-100 font-sans flex flex-col">
+        {/* Background Hero Image */}
         <div className="absolute inset-0 z-0">
           <img
             src={siteImages.heroWheelchair}
-            alt="Radiant Hope"
-            className="w-full h-full object-cover object-[10%_center]"
+            alt="Young girl smiling in a wheelchair on a sunny field"
+            className="w-full h-full object-cover object-[78%_center] md:object-[72%_center]"
+            decoding="async"
+            fetchPriority="high"
           />
-          {/* Vertical ribbon overlay - matching the image's distinct strips */}
-          <div className="absolute inset-0 flex">
-            {[...Array(24)].map((_, i) => (
-              <div
-                key={i}
-                className="h-full flex-1 border-r border-white/10"
-                style={{
-                  backdropFilter: (i >= 11 && i <= 20) ? 'none' : (i % 4 === 0 ? 'blur(8px)' : i % 2 === 0 ? 'blur(2px)' : 'none'),
-                  backgroundColor: i % 5 === 0 ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
-                }}
-              />
-            ))}
-          </div>
-          {/* Left-side dark gradient for text readability */}
-          <div className="absolute inset-y-0 left-0 w-full md:w-2/3 bg-gradient-to-r from-black/50 via-black/20 to-transparent pointer-events-none" />
-
-          {/* Subtle dark overlay for text readability */}
-          <div className="absolute inset-0 bg-black/10" />
+          {/* Purple gradient — left only; fully clear before the subject on the right */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "linear-gradient(90deg, rgba(46, 16, 101, 0.86) 0%, rgba(76, 29, 149, 0.62) 18%, rgba(91, 33, 182, 0.32) 32%, rgba(113, 7, 231, 0.1) 42%, transparent 50%)",
+            }}
+          />
+          {/* Soft glowing wave mesh — bottom left, like the mockup */}
+          <svg
+            className="pointer-events-none absolute bottom-0 left-0 w-[min(48%,28rem)] h-36 md:h-44 opacity-45"
+            viewBox="0 0 800 200"
+            fill="none"
+            aria-hidden
+          >
+            <path d="M0 140 Q120 90 240 130 T480 120 T720 145 T800 130" stroke="#C4B5FD" strokeWidth="1.5" strokeDasharray="2 10" strokeLinecap="round" />
+            <path d="M0 160 Q140 110 280 150 T560 140 T800 160" stroke="#A78BFA" strokeWidth="1.25" strokeDasharray="1.5 11" strokeLinecap="round" />
+            <path d="M0 180 Q160 130 320 170 T640 165 T800 180" stroke="#DDD6FE" strokeWidth="1" strokeDasharray="1 12" strokeLinecap="round" />
+          </svg>
         </div>
 
         {/* Hero Content */}
-        <main className="relative z-10 px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl pt-20 pb-16 md:pt-0 md:pb-0">
+        <main className="relative z-10 px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl py-12 md:py-16">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-4xl"
+            className="max-w-xl lg:max-w-2xl"
           >
             <h1 className="text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-8">
               Their Light Is<br />
               Already There.<br />
-              Help Us Let It Shine
+              Help Us Let It <span className="text-[#C4B5FD]">Shine</span>
             </h1>
-            <p className="text-base md:text-xl text-white/90 leading-[1.75] md:leading-[1.8] mb-10 md:mb-14 max-w-2xl font-medium">
-              We exist to help differently-abled people through advocacy, accessibility, equality, and education while changing society&apos;s perception.
+            <p className="text-base md:text-xl text-white leading-[1.75] md:leading-[1.8] mb-10 md:mb-12 max-w-xl font-medium">
+              We exist to help differently-abled people through advocacy,<br className="hidden sm:inline" />
+              {" "}accessibility, equality, and education while changing society&apos;s perception.
             </p>
 
-            <motion.div
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
+            <div className="flex flex-wrap gap-3">
               <Link
                 to="/donate"
-                className="group inline-flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-5 bg-white pl-4 sm:pl-10 pr-2 sm:pr-3 py-2 sm:py-3 rounded-full text-slate-900 font-bold shadow-2xl hover:shadow-white/20 transition-all max-w-full"
+                className="group inline-flex items-center gap-3 sm:gap-5 bg-white pl-5 sm:pl-8 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full text-slate-900 font-bold shadow-2xl hover:shadow-white/25 transition-all"
               >
-                <span className="text-sm sm:text-lg">Donate & Shine a Light</span>
-                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-purple-600 flex items-center justify-center text-white group-hover:bg-purple-700 transition-colors shrink-0">
-                  <ArrowUpRight size={20} strokeWidth={2.5} className="sm:hidden" />
-                  <ArrowUpRight size={24} strokeWidth={2.5} className="hidden sm:block" />
-                </div>
+                <span className="text-sm sm:text-lg tracking-tight">Donate &amp; Shine a Light</span>
+                <span className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#7107E7] flex items-center justify-center text-white group-hover:bg-[#5c06bb] transition-colors shrink-0">
+                  <ArrowUpRight size={18} strokeWidth={2.5} className="sm:hidden" />
+                  <ArrowUpRight size={22} strokeWidth={2.5} className="hidden sm:block" />
+                </span>
               </Link>
-            </motion.div>
-            <p className="mt-5 text-sm md:text-base text-white/80 font-medium max-w-2xl">
+            </div>
+            <p className="mt-5 text-sm md:text-base text-white/90 font-medium whitespace-nowrap overflow-x-auto max-w-full">
               Your generosity creates real access, greater opportunity, and lasting change.
             </p>
           </motion.div>
         </main>
-
-        {/* Impact Blur Decorative Element */}
-        <div className="absolute bottom-[-20%] right-[-10%] w-[800px] h-[800px] impact-blur pointer-events-none opacity-50" />
       </div>
 
 
@@ -772,50 +769,84 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="relative px-6 pt-4 pb-6 -mb-16 z-20">
+      {/* CTA — sits above footer with clear gap, no overlap */}
+      <section className="relative bg-white px-6 md:px-10 pt-10 md:pt-14 pb-10 md:pb-14">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="rounded-[2rem] bg-gradient-to-br from-sky-100 via-violet-50 to-amber-100 border border-violet-200/60 p-8 md:p-12 text-center shadow-xl shadow-violet-200/20 overflow-hidden relative"
+            className="relative overflow-hidden rounded-[2.5rem] min-h-[340px] md:min-h-[400px] lg:min-h-[440px]"
           >
-            <div className="absolute top-0 left-1/4 w-64 h-64 bg-sky-200/40 rounded-full blur-3xl pointer-events-none" />
-            <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-amber-200/40 rounded-full blur-3xl pointer-events-none" />
+            <img
+              src={siteImages.ctaBanner}
+              alt=""
+              className="absolute inset-0 w-full h-full object-cover object-right"
+              aria-hidden
+            />
+            {/* Soft left veil so copy stays readable on the lighter side */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background:
+                  "linear-gradient(90deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.28) 34%, rgba(255,255,255,0.06) 52%, transparent 68%)",
+              }}
+            />
 
-            <p className="text-[10px] font-bold text-violet-500 uppercase tracking-[0.3em] mb-4 relative">
-              The global mission of
-            </p>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-800 tracking-tight relative">
-              Light Upon <span className="text-violet-600">Light</span>
-            </h2>
-            <p className="mt-5 text-slate-600 font-medium max-w-xl mx-auto relative">
-              Join a community committed to advocacy, accessibility, and equality for differently-abled individuals everywhere.
-            </p>
+            <div className="relative grid lg:grid-cols-2 gap-8 items-center h-full px-8 py-10 sm:px-10 sm:py-12 md:px-14 md:py-14 lg:px-16 lg:py-16">
+              <div className="max-w-xl">
+                <p className="text-[11px] font-bold text-[#7107E7] uppercase tracking-[0.28em] mb-4">
+                  The global mission of
+                </p>
+                <h2 className="text-[2rem] sm:text-4xl md:text-[2.75rem] font-black text-slate-900 tracking-tight leading-[1.12]">
+                  Light Upon{" "}
+                  <span className="bg-gradient-to-r from-[#7107E7] via-[#8b5cf6] to-[#93c5fd] bg-clip-text text-transparent">
+                    Light
+                  </span>
+                </h2>
+                <p className="mt-5 text-[15px] md:text-base text-slate-700 font-medium leading-relaxed max-w-md">
+                  Join a community committed to advocacy, accessibility, and equality for differently-abled individuals everywhere.
+                </p>
 
-            <div className="mt-10 flex flex-wrap justify-center gap-4 relative">
-              <Link
-                to="/donate"
-                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-2xl bg-amber-300 hover:bg-amber-400 text-amber-950 font-black text-sm uppercase tracking-widest transition-colors"
-              >
-                Donate Now
-                <ArrowUpRight size={18} />
-              </Link>
-              <HoverFillButton
-                variant="purple"
-                rounded="2xl"
-                className="px-8 py-3.5 font-black text-sm uppercase tracking-widest"
-              >
-                Partner With Us
-              </HoverFillButton>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Link
+                    to="/donate"
+                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#f5d547] hover:bg-[#efc820] text-slate-900 font-black text-xs sm:text-sm uppercase tracking-[0.14em] transition-colors"
+                  >
+                    Donate Now
+                    <ArrowUpRight size={15} strokeWidth={2.75} />
+                  </Link>
+                  <Link
+                    to="/volunteer"
+                    className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-[#7107E7] hover:bg-[#5c06bb] text-white font-black text-xs sm:text-sm uppercase tracking-[0.14em] transition-colors"
+                  >
+                    Partner With Us
+                  </Link>
+                </div>
+
+                <ul className="mt-8 flex flex-wrap gap-x-7 gap-y-3">
+                  {[
+                    { icon: Heart, label: "Empower lives" },
+                    { icon: Users, label: "Promote inclusion" },
+                    { icon: Leaf, label: "Build a brighter future" },
+                  ].map(({ icon: Icon, label }) => (
+                    <li key={label} className="inline-flex items-center gap-2 text-[13px] font-medium text-slate-800">
+                      <Icon size={15} strokeWidth={2} className="shrink-0" />
+                      {label}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Right side reserved for banner graphic */}
+              <div className="hidden lg:block min-h-[220px]" aria-hidden />
             </div>
           </motion.div>
         </div>
       </section>
 
-      <Footer />
+      <Footer topPaddingClass="pt-14 md:pt-16" />
     </>
   );
 }

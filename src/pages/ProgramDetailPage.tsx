@@ -64,10 +64,11 @@ export default function ProgramDetailPage() {
   }
 
   return (
-    <div className="relative bg-white min-h-screen selection:bg-purple-100 font-sans flex flex-col">
+    <>
       <Header variant="dark" />
+      <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col">
 
-      <div className="max-w-7xl mx-auto w-full px-6 mb-8">
+      <div className="max-w-7xl mx-auto w-full px-6 pt-8 mb-8">
         <nav className="flex flex-wrap items-center gap-2 text-sm text-slate-500 font-medium">
           <Link to="/" className="inline-flex items-center text-violet-600 hover:text-violet-700 transition-colors">
             <House size={16} />
@@ -237,5 +238,6 @@ export default function ProgramDetailPage() {
 
       <Footer topPaddingClass="pt-24" />
     </div>
+    </>
   );
 }

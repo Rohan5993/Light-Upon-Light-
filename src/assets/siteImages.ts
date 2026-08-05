@@ -7,6 +7,8 @@ import wheelchairMeeting from "./images/wheelchair-meeting.webp";
 import ourVision from "./images/our-vision.webp";
 import aboutHero from "./images/about-hero.webp";
 import volunteerHero from "./images/volunteer-hero.webp";
+import ourStory from "./images/our-story.webp";
+import ctaBanner from "./images/cta-banner.webp";
 import programEnlighten from "./images/program-enlighten.webp";
 import programEnlighten2 from "./images/program-enlighten-2.webp";
 import programEnlighten3 from "./images/program-enlighten-3.webp";
@@ -36,6 +38,8 @@ export const siteImages = {
   ourVision,
   aboutHero,
   volunteerHero,
+  ourStory,
+  ctaBanner,
   programEnlighten,
   programEnlighten2,
   programEnlighten3,

@@ -83,8 +83,9 @@ export default function VolunteerPage() {
   };
 
   return (
-    <div className="relative bg-white min-h-screen selection:bg-purple-100 font-sans flex flex-col">
+    <>
       <Header variant="dark" />
+      <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col">
 
       {/* Hero */}
       <motion.section
@@ -306,5 +307,6 @@ export default function VolunteerPage() {
 
       <Footer topPaddingClass="pt-24" />
     </div>
+    </>
   );
 }
