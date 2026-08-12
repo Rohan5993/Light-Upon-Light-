@@ -42,9 +42,11 @@ export default function ScrollColorWords({ text, className = "" }: ScrollColorWo
         const start = index / words.length;
         const end = Math.min(1, start + 1 / words.length);
         return (
-          <ScrollWord key={`${word}-${index}`} progress={scrollYProgress} range={[start, end]}>
-            {word}
-          </ScrollWord>
+          <span key={`${word}-${index}`}>
+            <ScrollWord progress={scrollYProgress} range={[start, end]}>
+              {word}
+            </ScrollWord>
+          </span>
         );
       })}
     </p>
