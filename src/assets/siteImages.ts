@@ -27,6 +27,7 @@ import programSendingLightAbroad3 from "./images/program-sending-light-abroad-3.
 import programMeetOurLight from "./images/program-meet-our-light.webp";
 import programMeetOurLight2 from "./images/program-meet-our-light-2.webp";
 import programMeetOurLight3 from "./images/program-meet-our-light-3.webp";
+import quoteMark from "./images/quote-mark.png";
 
 export const siteImages = {
   donation,
@@ -58,4 +59,5 @@ export const siteImages = {
   programMeetOurLight,
   programMeetOurLight2,
   programMeetOurLight3,
+  quoteMark,
 } as const;

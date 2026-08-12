@@ -10,9 +10,9 @@ export default function Footer({ className = "", topPaddingClass = "pt-48" }: Fo
   return (
     <footer className={`relative bg-[#270E32] ${topPaddingClass} pb-14 px-6 md:px-16 overflow-hidden ${className}`}>
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 lg:gap-24 mb-12">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-12 mb-12">
           {/* Logo & Description */}
-          <div className="space-y-8 md:col-span-2 lg:col-span-1">
+          <div className="space-y-8 md:max-w-[280px] lg:max-w-[320px] shrink-0">
             <div className="flex items-center gap-3">
               <div className="grid grid-cols-2 gap-1">
                 <div className="w-3 h-3 bg-white rounded-md" />
@@ -20,9 +20,9 @@ export default function Footer({ className = "", topPaddingClass = "pt-48" }: Fo
                 <div className="w-3 h-3 bg-white rounded-md" />
                 <div className="w-3 h-3 bg-white rounded-md" />
               </div>
-              <span className="text-white font-bold text-xl sm:text-2xl md:text-3xl tracking-tight">Light Upon Light</span>
+              <span className="text-white font-bold text-xl sm:text-2xl tracking-tight">Light Upon Light</span>
             </div>
-            <p className="text-gray-400 leading-relaxed text-[15px] font-medium max-w-xs">
+            <p className="text-gray-400 leading-relaxed text-[15px] font-medium">
               Uniting hearts and actions to create positive change that lasts beyond a single moment.
             </p>
             <div className="flex flex-wrap gap-4">
@@ -45,7 +45,7 @@ export default function Footer({ className = "", topPaddingClass = "pt-48" }: Fo
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-8">
+          <div className="space-y-8 shrink-0">
             <h4 className="text-white font-bold text-lg">Quick Links</h4>
             <ul className="space-y-4">
               {[
@@ -65,7 +65,7 @@ export default function Footer({ className = "", topPaddingClass = "pt-48" }: Fo
           </div>
 
           {/* Contact */}
-          <div className="space-y-8">
+          <div className="space-y-8 md:max-w-[260px] shrink-0">
             <h4 className="text-white font-bold text-lg">Contact</h4>
             <ul className="space-y-6">
               <li className="flex items-start gap-4 text-gray-400">
@@ -74,19 +74,21 @@ export default function Footer({ className = "", topPaddingClass = "pt-48" }: Fo
               </li>
               <li className="flex items-start gap-4 text-gray-400 min-w-0">
                 <Mail className="w-5 h-5 flex-shrink-0 text-white mt-0.5" />
-                <a href="mailto:lightuponlight1408@gmail.com" className="text-[15px] font-medium break-all">
+                <a href="mailto:lightuponlight1408@gmail.com" className="text-[15px] font-medium break-all hover:text-white transition-colors">
                   lightuponlight1408@gmail.com
                 </a>
               </li>
               <li className="flex items-center gap-4 text-gray-400">
                 <Phone className="w-5 h-5 flex-shrink-0 text-white" />
-                <a href="tel:2067660884" className="text-[15px] font-medium">206-766-0884</a>
+                <a href="tel:2067660884" className="text-[15px] font-medium hover:text-white transition-colors">
+                  206-766-0884
+                </a>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="pt-8 border-t border-white/10 text-center text-[13px] text-gray-500 font-medium space-y-2">
+        <div className="pt-4 text-center text-[13px] text-gray-500 font-medium space-y-2">
           <p>© 2026 Light Upon Light. All rights reserved.</p>
           <p className="text-[11px] opacity-60 max-w-3xl mx-auto">
             A 501(c)(3) nonprofit organization (EIN 99-2690459). Donations are tax-deductible as allowed by law. Verify our status on the IRS website.

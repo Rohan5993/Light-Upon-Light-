@@ -1,5 +1,5 @@
-import { motion } from "motion/react";
-import { ArrowUpRight, Heart, Star, ArrowLeft, ArrowRight, Scale, Accessibility, BookOpen, Equal, Megaphone, Handshake, Globe, Users, Leaf } from "lucide-react";
+import { motion, useScroll, useTransform } from "motion/react";
+import { ArrowUpRight, ArrowLeft, ArrowRight, Scale, Accessibility, BookOpen, Equal, Megaphone, Handshake, Globe, Youtube } from "lucide-react";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
@@ -10,48 +10,45 @@ import { resolveMediaUrl } from "../lib/publicUrl";
 import Footer from "../components/Footer";
 import HoverFillLink from "../components/HoverFillLink";
 import { getAllBlogPosts } from "../services/blogService";
-
+import AnimatedText, { AnimatedWords, FadeIn } from "../components/motion/AnimatedText";
+import AnimatedImage from "../components/motion/AnimatedImage";
+import ScrollColorWords from "../components/motion/ScrollColorWords";
+import { TestimonialCard } from "../components/TestimonialCard";
 
 const PILLARS = [
   {
     step: "01",
     title: "Advocacy",
-    tagline: "Every voice deserves to be heard.",
-    desc: "We stand beside differently-abled individuals and families, ensuring they are seen, respected, and represented. We challenge barriers, confront ableism, and work to create lasting change that protects dignity and expands opportunity.",
+    desc: "Fighting for their rights, dignity, and equal treatment — always.",
     icon: Scale,
-    accent: "sky" as const,
+    accent: "from-sky-400 to-sky-300",
+    glow: "shadow-sky-100",
   },
   {
     step: "02",
     title: "Accessibility",
-    tagline: "Opportunity begins with access.",
-    desc: "True inclusion begins when every school, business, park, public space, and community is designed so everyone can participate. We work to make these spaces more accessible by removing physical, social, and attitudinal barriers, creating environments where differently-abled individuals can belong, contribute, and thrive.",
+    desc: "Breaking barriers so they access the care they deserve.",
     icon: Accessibility,
-    accent: "violet" as const,
+    accent: "from-violet-500 to-violet-400",
+    glow: "shadow-violet-100",
   },
   {
     step: "03",
     title: "Education",
-    tagline: "Understanding changes everything.",
-    desc: "Inclusion begins long before adulthood, it begins in classrooms, conversations, and communities. Through education, we replace fear with understanding, misconceptions with knowledge, and judgment with compassion.",
+    desc: "Shifting how the world sees, treats, and values them.",
     icon: BookOpen,
-    accent: "amber" as const,
+    accent: "from-amber-400 to-amber-300",
+    glow: "shadow-amber-100",
   },
   {
     step: "04",
     title: "Equality",
-    tagline: "Every person deserves the same dignity, respect, and opportunity.",
-    desc: "Every voice matters. Every future matters. Every life matters. We believe differently-abled individuals deserve the same opportunities to pursue their dreams, contribute to their communities, and live fulfilling lives as everyone else.",
+    desc: "Same rights. Same dignity. No one left behind.",
     icon: Equal,
-    accent: "sky" as const,
+    accent: "from-sky-500 to-violet-400",
+    glow: "shadow-sky-100",
   },
 ];
-
-const pillarAccent = {
-  sky: { icon: "bg-sky-100 text-sky-600", border: "border-sky-100" },
-  violet: { icon: "bg-violet-100 text-violet-600", border: "border-violet-100" },
-  amber: { icon: "bg-amber-100 text-amber-700", border: "border-amber-100" },
-};
 
 const IMPACT_ACTIONS = [
   {
@@ -76,20 +73,6 @@ const IMPACT_ACTIONS = [
   },
 ];
 
-function SectionBadge({
-  label,
-  dotClass = "bg-violet-400",
-}: {
-  label: string;
-  dotClass?: string;
-}) {
-  return (
-    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-slate-100 text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white">
-      <span className={`w-1.5 h-1.5 rounded-full ${dotClass}`} />
-      {label}
-    </span>
-  );
-}
 
 const TESTIMONIALS = [
   {
@@ -124,57 +107,91 @@ const TESTIMONIALS = [
   }
 ];
 
+const WORK_LABELS = [
+  "Inclusive Education",
+  "Mentorship",
+  "Accessible Baking",
+  "Workforce Development",
+  "Accessibility Evaluations",
+  "Mobility Aid Distribution",
+  "At-Your-Door Donations",
+] as const;
+
 export default function HomePage() {
-  const [activeProgram, setActiveProgram] = useState(0);
   const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [activeWorkIndex, setActiveWorkIndex] = useState(0);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(BLOG_POSTS);
-  const programsRef = useRef<HTMLDivElement>(null);
   const testimonialsRef = useRef<HTMLDivElement>(null);
+  const blogFeaturedRef = useRef<HTMLDivElement>(null);
+  const blogSidebarRef = useRef<HTMLDivElement>(null);
 
-  const scrollToProgram = useCallback((index: number) => {
-    if (programsRef.current) {
-      const isMobile = window.innerWidth < 768;
-      const containerWidth = programsRef.current.offsetWidth;
-      const cardWidth = isMobile ? containerWidth : containerWidth / 3;
+  const { scrollYProgress: blogFeaturedProgress } = useScroll({
+    target: blogFeaturedRef,
+    offset: ["start 0.92", "center 0.4"],
+  });
 
-      programsRef.current.scrollTo({
-        left: index * cardWidth,
+  const blogBlock1Opacity = useTransform(blogFeaturedProgress, [0, 0.3], [0, 1]);
+  const blogBlock1Y = useTransform(blogFeaturedProgress, [0, 0.3], [56, 0]);
+  const blogBlock2Opacity = useTransform(blogFeaturedProgress, [0.22, 0.55], [0, 1]);
+  const blogBlock2Y = useTransform(blogFeaturedProgress, [0.22, 0.55], [44, 0]);
+  const blogBlock3Opacity = useTransform(blogFeaturedProgress, [0.48, 0.8], [0, 1]);
+  const blogBlock3Y = useTransform(blogFeaturedProgress, [0.48, 0.8], [36, 0]);
+
+  const { scrollYProgress: blogSidebarProgress } = useScroll({
+    target: blogSidebarRef,
+    offset: ["start 0.9", "end 0.55"],
+  });
+
+  const blogSidebar1X = useTransform(blogSidebarProgress, [0, 0.32], [140, 0]);
+  const blogSidebar1Opacity = useTransform(blogSidebarProgress, [0, 0.28], [0, 1]);
+  const blogSidebar2X = useTransform(blogSidebarProgress, [0.28, 0.58], [140, 0]);
+  const blogSidebar2Opacity = useTransform(blogSidebarProgress, [0.28, 0.54], [0, 1]);
+  const blogSidebar3X = useTransform(blogSidebarProgress, [0.54, 0.84], [140, 0]);
+  const blogSidebar3Opacity = useTransform(blogSidebarProgress, [0.54, 0.8], [0, 1]);
+
+  const blogSidebarMotion = [
+    { x: blogSidebar1X, opacity: blogSidebar1Opacity },
+    { x: blogSidebar2X, opacity: blogSidebar2Opacity },
+    { x: blogSidebar3X, opacity: blogSidebar3Opacity },
+  ];
+
+  const scrollToTestimonial = useCallback((index: number) => {
+    if (testimonialsRef.current) {
+      const container = testimonialsRef.current;
+      const card = container.firstElementChild as HTMLElement | null;
+      if (!card) return;
+      const gap = parseFloat(getComputedStyle(container).gap || "0") || 24;
+      const step = card.offsetWidth + gap;
+      container.scrollTo({
+        left: index * step,
         behavior: "smooth",
       });
     }
   }, []);
 
-  const scrollToTestimonial = useCallback((index: number) => {
-    if (testimonialsRef.current) {
-      const containerWidth = testimonialsRef.current.offsetWidth;
-      const isMobile = window.innerWidth < 768;
-      const cardWidth = isMobile ? containerWidth : containerWidth / 2;
-      const scrollPos = index * cardWidth;
+  const maxTestimonialIndex = Math.max(0, TESTIMONIALS.length - 2);
 
-      testimonialsRef.current.scrollTo({
-        left: scrollPos,
-        behavior: 'smooth'
-      });
-    }
+  const nextTestimonial = useCallback(() => {
+    setActiveTestimonial((prev) => (prev >= maxTestimonialIndex ? 0 : prev + 1));
+  }, [maxTestimonialIndex]);
+
+  const prevTestimonial = useCallback(() => {
+    setActiveTestimonial((prev) => (prev <= 0 ? maxTestimonialIndex : prev - 1));
+  }, [maxTestimonialIndex]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveWorkIndex((prev) => (prev + 1) % WORK_LABELS.length);
+    }, 1400);
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setActiveTestimonial(prev => (prev + 1) % TESTIMONIALS.length);
+      setActiveTestimonial((prev) => (prev >= maxTestimonialIndex ? 0 : prev + 1));
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveProgram((prev) => (prev + 1) % PROGRAMS.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    scrollToProgram(activeProgram);
-  }, [activeProgram, scrollToProgram]);
+  }, [maxTestimonialIndex]);
 
   useEffect(() => {
     scrollToTestimonial(activeTestimonial);
@@ -212,372 +229,320 @@ export default function HomePage() {
 
   return (
     <>
-      <Header variant="light" />
-      <div className="relative min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] overflow-hidden selection:bg-purple-100 font-sans flex flex-col">
-        {/* Background Hero Image */}
-        <div className="absolute inset-0 z-0">
-          <img
+      <div className="relative min-h-screen min-h-[100dvh] overflow-hidden selection:bg-purple-100 font-sans flex flex-col">
+        <Header variant="light" />
+        {/* Background Hero Image with Vertical Ribbon Effect */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <AnimatedImage
             src={siteImages.heroWheelchair}
-            alt="Young girl smiling in a wheelchair on a sunny field"
-            className="w-full h-full object-cover object-[78%_center] md:object-[72%_center]"
-            decoding="async"
-            fetchPriority="high"
+            alt="Young girl smiling in a wheelchair outdoors"
+            className="w-full h-full object-cover object-[72%_center] md:object-right"
+            containerClassName="absolute inset-0"
+            parallax={false}
+            kenBurns
+            animateOnMount
           />
-          {/* Purple gradient — left only; fully clear before the subject on the right */}
-          <div
-            className="absolute inset-0 pointer-events-none"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(46, 16, 101, 0.86) 0%, rgba(76, 29, 149, 0.62) 18%, rgba(91, 33, 182, 0.32) 32%, rgba(113, 7, 231, 0.1) 42%, transparent 50%)",
-            }}
-          />
-          {/* Soft glowing wave mesh — bottom left, like the mockup */}
-          <svg
-            className="pointer-events-none absolute bottom-0 left-0 w-[min(48%,28rem)] h-36 md:h-44 opacity-45"
-            viewBox="0 0 800 200"
-            fill="none"
-            aria-hidden
-          >
-            <path d="M0 140 Q120 90 240 130 T480 120 T720 145 T800 130" stroke="#C4B5FD" strokeWidth="1.5" strokeDasharray="2 10" strokeLinecap="round" />
-            <path d="M0 160 Q140 110 280 150 T560 140 T800 160" stroke="#A78BFA" strokeWidth="1.25" strokeDasharray="1.5 11" strokeLinecap="round" />
-            <path d="M0 180 Q160 130 320 170 T640 165 T800 180" stroke="#DDD6FE" strokeWidth="1" strokeDasharray="1 12" strokeLinecap="round" />
-          </svg>
+          {/* Vertical ribbon overlay - matching the image's distinct strips */}
+          <div className="absolute inset-0 flex">
+            {[...Array(24)].map((_, i) => (
+              <div
+                key={i}
+                className="h-full flex-1 border-r border-white/10"
+                style={{
+                  backdropFilter: (i >= 11 && i <= 20) ? 'none' : (i % 4 === 0 ? 'blur(8px)' : i % 2 === 0 ? 'blur(2px)' : 'none'),
+                  backgroundColor: i % 5 === 0 ? 'rgba(255, 255, 255, 0.1)' : 'transparent',
+                }}
+              />
+            ))}
+          </div>
+          {/* Left-side dark gradient for text readability */}
+          <div className="absolute inset-y-0 left-0 w-full md:w-2/3 bg-gradient-to-r from-black/60 via-black/30 to-transparent pointer-events-none" />
+
+          {/* Subtle dark overlay for text readability */}
+          <div className="absolute inset-0 bg-black/10" />
         </div>
 
         {/* Hero Content */}
-        <main className="relative z-10 px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl py-12 md:py-16">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="max-w-xl lg:max-w-2xl"
-          >
+        <main className="relative z-10 px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl pt-20 pb-16 md:pt-0 md:pb-0">
+          <div className="max-w-4xl">
             <h1 className="text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-8">
-              Their Light Is<br />
-              Already There.<br />
-              Help Us Let It <span className="text-[#C4B5FD]">Shine</span>
+              <AnimatedText
+                lines={[
+                  "Their Light Is",
+                  "Already There.",
+                  "Help Us Let It Shine.",
+                ]}
+                animateOnMount
+              />
             </h1>
-            <p className="text-base md:text-xl text-white leading-[1.75] md:leading-[1.8] mb-10 md:mb-12 max-w-xl font-medium">
-              We exist to help differently-abled people through advocacy,<br className="hidden sm:inline" />
-              {" "}accessibility, equality, and education while changing society&apos;s perception.
-            </p>
+            <AnimatedWords
+              text="Differently-abled individuals carry greatness within them but an unequal world of barriers and silence dims it. Your donation funds advocacy, accessibility, and equality - giving them the rights, dignity, and opportunities they've always deserved."
+              animateOnMount
+              delay={0.35}
+              className="text-base md:text-xl text-white/90 leading-[1.75] md:leading-[1.8] mb-10 md:mb-14 max-w-2xl font-medium"
+            />
 
-            <div className="flex flex-wrap gap-3">
-              <Link
-                to="/donate"
-                className="group inline-flex items-center gap-3 sm:gap-5 bg-white pl-5 sm:pl-8 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full text-slate-900 font-bold shadow-2xl hover:shadow-white/25 transition-all"
-              >
-                <span className="text-sm sm:text-lg tracking-tight">Donate &amp; Shine a Light</span>
-                <span className="w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-[#7107E7] flex items-center justify-center text-white group-hover:bg-[#5c06bb] transition-colors shrink-0">
-                  <ArrowUpRight size={18} strokeWidth={2.5} className="sm:hidden" />
-                  <ArrowUpRight size={22} strokeWidth={2.5} className="hidden sm:block" />
-                </span>
-              </Link>
-            </div>
-            <p className="mt-5 text-sm md:text-base text-white/90 font-medium whitespace-nowrap overflow-x-auto max-w-full">
-              Your generosity creates real access, greater opportunity, and lasting change.
-            </p>
-          </motion.div>
-        </main>
-      </div>
-
-
-      {/* Our Vision + Pillars */}
-      <section className="bg-[#FAFCFF] py-14 md:py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 mb-10 items-stretch">
-            <div className="rounded-[2rem] bg-white border border-slate-100 p-6 md:p-8 shadow-[0_4px_32px_rgba(148,163,184,0.08)] flex flex-col justify-center">
-              <SectionBadge label="Our Vision" dotClass="bg-sky-400" />
-              <div className="mt-6 space-y-4">
-                <p className="text-lg font-bold text-slate-800 leading-relaxed">
-                  We envision a future where Light Upon Light no longer exists because our mission has been achieved.
-                </p>
-                <p className="text-base text-slate-500 font-medium leading-relaxed">
-                  A future where differently-abled people are seen, heard, and supported; with accessible and welcoming communities and public spaces; the same opportunities to contribute, thrive, and belong as everyone else; and a society that sees them for who they are, not just their disability or diagnosis.
-                </p>
-                <p className="text-base font-bold text-slate-800 leading-relaxed pt-2 border-t border-slate-100">
-                  Because every life deserves dignity, opportunity, and belonging.
-                </p>
-              </div>
-            </div>
-
-            <div className="rounded-[2rem] p-px bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.1)]">
-              <div className="rounded-[1.95rem] overflow-hidden h-full min-h-[280px] lg:min-h-0">
-                <img
-                  src={siteImages.ourVision}
-                  alt="Light Upon Light community gathering outdoors"
-                  className="w-full h-full object-cover aspect-[4/3] lg:aspect-auto lg:h-full min-h-[280px]"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="mt-14 pt-14 border-t border-slate-200/80">
-            <SectionBadge label="Pillars" dotClass="bg-amber-400" />
-            <h2 className="mt-4 text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
-              The Four Rays of Light
-            </h2>
-            <p className="text-slate-500 font-medium max-w-3xl mt-3 mb-10 leading-relaxed">
-              Just as four rays of light shine brighter together, these four guiding principles fuel everything we do. They shape every program we create, strengthen every partnership we build, and guide every decision we make as we carry out our mission.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {PILLARS.map((pillar) => {
-                const accent = pillarAccent[pillar.accent];
-                const Icon = pillar.icon;
-                return (
-                  <article
-                    key={pillar.title}
-                    className={`rounded-2xl bg-white border ${accent.border} p-6 md:p-7 shadow-sm hover:shadow-md transition-shadow`}
-                  >
-                    <div className="flex items-start justify-between gap-4 mb-4">
-                      <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${accent.icon}`}>
-                        <Icon size={20} strokeWidth={2.25} />
-                      </div>
-                      <span className="text-[11px] font-black tracking-[0.2em] text-slate-300">
-                        {pillar.step}
-                      </span>
-                    </div>
-                    <h4 className="text-lg font-bold text-slate-800 mb-1">{pillar.title}</h4>
-                    <p className="text-slate-800 font-semibold text-sm leading-relaxed mb-3">
-                      {pillar.tagline}
-                    </p>
-                    <p className="text-slate-600 text-sm leading-relaxed">{pillar.desc}</p>
-                  </article>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Founder */}
-      <section id="our-mission" className="px-6 py-14 md:py-20">
-        <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-6 md:p-10 lg:p-12">
-          <div className="grid lg:grid-cols-[auto_1fr] gap-8 lg:gap-12 items-center">
-            <div className="relative mx-auto lg:mx-0 w-full max-w-xs">
-              <div className="rounded-[1.5rem] overflow-hidden shadow-xl border-4 border-white aspect-[4/5]">
-                <img
-                  src={siteImages.founder}
-                  alt="Founder and CEO of Light Upon Light"
-                  className="w-full h-full object-cover object-top"
-                />
-              </div>
-              <div className="absolute -bottom-4 -right-4 bg-white px-5 py-4 rounded-2xl shadow-lg border border-slate-100 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-violet-100 flex items-center justify-center text-violet-600">
-                  <Heart className="w-5 h-5 fill-violet-600" />
-                </div>
-                <div>
-                  <p className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">Founded in</p>
-                  <p className="text-lg font-black text-slate-800">2024</p>
-                </div>
-              </div>
-            </div>
-
-            <div>
-              <SectionBadge label="Founder" dotClass="bg-violet-500" />
-              <h2 className="mt-4 text-2xl md:text-3xl font-bold text-slate-800 mb-4 tracking-tight leading-tight">
-                Led by Someone Who Truly Understands.
-              </h2>
-              <div className="space-y-5">
-                <p className="text-base md:text-lg text-slate-600 font-medium leading-relaxed">
-                  Our Founder and CEO isn&apos;t just passionate about this cause. She has lived it. As a differently-abled woman herself, she knows the pain, the overlooked moments, and what it feels like to be denied basic dignity.
-                </p>
-                <p className="text-base md:text-lg text-slate-600 font-medium leading-relaxed">
-                  It started when she was denied something as simple as a cup of tea. That one small, deeply unfair moment sparked everything. And she made sure it would never happen to anyone else.
-                </p>
-                <p className="text-base md:text-lg text-slate-600 font-medium leading-relaxed">
-                  From her wheelchair she rises, leading Light Upon Light with a fire that cannot be dimmed, fighting every single day so that no differently-abled individual ever feels unseen, unheard, or unworthy again.
-                </p>
-                <p className="text-base md:text-lg font-bold text-slate-800 leading-relaxed pt-2 border-t border-violet-100">
-                  Because everyone deserves a cup of tea.
-                </p>
-              </div>
-              <Link
-                to="/about#youtube"
-                className="inline-flex items-center gap-2 mt-8 px-6 py-3 rounded-full bg-white border border-violet-200 text-slate-800 font-bold text-sm hover:bg-violet-50 hover:border-violet-300 transition-colors group"
-              >
-                Watch Her Story
-                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Programs */}
-      <section id="programs" className="bg-white py-14 md:py-20 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-8">
-            <div>
-              <SectionBadge label="Programs" dotClass="bg-sky-400" />
-              <h2 className="mt-4 text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
-                Our Radiant Programs
-              </h2>
-              <p className="mt-3 text-slate-500 font-medium max-w-2xl leading-relaxed">
-                Every program at Light Upon Light was developed from lived experience to remove barriers, educate society, and build a future where differently-abled people are valued, included, and given the same opportunities as everyone else.
-              </p>
-            </div>
-            <div className="flex gap-3 shrink-0">
-              <button
-                type="button"
-                onClick={() => setActiveProgram((prev) => (prev - 1 + PROGRAMS.length) % PROGRAMS.length)}
-                className="w-11 h-11 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50 hover:text-slate-800 transition-all bg-white shadow-sm"
-                aria-label="Previous program"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveProgram((prev) => (prev + 1) % PROGRAMS.length)}
-                className="w-11 h-11 rounded-full bg-violet-600 flex items-center justify-center text-white hover:bg-violet-700 transition-all shadow-lg shadow-violet-200"
-                aria-label="Next program"
-              >
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-
-          <div className="relative overflow-hidden rounded-[1.5rem] border border-slate-100 bg-slate-50/40 p-3 md:p-4">
-            <div ref={programsRef} className="flex overflow-x-hidden scroll-smooth">
-            {PROGRAMS.map((event, i) => {
-              const stripeClass =
-                i % 3 === 0
-                  ? "bg-sky-400"
-                  : i % 3 === 1
-                    ? "bg-violet-400"
-                    : "bg-amber-400";
-
-              return (
-                <Link key={event.id} to={`/programs/${event.id}`} className="group min-w-full md:min-w-[33.333%] p-1.5">
-                  <article className="h-full rounded-[1.25rem] bg-white border border-slate-100 overflow-hidden shadow-sm hover:shadow-lg hover:shadow-slate-200/60 hover:-translate-y-0.5 transition-all duration-300">
-                    <div className={`h-1.5 w-full ${stripeClass}`} />
-                    <div className="p-5">
-                      <div className="rounded-xl overflow-hidden mb-4 aspect-[4/3]">
-                        <img
-                          src={resolveMediaUrl(event.img)}
-                          alt={event.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                          referrerPolicy="no-referrer"
-                        />
-                      </div>
-                      <span className="inline-block px-2.5 py-1 rounded-full bg-slate-50 border border-slate-100 text-[9px] uppercase tracking-wider font-bold text-slate-500 mb-3">
-                        {event.tag}
-                      </span>
-                      <h3 className="font-bold text-slate-800 mb-1.5 group-hover:text-violet-600 transition-colors text-lg leading-snug">
-                        {event.title}
-                      </h3>
-                      <p className="text-slate-800 font-semibold text-sm leading-snug mb-2 line-clamp-2">
-                        {event.headline}
-                      </p>
-                      <p className="text-slate-500 text-sm leading-relaxed line-clamp-3 overflow-hidden text-ellipsis min-h-[3.75rem]">
-                        {event.desc}
-                      </p>
-                      <span className="mt-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-violet-600 group-hover:gap-3 transition-all">
-                        Learn More <ArrowRight className="w-3.5 h-3.5" />
-                      </span>
-                    </div>
-                  </article>
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Link
+                  to="/donate"
+                  className="group inline-flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-5 bg-white pl-4 sm:pl-10 pr-2 sm:pr-3 py-2 sm:py-3 rounded-full text-slate-900 font-bold shadow-2xl hover:shadow-white/20 transition-all max-w-full"
+                >
+                  <span className="text-sm sm:text-lg">Donate & Shine a Light</span>
+                  <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-purple-600 flex items-center justify-center text-white group-hover:bg-purple-700 transition-colors shrink-0">
+                    <ArrowUpRight size={20} strokeWidth={2.5} className="sm:hidden" />
+                    <ArrowUpRight size={24} strokeWidth={2.5} className="hidden sm:block" />
+                  </div>
                 </Link>
+              </motion.div>
+            </motion.div>
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.95 }}
+              className="mt-5 text-sm md:text-base text-white/80 font-medium max-w-2xl"
+            >
+              Your generosity = real access, real equality, real change
+            </motion.p>
+          </div>
+        </main>
+
+        {/* Our Pillars — hero bottom right */}
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 1.05, ease: [0.22, 1, 0.36, 1] }}
+          className="absolute z-20 bottom-5 right-5 md:bottom-8 md:right-8 w-[min(100%-2.5rem,30rem)] sm:w-[32rem]"
+        >
+          <p className="text-xs font-bold uppercase tracking-[0.22em] text-white/90 mb-3 drop-shadow-sm">
+            Our Pillars
+          </p>
+          <div className="grid grid-cols-2 gap-3">
+            {PILLARS.map((pillar, index) => {
+              const Icon = pillar.icon;
+              return (
+                <motion.div
+                  key={pillar.title}
+                  initial={{ opacity: 0, y: 16, scale: 0.96 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.5, delay: 1.15 + index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -4, scale: 1.06 }}
+                  className="rounded-2xl bg-white/10 backdrop-blur-2xl border border-white/30 px-4 py-4 shadow-[0_8px_32px_rgba(0,0,0,0.18)] ring-1 ring-white/15 cursor-default origin-center"
+                >
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <div className="w-7 h-7 rounded-lg bg-white/15 border border-white/25 flex items-center justify-center text-white shrink-0">
+                      <Icon size={13} strokeWidth={2.4} className="text-white" />
+                    </div>
+                    <p className="text-base font-bold text-white leading-tight drop-shadow-sm">{pillar.title}</p>
+                  </div>
+                  <p className="text-sm text-white/85 font-medium leading-snug line-clamp-3">{pillar.desc}</p>
+                </motion.div>
               );
             })}
-            </div>
           </div>
+        </motion.div>
 
-          <div className="mt-8 text-center">
-            <HoverFillLink
-              to="/programs"
-              variant="purple"
-              className="gap-3 px-10 py-4 font-black text-sm uppercase tracking-widest"
-              labelClassName="inline-flex items-center gap-3"
+        {/* Impact Blur Decorative Element */}
+        <div className="absolute bottom-[-20%] right-[-10%] w-[800px] h-[800px] impact-blur pointer-events-none opacity-50" />
+      </div>
+
+      {/* What We Do */}
+      <section className="relative px-6 py-20 md:py-28 overflow-hidden bg-[#F7FBFF]">
+        <div
+          className="absolute inset-0 pointer-events-none opacity-[0.35]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.08) 1px, transparent 0)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="absolute inset-x-0 bottom-0 h-px bg-slate-200/80" />
+
+        <div className="relative max-w-7xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 36 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+            className="relative bg-white/90 backdrop-blur-sm border border-slate-200/80 rounded-[1.75rem] px-7 py-12 md:px-16 lg:px-20 md:py-16 shadow-[0_24px_80px_rgba(15,23,42,0.06)] text-center overflow-hidden"
+          >
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.08 }}
+              className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.28em] text-[#7107E7] mb-5"
             >
-              View All Programs
-              <ArrowUpRight className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-            </HoverFillLink>
-          </div>
+              Our Work
+            </motion.p>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+              className="text-4xl md:text-6xl font-bold text-slate-900 tracking-[-0.03em] leading-[1.05] mb-10 md:mb-12"
+            >
+              What We Do?
+            </motion.h2>
+
+            <ScrollColorWords
+              text="Our work includes inclusive education, mentorship, accessible baking and workforce development, accessibility evaluations, mobility aid distribution, and an in-person, at-your-door donation service. Through classroom programs, peer mentorship, and hands-on life skills training, we help differently-abled individuals build confidence, independence, and real opportunities to thrive. We also work with schools, businesses, and public spaces to remove barriers and create environments where everyone can belong. From restoring mobility and freedom through refurbished aids, to bringing supporters face-to-face with the people behind our mission, every program is rooted in lived experience — because lasting change starts with dignity, access, and connection."
+              className="max-w-4xl mx-auto text-lg md:text-[1.35rem] font-medium leading-[1.85] tracking-[-0.01em]"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.65, delay: 0.35 }}
+              className="mt-12 md:mt-14 pt-10 border-t border-slate-100"
+            >
+              <div className="flex flex-col items-center gap-5 md:gap-6">
+                {[
+                  WORK_LABELS.slice(0, 4),
+                  WORK_LABELS.slice(4),
+                ].map((row, rowIndex) => (
+                  <div
+                    key={rowIndex}
+                    className="flex flex-wrap items-center justify-center gap-y-3"
+                  >
+                    {row.map((label, index) => {
+                      const itemIndex = rowIndex === 0 ? index : 4 + index;
+                      const isActive = activeWorkIndex === itemIndex;
+                      return (
+                        <motion.div
+                          key={label}
+                          initial={{ opacity: 0, y: 8 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.35, delay: 0.45 + itemIndex * 0.04 }}
+                          className="flex items-center"
+                        >
+                          <span
+                            className={`px-3 md:px-4 text-[11px] md:text-[12px] font-semibold uppercase tracking-[0.14em] transition-colors duration-500 cursor-default hover:text-[#7107E7] ${
+                              isActive ? "text-[#7107E7]" : "text-slate-500"
+                            }`}
+                          >
+                            {label}
+                          </span>
+                          {index < row.length - 1 && (
+                            <span
+                              className="hidden sm:block w-1 h-1 rounded-full bg-[#7107E7]/45 mx-1 shrink-0"
+                              aria-hidden="true"
+                            />
+                          )}
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Testimonials */}
-      <section id="stories" className="px-6 py-14 md:py-20">
-        <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-6 md:p-10">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
-            <div>
-              <SectionBadge label="Testimonials" dotClass="bg-violet-500" />
-              <h2 className="mt-4 text-2xl md:text-3xl font-bold text-slate-800 tracking-tight">
-                Voices from Our Community
+      {/* Program Cards */}
+      <section id="programs" className="bg-white px-6 py-20 md:py-28">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
+            <FadeIn>
+              <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.28em] text-[#7107E7] mb-4">
+                Programs
+              </p>
+              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-[-0.03em]">
+                Our Radiant Programs
               </h2>
-            </div>
-            <div className="flex gap-2">
-              <button
-                type="button"
-                onClick={() => setActiveTestimonial((prev) => (prev === 0 ? TESTIMONIALS.length - 1 : prev - 1))}
-                className="w-9 h-9 rounded-full border-2 border-violet-200 bg-white text-violet-600 flex items-center justify-center hover:bg-violet-50 transition-colors"
-                aria-label="Previous testimonial"
+              <p className="mt-4 text-slate-500 font-medium leading-relaxed max-w-xl">
+                Hands-on initiatives that turn lived experience into real access, dignity, and opportunity.
+              </p>
+            </FadeIn>
+            <FadeIn delay={0.1}>
+              <HoverFillLink
+                to="/programs"
+                variant="purple"
+                className="gap-2 px-7 py-3.5 font-bold text-xs uppercase tracking-widest shrink-0"
+                labelClassName="inline-flex items-center gap-2"
               >
-                <ArrowLeft size={16} />
-              </button>
-              <button
-                type="button"
-                onClick={() => setActiveTestimonial((prev) => (prev + 1) % TESTIMONIALS.length)}
-                className="w-9 h-9 rounded-full border-2 border-violet-200 bg-white text-violet-600 flex items-center justify-center hover:bg-violet-50 transition-colors"
-                aria-label="Next testimonial"
-              >
-                <ArrowRight size={16} />
-              </button>
-            </div>
+                View All
+                <ArrowUpRight size={16} />
+              </HoverFillLink>
+            </FadeIn>
           </div>
 
-          <div ref={testimonialsRef} className="flex overflow-x-hidden scroll-smooth gap-6">
-            {TESTIMONIALS.map((item, i) => (
-              <div
-                key={i}
-                className="min-w-full md:min-w-[calc(50%-12px)] rounded-2xl bg-white border border-slate-100 p-6 md:p-8 shadow-sm flex flex-col sm:flex-row gap-5 items-start"
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {PROGRAMS.map((program, index) => (
+              <motion.div
+                key={program.id}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.55, delay: Math.min(index * 0.07, 0.35), ease: [0.22, 1, 0.36, 1] }}
               >
-                <img
-                  src={resolveMediaUrl(item.img)}
-                  alt={item.name}
-                  className="w-20 h-20 rounded-2xl object-cover border-2 border-violet-100 shrink-0"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="flex-1">
-                  <div className="flex gap-0.5 mb-4">
-                    {[...Array(5)].map((_, j) => (
-                      <Star key={j} className="w-4 h-4 text-amber-400 fill-amber-400" />
-                    ))}
+                <Link
+                  to={`/programs/${program.id}`}
+                  className="group block h-full rounded-2xl border border-slate-200/80 bg-white overflow-hidden shadow-[0_8px_30px_rgba(15,23,42,0.04)] hover:shadow-[0_18px_50px_rgba(15,23,42,0.1)] hover:-translate-y-1 transition-all duration-400"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-100">
+                    <img
+                      src={resolveMediaUrl(program.img)}
+                      alt={program.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      referrerPolicy="no-referrer"
+                    />
+                    <span className="absolute top-4 left-4 inline-flex px-2.5 py-1 rounded-full bg-white/95 text-[9px] font-bold uppercase tracking-widest text-slate-600 border border-white shadow-sm">
+                      {program.tag}
+                    </span>
                   </div>
-                  <p className="text-base md:text-lg text-slate-600 font-medium leading-relaxed mb-5">
-                    &ldquo;{item.quote}&rdquo;
-                  </p>
-                  <p className="font-bold text-slate-800 text-sm">{item.name}</p>
-                  <p className="text-[10px] font-bold text-violet-500 tracking-widest mt-1 uppercase">{item.role}</p>
-                </div>
-              </div>
+                  <div className="p-5 md:p-6">
+                    <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#7107E7] transition-colors leading-snug mb-2">
+                      {program.title}
+                    </h3>
+                    <p className="text-sm text-slate-500 font-medium leading-relaxed line-clamp-3 mb-5">
+                      {program.desc}
+                    </p>
+                    <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#7107E7] group-hover:gap-3 transition-all">
+                      Learn More <ArrowRight className="w-3.5 h-3.5" />
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Your Light in Action */}
-      <section className="relative px-6 py-16 md:py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-[#f4f0ff] via-[#f8faff] to-white" />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[min(90%,48rem)] h-64 bg-violet-300/20 blur-[100px] rounded-full pointer-events-none" />
+      <section className="relative px-6 py-20 md:py-28 overflow-hidden bg-[#FBFAFF]">
+        <div
+          className="absolute inset-0 pointer-events-none opacity-[0.3]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.08) 1px, transparent 0)",
+            backgroundSize: "28px 28px",
+          }}
+        />
 
         <div className="relative max-w-7xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.55 }}
+            transition={{ duration: 0.6 }}
             className="max-w-2xl mb-12"
           >
             <div className="flex items-center gap-3 mb-4">
-              <span className="w-8 h-px bg-violet-400" />
-              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-violet-500">
+              <span className="w-8 h-px bg-[#7107E7]" />
+              <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-[#7107E7]">
                 Impact
               </p>
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
+            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-[-0.03em] leading-tight">
               Your Light in Action
             </h2>
             <p className="mt-4 text-lg text-slate-500 font-medium leading-relaxed">
@@ -595,15 +560,15 @@ export default function HomePage() {
               return (
                 <motion.article
                   key={item.text}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 22 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.45, delay: Math.min(index * 0.07, 0.28) }}
-                  className="group relative rounded-[1.35rem] bg-white/90 backdrop-blur-sm border border-white shadow-[0_8px_30px_rgba(100,80,160,0.06)] hover:shadow-[0_16px_40px_rgba(100,80,160,0.12)] hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                  transition={{ duration: 0.5, delay: Math.min(index * 0.07, 0.28) }}
+                  className="group relative rounded-2xl bg-white border border-slate-200/80 shadow-[0_8px_30px_rgba(15,23,42,0.04)] hover:shadow-[0_16px_40px_rgba(15,23,42,0.1)] hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                 >
-                  <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-violet-400 to-sky-400 opacity-80" />
+                  <div className="absolute inset-y-0 left-0 w-1 bg-[#7107E7]" />
                   <div className="p-6 pl-7 flex gap-4 items-start">
-                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-gradient-to-br from-violet-50 to-sky-50 text-violet-600 border border-violet-100/80 group-hover:from-violet-100 group-hover:to-sky-100 transition-colors duration-300">
+                    <div className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 bg-violet-50 text-[#7107E7] border border-violet-100 group-hover:bg-violet-100 transition-colors duration-300">
                       <Icon size={22} strokeWidth={2.1} />
                     </div>
                     <p className="text-slate-600 text-[0.95rem] font-medium leading-relaxed pt-2">
@@ -619,148 +584,360 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="relative rounded-[1.75rem] p-[1px] bg-gradient-to-r from-violet-200 via-sky-200 to-violet-200"
+            transition={{ duration: 0.55, delay: 0.1 }}
+            className="relative rounded-2xl border border-slate-200/80 bg-white px-7 py-8 md:px-10 md:py-9 flex flex-col md:flex-row md:items-center md:justify-between gap-6 shadow-[0_12px_40px_rgba(15,23,42,0.05)]"
           >
-            <div className="relative rounded-[calc(1.75rem-1px)] bg-white px-7 py-8 md:px-10 md:py-9 flex flex-col md:flex-row md:items-center md:justify-between gap-6 overflow-hidden">
-              <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-violet-50/80 to-transparent pointer-events-none" />
-              <div className="relative">
-                <p className="text-xl md:text-2xl font-bold text-slate-900 leading-snug tracking-tight max-w-xl">
-                  Together, we&apos;re building a future where every person has the opportunity to shine.
-                </p>
+            <p className="text-xl md:text-2xl font-bold text-slate-900 leading-snug tracking-tight max-w-xl">
+              Together, we&apos;re building a future where every person has the opportunity to shine.
+            </p>
+            <Link
+              to="/donate"
+              className="inline-flex items-center justify-center gap-2 shrink-0 px-8 py-4 rounded-full bg-[#7107E7] text-white font-bold text-sm hover:bg-[#5f06c4] transition-colors shadow-[0_10px_28px_rgba(113,7,231,0.28)]"
+            >
+              Donate & Shine a Light
+              <ArrowRight size={16} />
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Voices from Our Community Section */}
+      <section id="stories" className="px-6 py-20 md:py-28 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="relative mb-12 flex flex-col items-center text-center">
+            <FadeIn className="flex flex-col items-center">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-violet-200 text-[10px] font-bold text-violet-700 mb-6 uppercase tracking-widest bg-white/80">
+                <div className="w-1.5 h-1.5 rounded-full bg-violet-600" />
+                Testimonials
               </div>
-              <Link
-                to="/donate"
-                className="relative inline-flex items-center justify-center gap-2 shrink-0 px-8 py-4 rounded-full bg-violet-600 text-white font-bold text-sm hover:bg-violet-700 transition-colors shadow-[0_10px_28px_rgba(124,58,237,0.28)]"
+              <AnimatedText
+                lines={["Voices from Our Community"]}
+                className="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight leading-tight"
+              />
+            </FadeIn>
+
+            <div className="md:absolute right-0 bottom-0 flex gap-3 mt-8 md:mt-0">
+              <button
+                type="button"
+                onClick={prevTestimonial}
+                className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center text-gray-400 hover:bg-white hover:text-gray-900 transition-all shadow-sm bg-white/50"
+                aria-label="Previous testimonial"
               >
-                Donate & Shine a Light
-                <ArrowRight size={16} />
-              </Link>
+                <ArrowLeft className="w-5 h-5" />
+              </button>
+              <button
+                type="button"
+                onClick={nextTestimonial}
+                className="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center text-white hover:bg-purple-700 transition-all shadow-lg shadow-purple-200"
+                aria-label="Next testimonial"
+              >
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          <div className="w-full overflow-hidden">
+            <div
+              ref={testimonialsRef}
+              className="flex gap-6 items-stretch overflow-x-hidden scroll-smooth"
+            >
+              {TESTIMONIALS.map((item) => (
+                <div
+                  key={item.name}
+                  data-testimonial-card
+                  className="w-[85%] min-w-[85%] sm:w-[calc((100%-1.5rem)/2.25)] sm:min-w-[calc((100%-1.5rem)/2.25)] max-w-[85%] sm:max-w-[calc((100%-1.5rem)/2.25)] shrink-0 flex"
+                >
+                  <TestimonialCard
+                    quote={item.quote}
+                    name={item.name}
+                    role={item.role}
+                    img={resolveMediaUrl(item.img)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="flex justify-center gap-2 mt-6">
+              {Array.from({ length: maxTestimonialIndex + 1 }, (_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => setActiveTestimonial(i)}
+                  aria-label={`Show testimonials ${i + 1} and ${i + 2}`}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    i === activeTestimonial ? "w-6 bg-violet-600" : "w-2 bg-violet-200 hover:bg-violet-300"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Language */}
+      <section className="relative px-6 py-20 md:py-28 overflow-hidden bg-[#F7F7F8]">
+        <div
+          className="absolute inset-0 pointer-events-none opacity-[0.3]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.08) 1px, transparent 0)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="relative max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start"
+          >
+            <div className="lg:col-span-5">
+              <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.28em] text-[#7107E7] mb-5">
+                Our Language
+              </p>
+              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-[-0.03em] leading-[1.12]">
+                Words Matter.
+                <br />
+                <span className="text-[#7107E7]">Choice Matters More.</span>
+              </h2>
+            </div>
+
+            <div className="lg:col-span-7">
+              <p className="text-base md:text-lg text-slate-600 font-medium leading-[1.85] tracking-[-0.01em]">
+                Whether someone uses &ldquo;disabled,&rdquo; &ldquo;person with a disability,&rdquo; &ldquo;differently-abled,&rdquo; or another term, the language they choose is shaped by their lived experience and what they believe best represents them. We respect and support each person&apos;s choice of language.
+              </p>
+
+              <div className="mt-9 flex flex-wrap items-center gap-x-3 gap-y-3">
+                {["disabled", "person with a disability", "differently-abled"].map((term, index, arr) => (
+                  <motion.div
+                    key={term}
+                    initial={{ opacity: 0, y: 8 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4, delay: 0.15 + index * 0.06 }}
+                    className="flex items-center gap-3"
+                  >
+                    <span className="text-sm md:text-[15px] font-semibold text-slate-500 tracking-tight">
+                      {term}
+                    </span>
+                    {index < arr.length - 1 && (
+                      <span className="w-1 h-1 rounded-full bg-slate-300 shrink-0" aria-hidden="true" />
+                    )}
+                  </motion.div>
+                ))}
+              </div>
+
+              <motion.p
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.55, delay: 0.25 }}
+                className="mt-8 pl-5 border-l-2 border-[#7107E7] text-base md:text-lg font-semibold text-slate-900 leading-snug"
+              >
+                At Light Upon Light, we use &ldquo;differently-abled.&rdquo;
+              </motion.p>
             </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Blog */}
-      <section id="blog" className="bg-white py-12 md:py-16 px-6 mb-10 md:mb-14">
+      {/* Our Vision */}
+      <section className="relative px-6 py-20 md:py-28 overflow-hidden bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
+          <div className="relative">
+            <div className="rounded-[1.75rem] overflow-hidden aspect-[16/10] md:aspect-[21/9] ring-1 ring-slate-200/60">
+              <img
+                src={siteImages.wheelchairMeeting}
+                alt="Light Upon Light community gathering"
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            <div className="relative md:absolute md:right-8 md:top-1/2 md:-translate-y-1/2 lg:right-10 md:max-w-xl mt-6 md:mt-0">
+              <div className="rounded-2xl bg-white/95 backdrop-blur-sm border border-slate-200/80 p-7 md:p-10 min-h-[280px] md:min-h-[320px] flex flex-col justify-center shadow-[0_16px_50px_rgba(15,23,42,0.08)]">
+                <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.28em] text-[#7107E7] mb-4">
+                  Our Vision
+                </p>
+                <h2 className="text-2xl md:text-3xl font-bold text-slate-900 tracking-[-0.03em] leading-[1.2] mb-5">
+                  We envision a future where Light Upon Light no longer needs to exist.
+                </h2>
+                <p className="text-sm md:text-base text-slate-500 font-medium leading-relaxed mb-6">
+                  A future where differently-abled people are seen, heard, and supported — with accessible communities and public spaces, the same opportunities to contribute and belong, and a society that sees them for who they are, not just their disability or diagnosis.
+                </p>
+                <p className="text-sm md:text-base font-semibold text-slate-900 leading-snug pl-4 border-l-2 border-[#7107E7]">
+                  Because every life deserves dignity, opportunity, and belonging.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Founder's Diary */}
+      <section id="our-mission" className="px-6 py-20 md:py-28 relative overflow-hidden bg-[#F7FBFF]">
+        <div
+          className="absolute inset-0 pointer-events-none opacity-[0.3]"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 1px 1px, rgba(15,23,42,0.08) 1px, transparent 0)",
+            backgroundSize: "28px 28px",
+          }}
+        />
+        <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+          <FadeIn className="lg:col-span-5">
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#7107E7] mb-5">
+              Founder&apos;s Diary
+            </p>
+
+            <h2 className="text-3xl md:text-[2.35rem] font-bold text-slate-900 tracking-[-0.03em] leading-[1.2] mb-6 max-w-md">
+              Hear the story behind the movement in her own words.
+            </h2>
+
+            <p className="text-base md:text-lg text-slate-500 font-medium leading-relaxed mb-10 max-w-md">
+              Watch our Founder &amp; CEO share the journey from one denied cup of tea to building an organization that fights for dignity, access, and equality every single day.
+            </p>
+
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full overflow-hidden ring-1 ring-slate-200 shrink-0">
+                <img
+                  src={siteImages.founder}
+                  alt="Founder & CEO of Light Upon Light"
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
+              <div>
+                <p className="font-semibold text-slate-900 text-sm">Founder &amp; CEO</p>
+                <p className="text-sm text-slate-500">Light Upon Light</p>
+              </div>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.12} className="lg:col-span-7">
+            <div className="rounded-2xl overflow-hidden ring-1 ring-slate-200/80 aspect-video bg-slate-900">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/ls7bEYWfP9w"
+                title="I Was Denied a Cup of Tea Because of My Disability — The Founder's Diary"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+
+            <a
+              href="https://www.youtube.com/@TheFoundersDiary24"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-red-600 transition-colors"
+            >
+              <Youtube size={18} className="text-red-600" />
+              Visit YouTube Channel
+              <ArrowUpRight size={16} />
+            </a>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* Blog Section - Layout from Screenshot */}
+      <section id="blog" className="bg-white pt-20 pb-8 md:pt-28 md:pb-10 px-6 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto relative z-10">
+          {/* Header */}
+          <div className="grid md:grid-cols-[1.5fr_1fr] gap-8 mb-16 items-start">
             <div>
-              <SectionBadge label="Blog" dotClass="bg-amber-400" />
-              <h2 className="mt-3 text-xl md:text-2xl font-bold text-slate-800 tracking-tight">
-                Stories that Inspire Action
+              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-gray-100 text-[9px] font-bold text-gray-400 mb-6 uppercase tracking-widest bg-gray-50/50">
+                <div className="w-1 h-1 rounded-full bg-gray-300" />
+                Blog
+              </div>
+              <h2 className="font-bold text-slate-900 tracking-tight leading-tight">
+                Stories that Inspires Action
               </h2>
-              <p className="mt-2 text-sm md:text-base text-slate-500 font-medium max-w-md">
+            </div>
+            <div className="pt-6">
+              <p className="text-gray-400 font-medium leading-relaxed max-w-sm">
                 Insights, updates, and stories from our events and communities.
               </p>
             </div>
-            <HoverFillLink
-              to="/blog"
-              variant="purple"
-              className="gap-2 px-6 py-3 font-bold text-xs uppercase tracking-widest shrink-0"
-              labelClassName="inline-flex items-center gap-2"
-            >
-              View All Stories
-              <ArrowUpRight size={16} />
-            </HoverFillLink>
           </div>
 
-          <div className="grid lg:grid-cols-12 gap-4 lg:h-[460px]">
-            {featuredBlogPost && (
-              <Link
-                to={`/blog/${featuredBlogPost.id}`}
-                className="group lg:col-span-7 block h-full min-h-[320px] md:min-h-[360px] lg:min-h-0"
-              >
-                <div className="rounded-2xl p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 h-full shadow-[0_12px_40px_rgba(139,92,246,0.12)]">
-                  <article className="rounded-[1.35rem] bg-white h-full overflow-hidden flex flex-col sm:flex-row">
-                    <div className="relative sm:w-[44%] min-h-[200px] sm:min-h-0 shrink-0 overflow-hidden">
-                      <img
-                        src={resolveMediaUrl(featuredBlogPost.image)}
-                        alt={featuredBlogPost.title}
-                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div className="absolute top-4 left-4">
-                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/95 backdrop-blur text-[10px] font-bold text-violet-600 uppercase tracking-widest shadow-sm">
-                          <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
-                          {featuredBlogPost.category}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex flex-col justify-center flex-1 p-6 md:p-8 bg-gradient-to-br from-white via-white to-violet-50/40">
-                      <span className="text-[10px] font-black uppercase tracking-[0.25em] text-sky-500 mb-3">
-                        Featured Story
-                      </span>
-                      <h3 className="text-xl md:text-2xl font-bold text-slate-800 leading-snug tracking-tight mb-4 group-hover:text-violet-600 transition-colors line-clamp-3">
-                        {featuredBlogPost.title}
-                      </h3>
-                      <p className="text-slate-500 font-medium leading-relaxed line-clamp-3 mb-6 text-sm md:text-base">
-                        {featuredBlogPost.excerpt}
-                      </p>
-                      <div className="mt-auto flex items-center justify-between pt-5 border-t border-slate-100">
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                          {featuredBlogPost.date}
-                        </span>
-                        <span className="inline-flex items-center gap-2 text-sm font-bold text-violet-600 group-hover:gap-3 transition-all">
-                          Read Story
-                          <span className="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center group-hover:bg-violet-600 group-hover:text-white transition-colors">
-                            <ArrowRight size={16} />
-                          </span>
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-              </Link>
-            )}
-
-            <div className="lg:col-span-5 flex flex-col gap-3 h-full min-h-0">
-              {homepageSidebarPosts.map((post, i) => {
-                const accent =
-                  i % 3 === 0
-                    ? { ring: "ring-sky-200", tag: "text-sky-600 bg-sky-50" }
-                    : i % 3 === 1
-                      ? { ring: "ring-violet-200", tag: "text-violet-600 bg-violet-50" }
-                      : { ring: "ring-amber-200", tag: "text-amber-700 bg-amber-50" };
-
-                return (
-                  <Link
-                    key={post.id}
-                    to={`/blog/${post.slug ?? post.id}`}
-                    className="group block flex-1 min-h-0"
+          <div className="grid lg:grid-cols-[1.6fr_1fr] gap-6 lg:gap-8">
+            {/* Featured Post (Left) */}
+            <div ref={blogFeaturedRef} className="bg-[#FBFAFF] rounded-2xl p-5 md:p-6">
+              {[featuredBlogPost].filter(Boolean).map(post => (
+                <div key={post!.id} className="group">
+                  <motion.div
+                    style={{ opacity: blogBlock1Opacity, y: blogBlock1Y }}
+                    className="relative aspect-[21/9] rounded-2xl overflow-hidden mb-6 border border-gray-100"
                   >
-                    <article
-                      className={`h-full min-h-[120px] rounded-xl overflow-hidden bg-[#FAFCFF] border border-slate-100 ring-1 ${accent.ring} hover:shadow-lg hover:shadow-slate-200/60 transition-all duration-300 flex flex-row`}
+                    <img
+                      src={resolveMediaUrl(post!.image)}
+                      alt={post!.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </motion.div>
+
+                  <motion.div style={{ opacity: blogBlock2Opacity, y: blogBlock2Y }}>
+                    <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest block mb-4">
+                      {post!.category}
+                    </span>
+                    <h3 className="text-[1.5rem] font-bold text-slate-900 mb-6 tracking-tight leading-snug group-hover:text-purple-600 transition-colors">
+                      {post!.title}
+                    </h3>
+                  </motion.div>
+
+                  <motion.div style={{ opacity: blogBlock3Opacity, y: blogBlock3Y }}>
+                    <p className="text-gray-400 font-medium leading-relaxed mb-3 text-[1rem]">
+                      {post!.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between pt-6 border-t border-gray-200/70">
+                      <span className="text-[10px] font-bold text-gray-300 uppercase tracking-[0.2em]">
+                        {post!.date}
+                      </span>
+                      <Link to={`/blog/${post!.id}`} className="flex items-center gap-3 text-purple-600 font-black text-sm hover:gap-4 transition-all">
+                        Read More <ArrowRight size={20} />
+                      </Link>
+                    </div>
+                  </motion.div>
+                </div>
+              ))}
+            </div>
+
+            {/* Sidebar Posts (Right) */}
+            <div
+              ref={blogSidebarRef}
+              className="space-y-4 bg-[#FBFAFF] rounded-2xl p-5 md:p-6 overflow-hidden"
+            >
+              {homepageSidebarPosts.map((post, i) => {
+                const motionStyle = blogSidebarMotion[i] ?? blogSidebarMotion[blogSidebarMotion.length - 1];
+                return (
+                  <Link key={post.id} to={`/blog/${post.slug ?? post.id}`} className="block mb-5 last:mb-0">
+                    <motion.div
+                      style={{ x: motionStyle.x, opacity: motionStyle.opacity }}
+                      className="relative overflow-hidden flex flex-col md:flex-row gap-6 p-6 rounded-2xl bg-white border border-gray-100 hover:border-purple-100 transition-all group cursor-pointer will-change-transform"
                     >
-                      <div className="w-28 sm:w-32 shrink-0 self-stretch overflow-hidden">
-                        <img
-                          src={resolveMediaUrl(post.image)}
-                          alt={post.title}
-                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                        />
+                      <div className="w-full md:w-28 h-28 rounded-xl overflow-hidden flex-shrink-0">
+                        <img src={resolveMediaUrl(post.image)} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" />
                       </div>
-                      <div className="flex flex-col justify-center py-4 px-4 flex-1 min-w-0">
-                        <span
-                          className={`inline-flex w-fit px-2 py-0.5 rounded-md text-[9px] font-bold uppercase tracking-widest mb-2 ${accent.tag}`}
-                        >
+                      <div className="flex flex-col justify-center flex-1">
+                        <span className="text-[9px] font-bold text-gray-300 uppercase tracking-widest mb-2">
                           {post.category}
                         </span>
-                        <h4 className="text-sm md:text-base font-bold text-slate-800 leading-snug mb-1.5 group-hover:text-violet-600 transition-colors line-clamp-2">
+                        <h4 className="text-lg font-bold text-slate-900 mb-2 leading-snug group-hover:text-purple-600 transition-colors">
                           {post.title}
                         </h4>
-                        <p className="text-slate-500 text-xs font-medium leading-relaxed line-clamp-1 mb-2 hidden sm:block">
+                        <p className="text-gray-400 text-xs font-medium mb-4 line-clamp-1">
                           {post.excerpt}
                         </p>
-                        <div className="flex items-center justify-between gap-2 mt-auto">
-                          <span className="text-[9px] font-bold text-slate-400 uppercase tracking-widest">
+                        <div className="flex items-center justify-between">
+                          <span className="text-[8px] font-bold text-gray-300 uppercase tracking-widest">
                             {post.date}
                           </span>
-                          <span className="inline-flex items-center gap-1 text-[10px] font-black uppercase tracking-wider text-violet-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                            Read <ArrowUpRight size={12} />
-                          </span>
+                          <div className="flex items-center gap-1.5 text-[9px] font-black uppercase text-slate-900 group-hover:text-purple-600">
+                            Read More <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                          </div>
                         </div>
                       </div>
-                    </article>
+                    </motion.div>
                   </Link>
                 );
               })}
@@ -769,84 +946,49 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* CTA — sits above footer with clear gap, no overlap */}
-      <section className="relative bg-white px-6 md:px-10 pt-10 md:pt-14 pb-10 md:pb-14">
+      {/* Branding Banner / CTA */}
+      <section className="relative px-6 pt-4 pb-12 md:pt-6 md:pb-16 bg-white">
         <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative overflow-hidden rounded-[2.5rem] min-h-[340px] md:min-h-[400px] lg:min-h-[440px]"
-          >
-            <img
-              src={siteImages.ctaBanner}
-              alt=""
-              className="absolute inset-0 w-full h-full object-cover object-right"
-              aria-hidden
-            />
-            {/* Soft left veil so copy stays readable on the lighter side */}
-            <div
-              className="absolute inset-0 pointer-events-none"
-              style={{
-                background:
-                  "linear-gradient(90deg, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.28) 34%, rgba(255,255,255,0.06) 52%, transparent 68%)",
-              }}
-            />
-
-            <div className="relative grid lg:grid-cols-2 gap-8 items-center h-full px-8 py-10 sm:px-10 sm:py-12 md:px-14 md:py-14 lg:px-16 lg:py-16">
-              <div className="max-w-xl">
-                <p className="text-[11px] font-bold text-[#7107E7] uppercase tracking-[0.28em] mb-4">
-                  The global mission of
-                </p>
-                <h2 className="text-[2rem] sm:text-4xl md:text-[2.75rem] font-black text-slate-900 tracking-tight leading-[1.12]">
-                  Light Upon{" "}
-                  <span className="bg-gradient-to-r from-[#7107E7] via-[#8b5cf6] to-[#93c5fd] bg-clip-text text-transparent">
-                    Light
-                  </span>
-                </h2>
-                <p className="mt-5 text-[15px] md:text-base text-slate-700 font-medium leading-relaxed max-w-md">
-                  Join a community committed to advocacy, accessibility, and equality for differently-abled individuals everywhere.
-                </p>
-
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Link
-                    to="/donate"
-                    className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#f5d547] hover:bg-[#efc820] text-slate-900 font-black text-xs sm:text-sm uppercase tracking-[0.14em] transition-colors"
-                  >
-                    Donate Now
-                    <ArrowUpRight size={15} strokeWidth={2.75} />
-                  </Link>
-                  <Link
-                    to="/volunteer"
-                    className="inline-flex items-center justify-center px-7 py-3.5 rounded-full bg-[#7107E7] hover:bg-[#5c06bb] text-white font-black text-xs sm:text-sm uppercase tracking-[0.14em] transition-colors"
-                  >
-                    Partner With Us
-                  </Link>
+          <div className="rounded-[2rem] border border-slate-200/80 bg-[#FBFAFF] px-8 py-12 md:px-14 md:py-16">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10 md:gap-16">
+              <div className="max-w-2xl">
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="w-8 h-px bg-[#7107E7]" />
+                  <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[#7107E7]">
+                    Light Upon Light
+                  </p>
                 </div>
 
-                <ul className="mt-8 flex flex-wrap gap-x-7 gap-y-3">
-                  {[
-                    { icon: Heart, label: "Empower lives" },
-                    { icon: Users, label: "Promote inclusion" },
-                    { icon: Leaf, label: "Build a brighter future" },
-                  ].map(({ icon: Icon, label }) => (
-                    <li key={label} className="inline-flex items-center gap-2 text-[13px] font-medium text-slate-800">
-                      <Icon size={15} strokeWidth={2} className="shrink-0" />
-                      {label}
-                    </li>
-                  ))}
-                </ul>
+                <h2 className="text-3xl md:text-4xl lg:text-[2.75rem] font-bold text-slate-900 tracking-[-0.03em] leading-[1.2]">
+                  Together, we can build a future where every person has the chance to shine.
+                </h2>
+
+                <p className="mt-5 text-base md:text-lg text-slate-500 font-medium leading-relaxed max-w-xl">
+                  Your support fuels dignity, access, and opportunity for differently-abled communities.
+                </p>
               </div>
 
-              {/* Right side reserved for banner graphic */}
-              <div className="hidden lg:block min-h-[220px]" aria-hidden />
+              <div className="flex flex-col sm:flex-row md:flex-col gap-3 shrink-0 md:min-w-[220px]">
+                <Link
+                  to="/donate"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-[#7107E7] text-white font-bold text-sm hover:bg-[#5f06c4] transition-colors"
+                >
+                  Donate Now
+                  <ArrowRight size={16} />
+                </Link>
+                <Link
+                  to="/programs"
+                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full border border-slate-300 bg-white text-slate-700 font-bold text-sm hover:border-[#7107E7] hover:text-[#7107E7] transition-colors"
+                >
+                  Get Involved
+                </Link>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      <Footer topPaddingClass="pt-14 md:pt-16" />
+      <Footer topPaddingClass="pt-24 md:pt-28" />
     </>
   );
 }
