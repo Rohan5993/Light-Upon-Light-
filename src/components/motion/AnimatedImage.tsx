@@ -28,39 +28,27 @@ export default function AnimatedImage({
   const y = useTransform(scrollYProgress, [0, 1], parallax ? ["-6%", "6%"] : ["0%", "0%"]);
   const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1.12, 1.04, 1.1]);
 
-  const revealProps = animateOnMount
-    ? {
-        initial: { opacity: 0, scale: 1.08 },
-        animate: { opacity: 1, scale: 1 },
-      }
-    : {
-        initial: { opacity: 0, scale: 0.94, y: 32 },
-        whileInView: { opacity: 1, scale: 1, y: 0 },
-        viewport: { once: true, amount: 0.25 },
-      };
-
   return (
     <motion.div
       ref={ref}
       className={`overflow-hidden ${containerClassName}`}
-      {...revealProps}
-      transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+      initial={animateOnMount ? false : { opacity: 0, y: 24 }}
+      animate={animateOnMount ? { opacity: 1 } : undefined}
+      whileInView={animateOnMount ? undefined : { opacity: 1, y: 0 }}
+      viewport={animateOnMount ? undefined : { once: true, amount: 0.2 }}
+      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
     >
       <motion.div
-        className="w-full h-full"
+        className="w-full h-full will-change-transform"
         style={parallax ? { y, scale } : undefined}
-        animate={
-          kenBurns
-            ? { scale: [1, 1.06, 1] }
-            : undefined
-        }
+        animate={kenBurns ? { scale: [1, 1.05, 1] } : undefined}
         transition={
           kenBurns
             ? { duration: 18, repeat: Infinity, ease: "easeInOut" }
             : undefined
         }
       >
-        <img src={src} alt={alt} className={className} />
+        <img src={src} alt={alt} className={className} decoding="async" />
       </motion.div>
     </motion.div>
   );
