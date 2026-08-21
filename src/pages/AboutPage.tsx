@@ -1,8 +1,7 @@
 import { motion } from "motion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
-  Youtube,
   ArrowRight,
   HeartHandshake,
   Ear,
@@ -17,10 +16,20 @@ import {
   Calendar,
   MapPin,
   Compass,
+  Linkedin,
 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { siteImages } from "../assets/siteImages";
+import { BLOG_POSTS } from "../data/blogPosts";
+import { getAllBlogPosts } from "../services/blogService";
+import { resolveMediaUrl } from "../lib/publicUrl";
+import storyVideo from "../assets/lul.mp4";
+import boardMember8793 from "../assets/board-members/IMG_8793.webp";
+import boardMember8990 from "../assets/board-members/IMG_8990.webp";
+import boardMember9354 from "../assets/board-members/IMG_9354.webp";
+import boardMember9397 from "../assets/board-members/IMG_9397.webp";
+import boardMember9405 from "../assets/board-members/IMG_9405.webp";
 
 const HISTORY = [
   {
@@ -187,6 +196,64 @@ const approachAccent = {
   amber: { stripe: "bg-amber-400", icon: "bg-amber-100 text-amber-700", label: "text-amber-600" },
 };
 
+const BOARD_MEMBERS: {
+  name: string;
+  designation: string;
+  image: string;
+  blurb: string[];
+  linkedin?: string;
+}[] = [
+  {
+    name: "Megan Brown",
+    designation: "Treasurer",
+    image: boardMember9354,
+    blurb: [
+      "Megan Brown is an entrepreneur and business leader with experience in operations, sales, product development, project management, and marketing. She is the founder of Alida's Bakery, which she grew from a garage-based startup into a successful retail bakery and wholesale distribution business.",
+      "Her professional background also includes sales, marketing, client relations, and writing, giving her a broad understanding of both business operations and organizational growth. As Light Upon Light's Board Treasurer, Megan helps provide financial oversight, support responsible financial planning, and guide the organization toward sustainable growth as we continue expanding our programs and impact.",
+    ],
+    linkedin: "https://www.linkedin.com/in/megan-b-zebari",
+  },
+  {
+    name: "William Phillips",
+    designation: "Strategic Partnerships & Business Development",
+    image: boardMember8990,
+    blurb: [
+      "William Phillips is an entrepreneur and business leader with more than 25 years of experience in supply chain, logistics, operations, and business development. He is the founder of W Phillips Enterprises and has extensive experience building relationships and developing opportunities across the private and public sectors.",
+      "As Light Upon Light's Board Member — Strategic Partnerships & Business Development, William helps cultivate strategic relationships, identify partnership opportunities, and strengthen connections with businesses, foundations, and philanthropic organizations. His experience and relationship-building expertise support Light Upon Light's continued growth and help expand the resources and partnerships behind our mission.",
+    ],
+    linkedin: "https://www.linkedin.com/in/william-phillips-53834718b",
+  },
+  {
+    name: "Meenakshi “Meena” Das",
+    designation: "Accessibility & Technology Advisor",
+    image: boardMember9397,
+    blurb: [
+      "Meenakshi “Meena” Das is a software engineer at Microsoft, disability advocate, and accessibility thought leader working at the intersection of technology, accessibility, and inclusion. She combines her technical expertise and lived experience to help create more accessible products, workplaces, and communities.",
+      "Meena has been recognized as a Disability:IN NextGen Leader of the Year, a Stevie Social Change Maker of the Year, a University of Washington DO-IT Trailblazer, and an inductee into the Susan M. Daniels Disability Mentoring Hall of Fame. As Light Upon Light's Accessibility & Technology Advisor, she brings her expertise to strengthening accessibility across our programs, technology, and organizational work.",
+    ],
+    linkedin: "https://www.linkedin.com/in/meena11",
+  },
+  {
+    name: "Sarah Bekins Tompkins",
+    designation: "Community Outreach & Participant Engagement",
+    image: boardMember9405,
+    blurb: [
+      "Sarah Bekins Tompkins is a rare disease advocate and community leader with extensive experience in advocacy, public engagement, and elevating the perspectives of people with lived experience. Her work includes serving on the boards of the Northwest Rare Disease Coalition and Connective Strength, as well as contributing as a consumer reviewer for the Congressionally Directed Medical Research Programs and as a PCORI Ambassador.",
+      "As Light Upon Light's Board Director — Community Outreach & Participant Engagement, Sarah helps strengthen relationships with the communities we serve, engage participants in our programs, and ensure their experiences and perspectives remain an important part of our work.",
+    ],
+    linkedin: "https://www.linkedin.com/in/sarah-bekins-tompkins-a6663b160",
+  },
+  {
+    name: "Dr. Muhammad Salah",
+    designation: "Communications & Outreach",
+    image: boardMember8793,
+    blurb: [
+      "Dr. Muhammad Salah is an internationally recognized educator, scholar, speaker, and media professional with decades of experience connecting with audiences around the world. He holds a PhD in Comparative Fiqh, a degree in Shari'ah and Islamic Law from Al-Azhar University, and a bachelor's degree in pharmacology.",
+      "Throughout his career, he has taught at universities and educational institutions and produced more than 1,500 hours of television and educational programming. As Light Upon Light's Board Director — Communications & Outreach, Dr. Salah brings his extensive experience in media, public speaking, and community engagement to help share our story, spread our mission, and expand awareness of our work.",
+    ],
+  },
+];
+
 const GET_INVOLVED = [
   {
     title: "Donate",
@@ -214,6 +281,30 @@ const GET_INVOLVED = [
 export default function AboutPage() {
   const { hash } = useLocation();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [flippedBoard, setFlippedBoard] = useState<number | null>(null);
+  const storyVideoRef = useRef<HTMLVideoElement>(null);
+  const [blogStoryImage, setBlogStoryImage] = useState(
+    BLOG_POSTS.find((post) => post.isFeatured)?.image ?? BLOG_POSTS[0].image,
+  );
+
+  useEffect(() => {
+    const video = storyVideoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.defaultMuted = true;
+    video.loop = true;
+    video.playsInline = true;
+    const play = () => {
+      video.play().catch(() => {});
+    };
+    play();
+    video.addEventListener("canplay", play);
+    video.addEventListener("loadeddata", play);
+    return () => {
+      video.removeEventListener("canplay", play);
+      video.removeEventListener("loadeddata", play);
+    };
+  }, []);
 
   useEffect(() => {
     if (!hash) return;
@@ -225,10 +316,27 @@ export default function AboutPage() {
     });
   }, [hash]);
 
+  useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      try {
+        const posts = await getAllBlogPosts();
+        if (!isMounted || !posts.length) return;
+        const featured = posts.find((post) => post.isFeatured) ?? posts[0];
+        if (featured?.image) setBlogStoryImage(featured.image);
+      } catch {
+        // Keep the local blog fallback image if Strapi is unreachable.
+      }
+    })();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return (
     <>
       <Header variant="dark" />
-      <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col">
+      <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col overflow-x-hidden">
 
       {/* 1) Hero Section */}
       <motion.section
@@ -236,7 +344,7 @@ export default function AboutPage() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="px-6 pt-10 pb-16 relative overflow-hidden"
+        className="px-4 sm:px-6 pt-10 pb-12 sm:pb-16 relative overflow-hidden"
       >
         <div className="absolute inset-0 bg-gradient-to-br from-purple-50 via-white to-blue-50" />
         <div className="max-w-7xl mx-auto relative z-10 grid lg:grid-cols-[1.2fr_1fr] gap-10 items-center">
@@ -268,10 +376,10 @@ export default function AboutPage() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, delay: 0.05 }}
-        className="px-6 py-20 bg-white"
+        className="px-4 sm:px-6 py-14 sm:py-20 bg-white"
       >
         <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-6 md:p-10 lg:p-14">
-          <div className="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-14 items-center">
+          <div className="grid lg:grid-cols-[1fr_1.15fr] gap-10 lg:gap-14 items-center">
             <div>
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-violet-500 mb-5">Our Story</p>
               <blockquote className="text-2xl sm:text-3xl md:text-[2rem] font-bold text-slate-800 leading-tight tracking-tight mb-6">
@@ -286,7 +394,7 @@ export default function AboutPage() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 mt-8 w-full">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-8 w-full">
                 {ORG_FACTS.map((fact) => {
                   const accent = orgFactAccent[fact.accent];
                   const Icon = fact.icon;
@@ -310,12 +418,19 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-              <div className="rounded-[1.5rem] overflow-hidden shadow-xl border-4 border-white aspect-[4/3]">
-                <img
-                  src={siteImages.ourStory}
-                  alt="It started with a cup of tea — Light Upon Light origin story"
-                  className="w-full h-full object-cover"
+            <div className="relative mx-auto w-full max-w-xl sm:max-w-2xl lg:max-w-none">
+              <div className="rounded-[1.5rem] overflow-hidden shadow-xl border-4 border-white h-[20rem] sm:h-[24rem] lg:h-[30rem] bg-slate-900">
+                <video
+                  ref={storyVideoRef}
+                  src={storyVideo}
+                  poster={siteImages.ourStory}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="auto"
+                  className="w-full h-full object-cover object-center"
+                  aria-label="Light Upon Light origin story"
                 />
               </div>
             </div>
@@ -329,7 +444,7 @@ export default function AboutPage() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, delay: 0.05 }}
-        className="px-6 py-20 bg-[#FAFCFF]"
+        className="px-4 sm:px-6 py-14 sm:py-20 bg-[#FAFCFF]"
       >
         <div className="max-w-7xl mx-auto">
           <div className="mb-10 max-w-2xl">
@@ -374,7 +489,7 @@ export default function AboutPage() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, delay: 0.05 }}
-        className="px-6 py-20 bg-[#f8f5ff]"
+        className="px-4 sm:px-6 py-14 sm:py-20 bg-[#f8f5ff]"
       >
         <div className="max-w-7xl mx-auto">
           <div className="mb-10 md:mb-12 max-w-2xl">
@@ -426,88 +541,22 @@ export default function AboutPage() {
         </div>
       </motion.section>
 
-      {/* 6) Founder Story — YouTube */}
-      <motion.section
-        id="youtube"
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7, delay: 0.05 }}
-        className="relative px-6 py-16 md:py-20 scroll-mt-24 overflow-hidden bg-gradient-to-br from-sky-100 via-sky-50 to-amber-50"
-      >
-        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-sky-300 via-sky-400 to-amber-300" />
-        <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-sky-300 via-sky-400 to-amber-300" />
-
-        <div className="relative max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-[1fr_1.15fr] gap-10 lg:gap-14 items-center">
-            <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-sky-300 text-[10px] font-bold text-sky-700 mb-5 uppercase tracking-widest bg-white/80 backdrop-blur-sm shadow-sm">
-                <Youtube size={12} className="text-red-500" />
-                The Founder&apos;s Diary
-              </div>
-              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-4 leading-tight">
-                Hear the story behind the movement in her own words.
-              </h2>
-              <p className="text-slate-700 font-medium leading-relaxed mb-6">
-                Watch our Founder &amp; CEO share the journey from one denied cup of tea to building an organization that fights for dignity, access, and equality every single day.
-              </p>
-
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden border-2 border-white shadow-[0_8px_24px_rgba(14,165,233,0.18)] shrink-0">
-                  <img src={siteImages.foundersDiary} alt="Founder and CEO of Light Upon Light" className="w-full h-full object-cover object-top" />
-                </div>
-                <div>
-                  <p className="text-slate-900 font-bold">Founder &amp; CEO</p>
-                  <p className="text-slate-600 text-sm">Light Upon Light</p>
-                </div>
-              </div>
-
-              <a
-                href="https://www.youtube.com/@TheFoundersDiary24"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-red-600 text-white text-sm font-bold hover:bg-red-500 transition-colors shadow-md shadow-red-200/50"
-              >
-                <Youtube size={18} />
-                Visit YouTube Channel
-              </a>
-            </div>
-
-            <div className="rounded-[1.75rem] p-[2px] bg-gradient-to-br from-sky-300 via-sky-200 to-amber-200 shadow-[0_12px_32px_rgba(14,165,233,0.12)]">
-              <div className="rounded-[1.65rem] overflow-hidden bg-white aspect-video">
-                <iframe
-                  className="w-full h-full border-0"
-                  src="https://www.youtube.com/embed/ls7bEYWfP9w"
-                  title="The Founder's Diary — Light Upon Light"
-                  loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </motion.section>
-
-      {/* 7) Our Approach */}
+      {/* 6) Our Approach */}
       <motion.section
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, delay: 0.05 }}
-        className="px-6 py-20 bg-white"
+        className="px-4 sm:px-6 py-14 sm:py-20 bg-white"
       >
         <div className="max-w-7xl mx-auto">
           <div className="max-w-2xl mb-10">
-            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-slate-400 mb-3">Our Approach</p>
-            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight mb-3">
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-violet-500 mb-3">How We Create Change</p>
+            <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
               Creating Lasting Change Takes
               <br />
               <span className="text-sky-500">All of Us.</span>
             </h2>
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-violet-500">
-              How We Create Change
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -539,10 +588,116 @@ export default function AboutPage() {
         </div>
       </motion.section>
 
+      {/* 7) Our Board Members */}
+      <motion.section
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, delay: 0.05 }}
+        className="relative px-4 sm:px-6 py-16 sm:py-24 overflow-hidden bg-white"
+      >
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage:
+              "radial-gradient(ellipse at 8% 20%, rgba(113,7,231,0.06) 0%, transparent 50%), radial-gradient(ellipse at 92% 80%, rgba(56,189,248,0.07) 0%, transparent 48%)",
+          }}
+        />
+
+        <div className="relative max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-14">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-[#7107E7] mb-4">
+                Leadership
+              </p>
+              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-[-0.04em] leading-[1.05]">
+                Our Board
+                <span className="block text-slate-300">Members</span>
+              </h2>
+            </div>
+            <p className="text-slate-500 font-medium leading-relaxed max-w-md lg:text-right">
+              Guiding Light Upon Light with lived experience, care, and a commitment to dignity for every differently-abled individual.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
+            {BOARD_MEMBERS.map((member, index) => {
+              const isFlipped = flippedBoard === index;
+              return (
+              <motion.article
+                key={`${member.image}-${index}`}
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.6, delay: index * 0.08 }}
+                className="group [perspective:1200px]"
+              >
+                <div
+                  className={`relative aspect-square w-full transition-transform duration-700 ease-out [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)] ${
+                    isFlipped ? "[transform:rotateY(180deg)]" : ""
+                  }`}
+                >
+                  <div className="absolute inset-0 overflow-hidden rounded-2xl bg-slate-200 [backface-visibility:hidden]">
+                    <img
+                      src={member.image}
+                      alt={`${member.name}, ${member.designation}`}
+                      className="absolute inset-0 w-full h-full object-cover object-top"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/20 to-transparent" />
+                    <button
+                      type="button"
+                      onClick={() => setFlippedBoard(isFlipped ? null : index)}
+                      className="absolute inset-0 z-0"
+                      aria-label={`${isFlipped ? "Hide" : "Show"} blurb for ${member.name}`}
+                    />
+                    <div className="absolute inset-x-0 bottom-0 z-10 p-3.5 sm:p-4 pointer-events-none">
+                      <h3 className="text-sm sm:text-base font-bold text-white tracking-tight leading-tight">
+                        {member.name}
+                      </h3>
+                      <p className="mt-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.08em] leading-snug text-white/90">
+                        {member.designation}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-[#7107E7] to-[#4c05a0] p-3 sm:p-4 flex flex-col text-white [transform:rotateY(180deg)] [backface-visibility:hidden] overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={() => setFlippedBoard(isFlipped ? null : index)}
+                      className="min-h-0 flex-1 overflow-y-auto overscroll-contain pr-1 space-y-2.5 text-left"
+                      aria-label={`Hide blurb for ${member.name}`}
+                    >
+                      {member.blurb.map((paragraph) => (
+                        <p key={paragraph.slice(0, 32)} className="text-[11px] sm:text-xs font-medium leading-relaxed text-white/95">
+                          {paragraph}
+                        </p>
+                      ))}
+                    </button>
+                  </div>
+                </div>
+                {member.linkedin && (
+                  <a
+                    href={member.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2.5 inline-flex items-center justify-center gap-1.5 w-full rounded-full border border-slate-200 bg-white py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#0A66C2] hover:border-[#0A66C2] hover:bg-[#0A66C2] hover:text-white transition-colors"
+                    aria-label={`${member.name} on LinkedIn`}
+                  >
+                    <Linkedin size={13} />
+                    LinkedIn
+                  </a>
+                )}
+              </motion.article>
+              );
+            })}
+          </div>
+        </div>
+      </motion.section>
+
       {/* 8) FAQ */}
       <section
         id="faq"
-        className="px-6 py-20 bg-[#eef5ff] scroll-mt-24"
+        className="px-4 sm:px-6 py-14 sm:py-20 bg-[#eef5ff] scroll-mt-24"
       >
         <div className="max-w-7xl mx-auto">
           <div className="lg:flex lg:items-stretch lg:gap-16">
@@ -638,7 +793,7 @@ export default function AboutPage() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7, delay: 0.05 }}
-        className="px-6 py-20 bg-white"
+        className="px-4 sm:px-6 py-14 sm:py-20 bg-white"
       >
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
@@ -655,14 +810,14 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
             {GET_INVOLVED.map((item) => (
               <Link key={item.title} to={item.to} className="group block h-full">
                 <article className="h-full rounded-2xl overflow-hidden border border-gray-100 bg-white shadow-sm hover:shadow-lg transition-all hover:-translate-y-0.5">
                   <div className="aspect-[16/10] overflow-hidden">
                     <img
-                      src={item.image}
-                      alt=""
+                      src={resolveMediaUrl(item.title === "Read Our Stories" ? blogStoryImage : item.image)}
+                      alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />
                   </div>

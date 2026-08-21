@@ -20,6 +20,9 @@
   svg {
     @apply max-w-full;
   }
+  img {
+    height: auto;
+  }
   iframe {
     max-width: 100%;
   }

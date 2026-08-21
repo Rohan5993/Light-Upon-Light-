@@ -17,9 +17,9 @@ export default function ProgramsPage() {
   return (
     <>
       <Header variant="dark" />
-      <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col">
+      <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col overflow-x-hidden">
 
-      <section className="px-6 pt-10 pb-14 md:pb-20 relative overflow-hidden">
+      <section className="px-4 sm:px-6 pt-10 pb-14 md:pb-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-violet-50 via-white to-sky-50" />
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="inline-flex w-fit items-center gap-2 px-3 py-1.5 rounded-full border border-violet-200 text-[10px] font-bold text-violet-600 mb-6 uppercase tracking-widest bg-white">
@@ -35,8 +35,8 @@ export default function ProgramsPage() {
         </div>
       </section>
 
-      <section className="px-6 pb-20">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <section className="px-4 sm:px-6 pb-16 sm:pb-20">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
           {PROGRAMS.map((program, i) => (
             <Link
               key={program.id}

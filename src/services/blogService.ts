@@ -1,4 +1,5 @@
 import { BLOG_POSTS, type BlogPost } from "../data/blogPosts";
+import { preferWebpUrl } from "../lib/publicUrl";
 
 type StrapiRecord = Record<string, unknown>;
 
@@ -52,7 +53,8 @@ function pickImageUrl(rawImage: unknown): string | undefined {
 
   const url = (fromFormat as string | undefined) ?? (attrs.url as string | undefined);
   if (!url) return undefined;
-  return url.startsWith("http") ? url : `${STRAPI_URL}${url}`;
+  const absolute = url.startsWith("http") ? url : `${STRAPI_URL}${url}`;
+  return preferWebpUrl(absolute);
 }
 
 function pickCategory(raw: StrapiRecord): string {

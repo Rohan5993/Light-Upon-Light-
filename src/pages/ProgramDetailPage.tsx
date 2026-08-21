@@ -17,8 +17,8 @@ function CtaLink({
 }) {
   const className =
     variant === "primary"
-      ? "inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-violet-600 text-white font-bold text-sm hover:bg-violet-700 transition-colors"
-      : "inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-white border border-violet-200 text-slate-800 font-bold text-sm hover:bg-violet-50 transition-colors";
+      ? "inline-flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 rounded-full bg-violet-600 text-white font-bold text-sm hover:bg-violet-700 transition-colors"
+      : "inline-flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 rounded-full bg-white border border-violet-200 text-slate-800 font-bold text-sm hover:bg-violet-50 transition-colors";
 
   if (cta.external) {
     return (
@@ -66,9 +66,9 @@ export default function ProgramDetailPage() {
   return (
     <>
       <Header variant="dark" />
-      <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col">
+      <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col overflow-x-hidden">
 
-      <div className="max-w-7xl mx-auto w-full px-6 pt-8 mb-8">
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-8 mb-8">
         <nav className="flex flex-wrap items-center gap-2 text-sm text-slate-500 font-medium">
           <Link to="/" className="inline-flex items-center text-violet-600 hover:text-violet-700 transition-colors">
             <House size={16} />
@@ -83,7 +83,7 @@ export default function ProgramDetailPage() {
       </div>
 
       {/* Hero */}
-      <section className="px-6 pb-12">
+      <section className="px-4 sm:px-6 pb-12">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -126,8 +126,8 @@ export default function ProgramDetailPage() {
               </div>
             </div>
 
-            <div className="rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.12)]">
-              <div className="rounded-[1.85rem] overflow-hidden aspect-[4/3]">
+            <div className="rounded-2xl sm:rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.12)]">
+              <div className="rounded-[1.1rem] sm:rounded-[1.85rem] overflow-hidden aspect-[4/3]">
                 <img
                   src={resolveMediaUrl(program.img)}
                   alt={program.title}
@@ -141,7 +141,7 @@ export default function ProgramDetailPage() {
       </section>
 
       {/* Story */}
-      <section className="relative px-6 py-20 md:py-28 overflow-hidden">
+      <section className="relative px-4 sm:px-6 py-16 sm:py-20 md:py-28 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-sky-50 via-violet-50/40 to-white pointer-events-none" />
         <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-200 to-transparent" />
 
@@ -159,7 +159,7 @@ export default function ProgramDetailPage() {
               </p>
             </div>
 
-            <div className="rounded-[1.75rem] bg-white/80 backdrop-blur-sm border border-white shadow-[0_8px_40px_rgba(100,80,160,0.06)] p-8 md:p-12 lg:p-14">
+            <div className="rounded-2xl sm:rounded-[1.75rem] bg-white/80 backdrop-blur-sm border border-white shadow-[0_8px_40px_rgba(100,80,160,0.06)] p-5 sm:p-8 md:p-12 lg:p-14">
               {/* Lead paragraph */}
               <motion.p
                 initial={{ opacity: 0, y: 12 }}
@@ -193,7 +193,7 @@ export default function ProgramDetailPage() {
       </section>
 
       {/* CTA band */}
-      <section className="px-6 py-16 md:py-20 bg-white">
+      <section className="px-4 sm:px-6 py-16 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-8 md:p-12">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
             <div className="max-w-xl">
@@ -213,7 +213,7 @@ export default function ProgramDetailPage() {
       </section>
 
       {/* Next / Prev */}
-      <section className="px-6 pb-20">
+      <section className="px-4 sm:px-6 pb-16 sm:pb-20">
         <div className="max-w-7xl mx-auto grid sm:grid-cols-2 gap-4">
           <Link
             to={`/programs/${prevProgram.id}`}

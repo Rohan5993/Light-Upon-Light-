@@ -1,5 +1,14 @@
 import { Instagram, Facebook, Linkedin, Youtube, Music2, MapPin, Mail, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
+import { SOCIAL_LINKS } from "../data/socialLinks";
+
+const SOCIAL_ICONS = {
+  Instagram,
+  Facebook,
+  LinkedIn: Linkedin,
+  YouTube: Youtube,
+  TikTok: Music2,
+} as const;
 
 type FooterProps = {
   className?: string;
@@ -8,11 +17,11 @@ type FooterProps = {
 
 export default function Footer({ className = "", topPaddingClass = "pt-48" }: FooterProps) {
   return (
-    <footer className={`relative bg-[#270E32] ${topPaddingClass} pb-14 px-6 md:px-16 overflow-hidden ${className}`}>
+    <footer className={`relative bg-[#270E32] ${topPaddingClass} pb-6 px-4 sm:px-6 md:px-16 overflow-hidden ${className}`}>
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-12 mb-12">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6 mb-6">
           {/* Logo & Description */}
-          <div className="space-y-8 md:max-w-[280px] lg:max-w-[320px] shrink-0">
+          <div className="space-y-4 md:max-w-[280px] lg:max-w-[320px] shrink-0">
             <div className="flex items-center gap-3">
               <div className="grid grid-cols-2 gap-1">
                 <div className="w-3 h-3 bg-white rounded-md" />
@@ -25,35 +34,36 @@ export default function Footer({ className = "", topPaddingClass = "pt-48" }: Fo
             <p className="text-gray-400 leading-relaxed text-[15px] font-medium">
               Uniting hearts and actions to create positive change that lasts beyond a single moment.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <a href="https://www.instagram.com/light_upon_light14/?igsh=MXZsbHhtc3N1aGFnZA%3D%3D&utm_source=qr#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-all">
-                <Instagram size={18} />
-              </a>
-              <a href="https://www.facebook.com/people/Light-Upon-Light/61576724334985/?name=xhp_nt__fb__action__open_user" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-all">
-                <Facebook size={18} />
-              </a>
-              <a href="https://www.linkedin.com/in/ronahi-zebari-a7831b35b/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-all">
-                <Linkedin size={18} />
-              </a>
-              <a href="https://www.youtube.com/@TheFoundersDiary24" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-all">
-                <Youtube size={18} />
-              </a>
-              <a href="https://www.tiktok.com/@lightuponlight08?_t=ZT-903BJ5tKo3R&_r=1" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-all">
-                <Music2 size={18} />
-              </a>
+            <div className="flex flex-wrap gap-3">
+              {SOCIAL_LINKS.map((item) => {
+                const Icon = SOCIAL_ICONS[item.label];
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={item.label}
+                    className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-all"
+                  >
+                    <Icon size={18} />
+                  </a>
+                );
+              })}
             </div>
           </div>
 
           {/* Quick Links */}
-          <div className="space-y-8 shrink-0">
+          <div className="space-y-4 shrink-0">
             <h4 className="text-white font-bold text-lg">Quick Links</h4>
-            <ul className="space-y-4">
+            <ul className="space-y-3">
               {[
-                { label: 'About Us', path: '/about' },
                 { label: 'Programs', path: '/programs' },
+                { label: 'About Us', path: '/about' },
                 { label: 'Blogs', path: '/blog' },
+                { label: 'Volunteer', path: '/volunteer' },
+                { label: 'Contact Us', path: '/contact' },
                 { label: 'Donate', path: '/donate' },
-                { label: 'Get Involved', path: '/programs' }
               ].map((link) => (
                 <li key={link.label}>
                   <Link to={link.path} className="text-gray-400 hover:text-white transition-colors text-[15px] font-medium">
@@ -65,9 +75,9 @@ export default function Footer({ className = "", topPaddingClass = "pt-48" }: Fo
           </div>
 
           {/* Contact */}
-          <div className="space-y-8 md:max-w-[260px] shrink-0">
+          <div className="space-y-4 md:max-w-[260px] shrink-0">
             <h4 className="text-white font-bold text-lg">Contact</h4>
-            <ul className="space-y-6">
+            <ul className="space-y-4">
               <li className="flex items-start gap-4 text-gray-400">
                 <MapPin className="w-5 h-5 flex-shrink-0 text-white" />
                 <span className="text-[15px] font-medium leading-tight pt-0.5">Greater Seattle Area</span>

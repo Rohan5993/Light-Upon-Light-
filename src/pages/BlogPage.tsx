@@ -52,14 +52,14 @@ export default function BlogPage() {
   return (
     <>
       <Header variant="dark" />
-      <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col">
+      <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col overflow-x-hidden">
       <div className="absolute inset-0 flex pointer-events-none opacity-[0.03]">
         {[...Array(6)].map((_, i) => (
           <div key={i} className="h-full flex-1 border-r border-black" />
         ))}
       </div>
 
-      <main className="max-w-7xl mx-auto relative z-10 px-6 w-full pt-10">
+      <main className="max-w-7xl mx-auto relative z-10 px-4 sm:px-6 w-full pt-10">
         <div className="mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-gray-200 text-[10px] font-bold text-gray-500 mb-6 uppercase tracking-widest bg-white">
             <div className="w-1.5 h-1.5 rounded-full bg-purple-600" />
@@ -73,7 +73,7 @@ export default function BlogPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
           {paginatedPosts.map((post, i) => (
             <motion.article
               key={post.id}

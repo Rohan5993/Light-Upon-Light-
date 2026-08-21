@@ -8,10 +8,11 @@ interface HeaderProps {
 }
 
 const NAV_LINKS = [
-  { to: "/", label: "Home", isActive: (pathname: string, hash: string) => pathname === "/" && hash !== "#our-mission" },
-  { to: "/about", label: "About Us", isActive: (pathname: string) => pathname.startsWith("/about") },
   { to: "/programs", label: "Programs", isActive: (pathname: string) => pathname.startsWith("/programs") },
+  { to: "/about", label: "About Us", isActive: (pathname: string) => pathname.startsWith("/about") },
   { to: "/blog", label: "Blogs", isActive: (pathname: string) => pathname.startsWith("/blog") },
+  { to: "/volunteer", label: "Volunteer", isActive: (pathname: string) => pathname.startsWith("/volunteer") },
+  { to: "/contact", label: "Contact", isActive: (pathname: string) => pathname.startsWith("/contact") },
 ] as const;
 
 export default function Header({ variant = "light" }: HeaderProps) {
@@ -58,7 +59,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
     <>
       <div className="h-[50px] sm:h-[88px] md:h-[148px] lg:h-[132px]" aria-hidden="true" />
       <header
-        className={`fixed top-0 left-0 w-full z-50 pointer-events-none h-[50px] lg:h-auto px-6 md:px-16 lg:py-0 lg:pt-[20px] flex items-center ${mobileHeaderGlass} lg:bg-transparent lg:backdrop-blur-none lg:backdrop-saturate-100 lg:border-b-0 lg:shadow-none ${
+        className={`fixed top-0 left-0 w-full z-50 pointer-events-none h-[50px] lg:h-auto px-4 sm:px-6 md:px-16 lg:py-0 lg:pt-[20px] flex items-center ${mobileHeaderGlass} lg:bg-transparent lg:backdrop-blur-none lg:backdrop-saturate-100 lg:border-b-0 lg:shadow-none ${
           isScrolled ? "lg:pb-3" : "lg:pb-8"
         }`}
       >
@@ -74,7 +75,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
               <div className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${logoDotClass} rounded-full`} />
               <div className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${logoDotClass} rounded-full`} />
             </div>
-            <span className={`${logoTextClass} font-bold text-xs sm:text-base md:text-xl tracking-tight truncate min-w-0`}>
+            <span className={`${logoTextClass} font-bold text-xs sm:text-base md:text-xl tracking-tight whitespace-nowrap leading-none min-w-0`}>
               Light Upon Light
             </span>
           </Link>
@@ -104,25 +105,25 @@ export default function Header({ variant = "light" }: HeaderProps) {
 
         {/* Desktop */}
         <div
-          className={`hidden lg:flex items-center w-full min-w-0 pointer-events-auto max-w-7xl mx-auto transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
-            isScrolled ? "justify-center" : "justify-between"
+          className={`hidden lg:grid items-center w-full min-w-0 pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+            isScrolled ? "grid-cols-1 justify-items-center max-w-7xl mx-auto" : "grid-cols-[1fr_auto_1fr]"
           }`}
         >
           {!isScrolled && (
-            <Link to="/" className="flex items-center gap-2 group">
+            <Link to="/" className="flex items-center gap-2.5 group justify-self-start">
               <div className="grid grid-cols-2 gap-0.5 group-hover:rotate-12 transition-transform duration-500 shrink-0">
                 <div className={`w-3.5 h-3.5 ${logoDotClass} rounded-full`} />
                 <div className={`w-3.5 h-3.5 ${logoDotClass} rounded-full`} />
                 <div className={`w-3.5 h-3.5 ${logoDotClass} rounded-full`} />
                 <div className={`w-3.5 h-3.5 ${logoDotClass} rounded-full`} />
               </div>
-              <span className={`${logoTextClass} font-bold text-xl tracking-tight`}>
+              <span className={`${logoTextClass} font-bold text-xl tracking-tight whitespace-nowrap leading-none`}>
                 Light Upon Light
               </span>
             </Link>
           )}
 
-          <nav className="flex items-center bg-white px-3 py-3 rounded-full shadow-xl gap-1">
+          <nav className="flex items-center bg-white px-3 py-3 rounded-full shadow-xl gap-1 justify-self-center">
             {isScrolled && (
               <Link to="/" className="flex items-center gap-2 pl-2 pr-2 group shrink-0" aria-label="Light Upon Light home">
                 <div className="grid grid-cols-2 gap-0.5 group-hover:rotate-12 transition-transform duration-500 shrink-0">
@@ -137,16 +138,16 @@ export default function Header({ variant = "light" }: HeaderProps) {
               </Link>
             )}
 
-            <ul className="flex items-center gap-1 text-[15px]">
+            <ul className="flex items-center gap-1 text-[12px]">
               {NAV_LINKS.map((link) => {
-                const active = link.isActive(pathname, hash);
+                const active = link.isActive(pathname);
                 return (
                   <li key={link.to}>
                     <HoverFillLink
                       to={link.to}
                       variant={navVariant(active)}
-                      className={`${link.to === "/" ? "px-6" : "px-5"} py-2.5`}
-                      labelClassName={active ? "font-black" : "font-bold"}
+                      className="px-5 py-2.5"
+                      labelClassName={`uppercase tracking-wider ${active ? "font-black" : "font-bold"}`}
                     >
                       {link.label}
                     </HoverFillLink>
@@ -170,7 +171,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
             <HoverFillLink
               to="/donate"
               variant="white"
-              className={`h-11 px-8 text-sm font-black whitespace-nowrap uppercase tracking-wider ${donateChromeClass}`}
+              className={`h-11 px-8 text-sm font-black whitespace-nowrap uppercase tracking-wider justify-self-end ${donateChromeClass}`}
             >
               Donate Now
             </HoverFillLink>
@@ -195,14 +196,14 @@ export default function Header({ variant = "light" }: HeaderProps) {
       >
         <ul className="flex flex-col gap-1">
           {NAV_LINKS.map((link) => {
-            const active = link.isActive(pathname, hash);
+            const active = link.isActive(pathname);
             return (
               <li key={link.to}>
                 <HoverFillLink
                   to={link.to}
                   variant={navVariant(active)}
-                  className="w-full px-4 py-3 text-base"
-                  labelClassName={`w-full text-center ${active ? "font-black" : "font-bold"}`}
+                  className="w-full px-4 py-3 text-[12px]"
+                  labelClassName={`w-full text-center uppercase tracking-wider ${active ? "font-black" : "font-bold"}`}
                   onClick={() => setMobileOpen(false)}
                 >
                   {link.label}

@@ -3,6 +3,8 @@ import founder from "./images/founder.webp";
 import foundersDiary from "./images/founders-diary.webp";
 import heroWheelchair from "./images/hero-wheelchair.webp";
 import heroWheelchairRight from "./images/hero-wheelchair-right.webp";
+import heroGirlFountain from "./images/hero-girl-fountain.webp";
+import heroHomepage from "./images/hero-homepage.webp";
 import wheelchairMeeting from "./images/wheelchair-meeting.webp";
 import ourVision from "./images/our-vision.webp";
 import aboutHero from "./images/about-hero.webp";
@@ -27,7 +29,7 @@ import programSendingLightAbroad3 from "./images/program-sending-light-abroad-3.
 import programMeetOurLight from "./images/program-meet-our-light.webp";
 import programMeetOurLight2 from "./images/program-meet-our-light-2.webp";
 import programMeetOurLight3 from "./images/program-meet-our-light-3.webp";
-import quoteMark from "./images/quote-mark.png";
+import quoteMark from "./images/quote-mark.webp";
 
 export const siteImages = {
   donation,
@@ -35,6 +37,8 @@ export const siteImages = {
   foundersDiary,
   heroWheelchair,
   heroWheelchairRight,
+  heroGirlFountain,
+  heroHomepage,
   wheelchairMeeting,
   ourVision,
   aboutHero,

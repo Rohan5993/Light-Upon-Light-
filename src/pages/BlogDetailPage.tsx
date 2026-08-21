@@ -352,8 +352,8 @@ export default function BlogDetailPage() {
   return (
     <>
       <Header variant="dark" />
-      <div className="relative bg-[#f8f5ff] min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col">
-      <main className="max-w-7xl mx-auto w-full px-6 pt-10 pb-24 md:pb-0">
+      <div className="relative bg-[#f8f5ff] min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col overflow-x-hidden">
+      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-10 pb-24 md:pb-0">
         <div className="mb-10">
           <nav className="flex flex-wrap items-center gap-2 text-sm text-gray-500 font-bold">
             <Link to="/" className="inline-flex items-center text-purple-600 hover:text-purple-700 transition-colors">

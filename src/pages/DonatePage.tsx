@@ -22,28 +22,28 @@ const DONOR_STORIES = [
       "I donated because I wanted real proof that help was reaching families. The updates showed exactly where support went and what changed.",
     name: "Sarah J.",
     role: "Recurring Donor",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=300",
+    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fm=webp&fit=crop&q=80&w=300",
   },
   {
     quote:
       "Monthly giving made it easy for me to stay consistent. It feels meaningful knowing my support helps programs run every single month.",
     name: "David R.",
     role: "Community Sponsor",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300",
+    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fm=webp&fit=crop&q=80&w=300",
   },
   {
     quote:
       "I started with a one-time donation and quickly saw impact stories that felt honest and transparent. That trust is why I kept giving.",
     name: "Amina K.",
     role: "First-time to Ongoing Donor",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=300",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fm=webp&fit=crop&q=80&w=300",
   },
   {
     quote:
       "What stood out most was how fast support reached people in need. The organization combines compassion with real execution.",
     name: "Michael T.",
     role: "Monthly Donor",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fm=webp&fit=crop&q=80&w=300",
   },
 ];
 
@@ -128,15 +128,15 @@ export default function DonatePage() {
   return (
     <>
       <Header variant="dark" />
-      <div className="min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] font-sans flex flex-col bg-[#FAFCFF] selection:bg-violet-100">
+      <div className="min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] font-sans flex flex-col bg-[#FAFCFF] selection:bg-violet-100 overflow-x-hidden">
 
       <main className="flex-1">
         {/* Bento hero */}
-        <section className="px-6 pt-10 pb-16 md:pt-14 md:pb-20">
+        <section className="px-4 sm:px-6 pt-10 pb-16 md:pt-14 md:pb-20">
           <div className="max-w-7xl mx-auto">
             <div className="grid lg:grid-cols-12 gap-5 md:gap-6 auto-rows-auto">
               {/* Headline block */}
-              <div className="lg:col-span-7 rounded-[2rem] bg-white border border-slate-100 p-8 md:p-10 shadow-[0_4px_32px_rgba(148,163,184,0.1)] relative overflow-hidden">
+              <div className="lg:col-span-7 rounded-2xl sm:rounded-[2rem] bg-white border border-slate-100 p-5 sm:p-8 md:p-10 shadow-[0_4px_32px_rgba(148,163,184,0.1)] relative overflow-hidden">
                 <div className="absolute -top-16 -right-16 w-48 h-48 bg-violet-100/60 rounded-full blur-2xl pointer-events-none" />
                 <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-sky-100/70 rounded-full blur-2xl pointer-events-none" />
 
@@ -175,10 +175,10 @@ export default function DonatePage() {
               {/* Donate form */}
               <div
                 id="top-donate-card"
-                className="lg:col-span-5 lg:row-span-2 rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.12)]"
+                className="lg:col-span-5 lg:row-span-2 rounded-2xl sm:rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.12)]"
               >
                 <div className="rounded-[calc(2rem-3px)] bg-white h-full flex flex-col overflow-hidden">
-                  <div className="px-7 pt-7 pb-5 border-b border-slate-100 bg-gradient-to-r from-sky-50/80 via-white to-amber-50/80">
+                  <div className="px-5 sm:px-7 pt-6 sm:pt-7 pb-5 border-b border-slate-100 bg-gradient-to-r from-sky-50/80 via-white to-amber-50/80">
                     <div className="flex items-center gap-2 mb-3">
                       <span className="w-2 h-2 rounded-full bg-sky-400" />
                       <span className="w-2 h-2 rounded-full bg-violet-400" />
@@ -188,7 +188,7 @@ export default function DonatePage() {
                     <p className="text-sm text-slate-500 mt-1">Select frequency and amount below.</p>
                   </div>
 
-                  <div className="p-7 md:p-8 flex flex-col flex-1">
+                  <div className="p-5 sm:p-7 md:p-8 flex flex-col flex-1">
                     <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3">
                       Gift frequency
                     </p>
@@ -333,7 +333,7 @@ export default function DonatePage() {
         </section>
 
         {/* Trust band */}
-        <section className="bg-gradient-to-r from-sky-50 via-violet-50 to-amber-50 border-y border-white py-10 px-6">
+        <section className="bg-gradient-to-r from-sky-50 via-violet-50 to-amber-50 border-y border-white py-10 px-4 sm:px-6">
           <div className="max-w-7xl mx-auto grid sm:grid-cols-3 gap-6">
             {[
               { icon: ShieldCheck, title: "Trusted nonprofit", desc: "501(c)(3), EIN 99-2690459.", color: "blue" as const },
@@ -357,7 +357,7 @@ export default function DonatePage() {
         </section>
 
         {/* Allocation */}
-        <section className="px-6 py-16 md:py-20">
+        <section className="px-4 sm:px-6 py-16 md:py-20">
           <div className="max-w-7xl mx-auto">
             <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
               <div>
@@ -399,7 +399,7 @@ export default function DonatePage() {
         </section>
 
         {/* Donor story */}
-        <section className="px-6 pb-16 md:pb-20">
+        <section className="px-4 sm:px-6 pb-16 md:pb-20">
           <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-8 md:p-12">
             <div className="grid lg:grid-cols-[1fr_auto] gap-10 items-start">
               <div className="flex gap-5">
@@ -454,7 +454,7 @@ export default function DonatePage() {
                 </ul>
                 <a
                   href="#top-donate-card"
-                  className="block w-full text-center rounded-2xl py-3.5 font-black text-sm bg-amber-300 hover:bg-amber-400 text-amber-950 transition-colors"
+                  className="block w-full text-center rounded-2xl py-3.5 font-black text-sm bg-[#38BDF8] hover:bg-sky-500 text-white transition-colors"
                 >
                   Donate Now
                 </a>

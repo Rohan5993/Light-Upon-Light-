@@ -39,7 +39,7 @@ export function publicUrl(path: string): string {
 
 /** Prefer WebP from Unsplash CDN when possible. */
 export function preferWebpUrl(url: string): string {
-  if (!/^https?:\/\/images\.unsplash\.com\//i.test(url)) return url;
+  if (!/^https?:\/\/(?:images|plus)\.unsplash\.com\//i.test(url)) return url;
   if (/[?&]fm=webp/i.test(url)) return url;
   return url.includes("?") ? `${url}&fm=webp` : `${url}?fm=webp`;
 }

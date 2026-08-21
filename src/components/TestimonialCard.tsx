@@ -1,4 +1,5 @@
 import { siteImages } from "../assets/siteImages";
+import { resolveMediaUrl } from "../lib/publicUrl";
 
 function TestimonialCard({
   quote,
@@ -12,7 +13,7 @@ function TestimonialCard({
   img: string;
 }) {
   return (
-    <article className="w-full h-full min-w-0 bg-white p-8 md:p-10 rounded-2xl flex flex-col border border-solid border-[1px] border-slate-200">
+    <article className="w-full h-full min-w-0 bg-white p-6 sm:p-8 md:p-10 rounded-2xl flex flex-col border border-solid border-[1px] border-slate-200">
       <img
         src={siteImages.quoteMark}
         alt=""
@@ -24,7 +25,7 @@ function TestimonialCard({
       </p>
       <div className="flex flex-row items-center gap-4 pt-4 border-t border-slate-100 min-w-0 mt-auto">
         <div className="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-violet-200/70 shadow-md overflow-hidden shrink-0">
-          <img src={img} alt={name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+          <img src={resolveMediaUrl(img)} alt={name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
         </div>
         <div className="flex flex-col gap-1 min-w-0">
           <p className="font-bold text-slate-900 text-sm md:text-base break-words">{name}</p>
