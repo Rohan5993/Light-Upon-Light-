@@ -1,0 +1,16 @@
+# Vercel should not upload these
+node_modules
+.tools
+tools
+.git
+.design-snapshots
+.tmp
+.env
+.env.*
+!.env.example
+dist
+coverage
+*.log
+.DS_Store
+search_img.py
+scripts/emailjs
