@@ -1,52 +1,39 @@
-# Free stack — your click checklist
+# Free stack — checklist
 
-Do these in order. Repos are already configured.
+## Final links
 
-## 1) Supabase (database) — ~3 min
+| What | URL |
+| --- | --- |
+| Website (GitHub Pages) | https://rohan5993.github.io/Light-Upon-Light-/ |
+| Strapi (Render) | https://light-upon-light-strapi.onrender.com |
+| Strapi Admin | https://light-upon-light-strapi.onrender.com/admin |
 
-1. Open https://supabase.com/dashboard → sign in with GitHub.
-2. **New project** → name `light-upon-light` → set DB password → Create.
-3. **Project Settings → Database → Connection string → URI**.
-4. Choose **Session** pooler (**port 5432**).
-5. Copy URI and put your real password in place of `[YOUR-PASSWORD]`.
-6. Save it somewhere private — this is `DATABASE_URL`.
+## 1) Supabase (database)
 
-## 2) Render (Strapi) — ~10 min
+1. https://supabase.com/dashboard → project with Postgres.
+2. Use **Session** pooler URI (**port 5432**) as `DATABASE_URL` on Render.
 
-1. Open https://dashboard.render.com → sign in with GitHub.
-2. **New → Blueprint** → connect `Rohan5993/Light-Upon-Light-Strapi`.
-3. Set env vars when asked:
-   - `DATABASE_URL` = Supabase Session URI from step 1
-   - `PUBLIC_URL` = `https://light-upon-light-strapi.onrender.com` (or the URL Render shows)
-4. Wait for deploy → open `/admin` → create admin user.
-5. **Settings → Users & Permissions → Roles → Public**:
+## 2) Render (Strapi)
+
+1. Service from `Rohan5993/Light-Upon-Light-Strapi`.
+2. Env: `DATABASE_URL` (Supabase Session URI), `PUBLIC_URL=https://light-upon-light-strapi.onrender.com`
+3. Open `/admin` → create admin user.
+4. **Public** role permissions:
    - Blog-post: `find`, `findOne`
    - Volunteer-application: `create`
    - Contact-message: `create`
-6. Save.
+   - Appointment: `create`
 
-## 3) Vercel (website) — ~5 min
+## 3) Website (GitHub Pages)
 
-1. Open https://vercel.com → sign in with GitHub.
-2. **Add New → Project** → import `Rohan5993/Light-Upon-Light-`.
-3. Branch: `version-1.3` (latest work). Framework: Vite. Output: `dist`.
-4. Env vars:
-   - `VITE_STRAPI_URL` = your Render URL (no trailing slash)
-   - Optional: PayPal / EmailJS vars from GitHub Actions secrets
-5. Deploy. Copy the `*.vercel.app` URL.
+1. Repo secret: `VITE_STRAPI_URL=https://light-upon-light-strapi.onrender.com`
+2. Push to `main` → Actions deploys `gh-pages`.
 
 ## 4) Verify
 
 ```bash
 cd "/Users/rohan/Light Upon Light/Light-Upon-Light-"
-STRAPI_URL=https://YOUR-SERVICE.onrender.com \
-SITE_URL=https://YOUR-SITE.vercel.app \
+STRAPI_URL=https://light-upon-light-strapi.onrender.com \
+SITE_URL=https://rohan5993.github.io/Light-Upon-Light- \
 node scripts/verify-free-stack.mjs
 ```
-
-Then reply with:
-1. Supabase project created? (yes/no)
-2. Render Strapi URL
-3. Vercel site URL
-
-I will finish permissions checks / CORS / form verification from there.

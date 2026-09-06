@@ -8,9 +8,12 @@
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rm -rf dist",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test:email": "node scripts/test-donation-email.mjs"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
+    "@paypal/react-paypal-js": "^10.3.0",
     "@tailwindcss/vite": "^4.1.14",
     "@vitejs/plugin-react": "^5.0.4",
     "lucide-react": "^0.546.0",

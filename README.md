@@ -20,6 +20,10 @@ View your app in AI Studio: https://ai.studio/apps/87fd0d22-f9a4-487f-99c0-d1a8d
 | Volunteer | https://rohan5993.github.io/Light-Upon-Light-/volunteer |
 | Blog | https://rohan5993.github.io/Light-Upon-Light-/blog |
 | Donate | https://rohan5993.github.io/Light-Upon-Light-/donate |
+| Contact | https://rohan5993.github.io/Light-Upon-Light-/contact |
+
+**CMS (Strapi on Render):** https://light-upon-light-strapi.onrender.com  
+**Admin:** https://light-upon-light-strapi.onrender.com/admin
 
 Use the trailing slash on the home URL. Pushes to `main` deploy automatically via GitHub Actions to the `gh-pages` branch.
 
@@ -30,7 +34,7 @@ Use the trailing slash on the home URL. Pushes to `main` deploy automatically vi
 1. Install dependencies:
    `npm install`
 2. Create `.env.local` and set:
-   - `VITE_STRAPI_URL=http://localhost:1337`
+   - `VITE_STRAPI_URL=https://light-upon-light-strapi.onrender.com` (or `http://localhost:1337` for local Strapi)
    - `VITE_STRAPI_TOKEN=your_strapi_read_token` (optional if your Strapi API is public)
 3. Run the app:
    `npm run dev`

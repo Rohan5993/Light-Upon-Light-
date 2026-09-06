@@ -13,6 +13,9 @@ import {
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { siteImages } from "../assets/siteImages";
+import {
+  submitVolunteerApplication,
+} from "../services/volunteerService";
 
 const OPPORTUNITIES = [
   {
@@ -81,18 +84,45 @@ export default function VolunteerPage() {
   const [interest, setInterest] = useState("");
   const [availability, setAvailability] = useState("");
   const [message, setMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const subject = encodeURIComponent("Volunteer Registration — Light Upon Light");
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\nPhone: ${phone}\nInterest: ${interest}\nAvailability: ${availability}\n\nWhy I want to volunteer:\n${message}`,
-    );
-    window.location.href = `mailto:lightuponlight1408@gmail.com?subject=${subject}&body=${body}`;
+    setSubmitError("");
+    setSubmitSuccess(false);
+    setIsSubmitting(true);
+
+    try {
+      await submitVolunteerApplication({
+        name,
+        email,
+        phone,
+        interest,
+        availability,
+        message,
+      });
+
+      setSubmitSuccess(true);
+      setName("");
+      setEmail("");
+      setPhone("");
+      setInterest("");
+      setAvailability("");
+      setMessage("");
+    } catch (error) {
+      const detail = error instanceof Error ? error.message : "Something went wrong.";
+      setSubmitError(
+        `${detail} Please try again, or email us at lightuponlight1408@gmail.com.`,
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -347,15 +377,26 @@ export default function VolunteerPage() {
 
               <button
                 type="submit"
-                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#7107E7] text-white font-bold text-sm py-3.5 hover:bg-[#5c06bb] transition-colors"
+                disabled={isSubmitting}
+                className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-[#7107E7] text-white font-bold text-sm py-3.5 hover:bg-[#5c06bb] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 <Handshake size={16} />
-                Submit Volunteer Form
+                {isSubmitting ? "Submitting..." : "Submit Volunteer Form"}
                 <ArrowRight size={16} />
               </button>
+              {submitSuccess && (
+                <p className="text-sm text-emerald-600 font-medium text-center">
+                  Thank you! Your volunteer application was received. We&apos;ll be in touch soon.
+                </p>
+              )}
+              {submitError && (
+                <p className="text-sm text-red-600 font-medium text-center">
+                  {submitError}
+                </p>
+              )}
               <p className="text-xs text-slate-400 font-medium flex items-center justify-center gap-2">
                 <Clock3 size={13} />
-                We typically respond within a few days.
+                We typically respond within few hours.
               </p>
             </form>
           </div>

@@ -12,3 +12,4 @@ coverage/
 
 # Local npm cache (do not commit)
 .npm_cache/
+.vercel

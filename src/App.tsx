@@ -13,6 +13,7 @@ import DonatePage from "./pages/DonatePage";
 import AboutPage from "./pages/AboutPage";
 import VolunteerPage from "./pages/VolunteerPage";
 import ContactPage from "./pages/ContactPage";
+import AppointmentPage from "./pages/AppointmentPage";
 
 const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, "");
 
@@ -28,6 +29,7 @@ export default function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/volunteer" element={<VolunteerPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/contact/appointment" element={<AppointmentPage />} />
         <Route path="/donate" element={<DonatePage />} />
       </Routes>
     </Router>

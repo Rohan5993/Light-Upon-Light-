@@ -21,10 +21,9 @@ import {
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { siteImages } from "../assets/siteImages";
-import { BLOG_POSTS } from "../data/blogPosts";
-import { getAllBlogPosts } from "../services/blogService";
 import { resolveMediaUrl } from "../lib/publicUrl";
 import storyVideo from "../assets/lul.mp4";
+import storyCoverImage from "../assets/images/ourstory.png";
 import boardMember8793 from "../assets/board-members/IMG_8793.webp";
 import boardMember8990 from "../assets/board-members/IMG_8990.webp";
 import boardMember9354 from "../assets/board-members/IMG_9354.webp";
@@ -260,21 +259,21 @@ const GET_INVOLVED = [
     desc: "Fund advocacy, accessibility, and programs that open real doors for differently-abled people.",
     to: "/donate",
     cta: "Give Today",
-    image: siteImages.donation,
+    image: siteImages.getInvolvedDonate,
   },
   {
     title: "Explore Programs",
     desc: "See how we turn compassion into action through education, wellness, and community support.",
     to: "/programs",
     cta: "View Programs",
-    image: siteImages.wheelchairMeeting,
+    image: siteImages.getInvolvedExplorePrograms,
   },
   {
     title: "Read Our Stories",
     desc: "Follow updates, insights, and voices from the communities we serve every day.",
     to: "/blog",
     cta: "Read Stories",
-    image: siteImages.heroWheelchair,
+    image: siteImages.getInvolvedReadOurStories,
   },
 ];
 
@@ -283,26 +282,52 @@ export default function AboutPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [flippedBoard, setFlippedBoard] = useState<number | null>(null);
   const storyVideoRef = useRef<HTMLVideoElement>(null);
-  const [blogStoryImage, setBlogStoryImage] = useState(
-    BLOG_POSTS.find((post) => post.isFeatured)?.image ?? BLOG_POSTS[0].image,
-  );
+  const [showStoryCover, setShowStoryCover] = useState(true);
 
   useEffect(() => {
     const video = storyVideoRef.current;
     if (!video) return;
+
     video.muted = true;
     video.defaultMuted = true;
-    video.loop = true;
     video.playsInline = true;
-    const play = () => {
-      video.play().catch(() => {});
+    video.loop = false;
+
+    let coverTimer: ReturnType<typeof setTimeout> | null = null;
+    let cancelled = false;
+
+    const clearCoverTimer = () => {
+      if (coverTimer) {
+        clearTimeout(coverTimer);
+        coverTimer = null;
+      }
     };
-    play();
-    video.addEventListener("canplay", play);
-    video.addEventListener("loadeddata", play);
+
+    const showCoverThenPlay = () => {
+      if (cancelled) return;
+      clearCoverTimer();
+      video.pause();
+      setShowStoryCover(true);
+      coverTimer = setTimeout(() => {
+        if (cancelled) return;
+        setShowStoryCover(false);
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      }, 3000);
+    };
+
+    const handleEnded = () => {
+      showCoverThenPlay();
+    };
+
+    video.addEventListener("ended", handleEnded);
+    showCoverThenPlay();
+
     return () => {
-      video.removeEventListener("canplay", play);
-      video.removeEventListener("loadeddata", play);
+      cancelled = true;
+      clearCoverTimer();
+      video.removeEventListener("ended", handleEnded);
+      video.pause();
     };
   }, []);
 
@@ -315,23 +340,6 @@ export default function AboutPage() {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   }, [hash]);
-
-  useEffect(() => {
-    let isMounted = true;
-    (async () => {
-      try {
-        const posts = await getAllBlogPosts();
-        if (!isMounted || !posts.length) return;
-        const featured = posts.find((post) => post.isFeatured) ?? posts[0];
-        if (featured?.image) setBlogStoryImage(featured.image);
-      } catch {
-        // Keep the local blog fallback image if Strapi is unreachable.
-      }
-    })();
-    return () => {
-      isMounted = false;
-    };
-  }, []);
 
   return (
     <>
@@ -419,18 +427,22 @@ export default function AboutPage() {
             </div>
 
             <div className="relative mx-auto w-full max-w-xl sm:max-w-2xl lg:max-w-none">
-              <div className="rounded-[1.5rem] overflow-hidden shadow-xl border-4 border-white h-[20rem] sm:h-[24rem] lg:h-[30rem] bg-slate-900">
+              <div className="relative rounded-[1.5rem] overflow-hidden shadow-xl border-4 border-white h-[20rem] sm:h-[24rem] lg:h-[30rem] bg-slate-900">
                 <video
                   ref={storyVideoRef}
                   src={storyVideo}
-                  poster={siteImages.ourStory}
-                  autoPlay
                   muted
-                  loop
                   playsInline
                   preload="auto"
                   className="w-full h-full object-cover object-center"
                   aria-label="Light Upon Light origin story"
+                />
+                <img
+                  src={storyCoverImage}
+                  alt="Light Upon Light our story"
+                  className={`absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-500 ${
+                    showStoryCover ? "opacity-100" : "opacity-0 pointer-events-none"
+                  }`}
                 />
               </div>
             </div>
@@ -816,7 +828,7 @@ export default function AboutPage() {
                 <article className="h-full rounded-2xl overflow-hidden border border-gray-100 bg-white shadow-sm hover:shadow-lg transition-all hover:-translate-y-0.5">
                   <div className="aspect-[16/10] overflow-hidden">
                     <img
-                      src={resolveMediaUrl(item.title === "Read Our Stories" ? blogStoryImage : item.image)}
+                      src={resolveMediaUrl(item.image)}
                       alt={item.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                     />

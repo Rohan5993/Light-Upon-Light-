@@ -1,5 +1,7 @@
 import donation from "./images/donation.webp";
+import donationPage from "./images/donationpage.png";
 import founder from "./images/founder.webp";
+import ronahi from "./images/Ronahi.jpeg";
 import foundersDiary from "./images/founders-diary.webp";
 import heroWheelchair from "./images/hero-wheelchair.webp";
 import heroWheelchairRight from "./images/hero-wheelchair-right.webp";
@@ -7,6 +9,12 @@ import heroGirlFountain from "./images/hero-girl-fountain.webp";
 import heroHomepage from "./images/hero-homepage.webp";
 import wheelchairMeeting from "./images/wheelchair-meeting.webp";
 import ourVision from "./images/our-vision.webp";
+import logoLul from "./images/logo-lul.png";
+import getInvolvedDonate from "./images/Donate.png";
+import getInvolvedExplorePrograms from "./images/Exploreprograms.PNG";
+import getInvolvedReadOurStories from "./images/read-our -story.png";
+import education from "./images/education.PNG";
+import workforce from "./images/workforce.PNG";
 import aboutHero from "./images/about-hero.webp";
 import volunteerHero from "./images/volunteer-hero.webp";
 import ourStory from "./images/our-story.webp";
@@ -33,7 +41,9 @@ import quoteMark from "./images/quote-mark.webp";
 
 export const siteImages = {
   donation,
+  donationPage,
   founder,
+  ronahi,
   foundersDiary,
   heroWheelchair,
   heroWheelchairRight,
@@ -41,6 +51,12 @@ export const siteImages = {
   heroHomepage,
   wheelchairMeeting,
   ourVision,
+  logoLul,
+  getInvolvedDonate,
+  getInvolvedExplorePrograms,
+  getInvolvedReadOurStories,
+  education,
+  workforce,
   aboutHero,
   volunteerHero,
   ourStory,

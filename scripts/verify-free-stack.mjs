@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
  * Verify free-stack wiring after deploy:
- *   Vercel site → Render Strapi → Supabase Postgres
+ *   GitHub Pages site → Render Strapi → Supabase Postgres
  *
  * Usage:
- *   STRAPI_URL=https://your-strapi.onrender.com node scripts/verify-free-stack.mjs
- *   STRAPI_URL=... SITE_URL=https://your-app.vercel.app node scripts/verify-free-stack.mjs
+ *   STRAPI_URL=https://light-upon-light-strapi.onrender.com node scripts/verify-free-stack.mjs
+ *   STRAPI_URL=... SITE_URL=https://rohan5993.github.io/Light-Upon-Light- node scripts/verify-free-stack.mjs
  */
 
 const STRAPI_URL = (process.env.STRAPI_URL || process.env.VITE_STRAPI_URL || "")
@@ -86,12 +86,11 @@ async function main() {
   );
 
   results.push(
-    await check("contact appointment create", `${STRAPI_URL}/api/contact-messages`, {
+    await check("appointment create", `${STRAPI_URL}/api/appointments`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         data: {
-          inquiryType: "appointment",
           name: `Verify Appt ${stamp}`,
           email: `appt+${stamp}@example.com`,
           phone: "2065550100",

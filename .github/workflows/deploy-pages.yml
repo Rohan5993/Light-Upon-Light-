@@ -29,7 +29,13 @@ jobs:
         run: npm run build
         env:
           VITE_BASE_PATH: /Light-Upon-Light-/
-
+          VITE_PAYPAL_CLIENT_ID: ${{ secrets.VITE_PAYPAL_CLIENT_ID }}
+          VITE_EMAILJS_SERVICE_ID: ${{ secrets.VITE_EMAILJS_SERVICE_ID }}
+          VITE_EMAILJS_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_TEMPLATE_ID }}
+          VITE_EMAILJS_ORG_TEMPLATE_ID: ${{ secrets.VITE_EMAILJS_ORG_TEMPLATE_ID }}
+          VITE_EMAILJS_PUBLIC_KEY: ${{ secrets.VITE_EMAILJS_PUBLIC_KEY }}
+          VITE_STRAPI_URL: ${{ secrets.VITE_STRAPI_URL }}
+          VITE_STRAPI_TOKEN: ${{ secrets.VITE_STRAPI_TOKEN }}
       - name: Prepare GitHub Pages artifact
         run: |
           cp dist/index.html dist/404.html

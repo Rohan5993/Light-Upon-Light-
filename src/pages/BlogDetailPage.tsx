@@ -6,7 +6,7 @@ import Footer from "../components/Footer";
 import BlogAudioPlayer from "../components/BlogAudioPlayer";
 import HoverFillLink from "../components/HoverFillLink";
 import { useBlogNarration } from "../hooks/useBlogNarration";
-import { BLOG_POSTS, type BlogPost } from "../data/blogPosts";
+import { type BlogPost } from "../data/blogPosts";
 import { getAllBlogPosts, getBlogPostBySlug } from "../services/blogService";
 import { resolveMediaUrl } from "../lib/publicUrl";
 
@@ -22,17 +22,6 @@ function buildLongContent(seed: string, title: string) {
   return blocks.join("\n\n");
 }
 
-function mergeBlogLists(cmsPosts: BlogPost[], localPosts: BlogPost[]): BlogPost[] {
-  const merged = [...cmsPosts, ...localPosts];
-  const seen = new Set<string>();
-  return merged.filter((p) => {
-    const key = p.slug ?? p.id ?? p.title;
-    if (seen.has(key)) return false;
-    seen.add(key);
-    return true;
-  });
-}
-
 function postMatchesRouteParam(p: BlogPost, routeId: string): boolean {
   const href = p.slug ?? p.id;
   return href === routeId || p.id === routeId || p.slug === routeId;
@@ -42,7 +31,7 @@ export default function BlogDetailPage() {
   const { id } = useParams();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [mergedPosts, setMergedPosts] = useState<BlogPost[]>(() => [...BLOG_POSTS]);
+  const [mergedPosts, setMergedPosts] = useState<BlogPost[]>([]);
   const wordRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const userScrollingRef = useRef(false);
   const scrollIdleTimerRef = useRef<number | null>(null);
@@ -63,10 +52,10 @@ export default function BlogDetailPage() {
     (async () => {
       try {
         const cmsPosts = await getAllBlogPosts();
-        if (!isMounted || !cmsPosts.length) return;
-        setMergedPosts((prev) => mergeBlogLists(cmsPosts, prev));
+        if (!isMounted) return;
+        setMergedPosts(cmsPosts);
       } catch {
-        // Keep local posts only.
+        if (isMounted) setMergedPosts([]);
       }
     })();
     return () => {
@@ -96,8 +85,7 @@ export default function BlogDetailPage() {
         // Ignore and fallback to local data below.
       }
 
-      const fallback =
-        BLOG_POSTS.find((item) => item.id === id || item.slug === id) ?? null;
+      const fallback = null;
       if (isMounted) {
         setPost(fallback);
       }
@@ -371,8 +359,16 @@ export default function BlogDetailPage() {
         <div ref={contentSectionRef} className="relative">
           <div className="grid md:grid-cols-[1.7fr_0.8fr] gap-8 md:gap-10 lg:gap-14">
             <article className="min-w-0">
-            <img src={resolveMediaUrl(post.image)} alt={post.title} className="w-full h-48 sm:h-64 md:h-[360px] object-cover rounded-2xl mb-10" />
-            <p className="text-[11px] uppercase tracking-widest text-gray-400 font-black mb-4">{post.category} • {post.date}</p>
+            <div className="w-full h-48 sm:h-64 md:h-[360px] rounded-2xl mb-10 overflow-hidden bg-slate-50">
+              <img
+                src={resolveMediaUrl(post.image)}
+                alt={post.title}
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
+            <p className="text-[11px] uppercase tracking-widest text-gray-400 font-black mb-4">
+              {post.category ? `${post.category} • ${post.date}` : post.date}
+            </p>
             <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">{post.title}</h1>
 
             <p className="text-xs text-gray-400 mb-6">
@@ -471,15 +467,17 @@ export default function BlogDetailPage() {
                   className="group bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all"
                 >
                   <Link to={`/blog/${item.slug ?? item.id}`}>
-                    <div className="aspect-[16/10] overflow-hidden">
+                    <div className="aspect-[16/10] overflow-hidden bg-slate-50">
                       <img
                         src={resolveMediaUrl(item.image)}
                         alt={item.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
                       />
                     </div>
                     <div className="p-6">
-                      <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">{item.category}</p>
+                      {item.category ? (
+                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">{item.category}</p>
+                      ) : null}
                       <h3 className="text-lg font-bold text-gray-900 leading-snug mb-3 group-hover:text-purple-600 transition-colors line-clamp-2">
                         {item.title}
                       </h3>

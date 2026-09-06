@@ -1,11 +1,10 @@
-import { BLOG_POSTS, type BlogPost } from "../data/blogPosts";
+import { type BlogPost } from "../data/blogPosts";
 import { preferWebpUrl } from "../lib/publicUrl";
+import { getStrapiUrl } from "../lib/strapiUrl";
 
 type StrapiRecord = Record<string, unknown>;
 
-const STRAPI_URL =
-  (import.meta.env.VITE_STRAPI_URL as string | undefined)?.replace(/\/$/, "") ??
-  "http://localhost:1337";
+const STRAPI_URL = getStrapiUrl();
 const STRAPI_TOKEN = import.meta.env.VITE_STRAPI_TOKEN as string | undefined;
 
 function toDateLabel(value: string | undefined): string {
@@ -70,7 +69,7 @@ function pickCategory(raw: StrapiRecord): string {
     if (name?.trim()) return name.toUpperCase();
   }
 
-  return "GENERAL";
+  return "";
 }
 
 function mapRecordToBlogPost(record: StrapiRecord): BlogPost {
@@ -112,7 +111,6 @@ function mapRecordToBlogPost(record: StrapiRecord): BlogPost {
     pickImageUrl(attrs.Image) ||
     pickImageUrl(attrs.coverImage) ||
     pickImageUrl(attrs.thumbnail) ||
-    BLOG_POSTS[0]?.image ||
     "";
 
   const contentFromBlocks = (() => {

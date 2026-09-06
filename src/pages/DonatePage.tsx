@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import {
   CheckCircle2,
   ChevronLeft,
@@ -13,6 +14,12 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { siteImages } from "../assets/siteImages";
 import { resolveMediaUrl } from "../lib/publicUrl";
+import PayPalDonateButtons from "../components/PayPalDonateButtons";
+import DonationThankYouModal from "../components/DonationThankYouModal";
+import {
+  sendDonationThankYouEmail,
+  type DonationReceipt,
+} from "../lib/sendDonationThankYou";
 
 const ONE_TIME_AMOUNTS = [25, 50, 100, 250];
 const MONTHLY_AMOUNTS = [15, 30, 60, 100];
@@ -49,26 +56,26 @@ const DONOR_STORIES = [
 
 const ALLOCATION = [
   {
-    title: "Education Access",
+    title: "Education",
     percent: "40%",
     percentValue: 40,
-    desc: "School materials, mentorship, and learning support for youth.",
-    image: siteImages.heroWheelchair,
+    desc: "Inclusive education that helps students better understand and include differently-abled people.",
+    image: siteImages.education,
     color: "blue" as const,
   },
   {
-    title: "Health & Wellbeing",
+    title: "Workforce Development",
     percent: "35%",
     percentValue: 35,
-    desc: "Community wellness initiatives and essential care access.",
-    image: siteImages.wheelchairMeeting,
+    desc: "Accessible baking experiences that help differently-abled people build practical skills, confidence, and pathways to employment.",
+    image: siteImages.workforce,
     color: "purple" as const,
   },
   {
-    title: "Community Relief",
+    title: "Mobility Aid Distribution",
     percent: "25%",
     percentValue: 25,
-    desc: "Direct aid, emergency response, and family stabilization.",
+    desc: "Providing wheelchairs and other mobility aids to differently-abled people in need abroad.",
     image: siteImages.donation,
     color: "yellow" as const,
   },
@@ -105,6 +112,9 @@ export default function DonatePage() {
   const [selectedAmount, setSelectedAmount] = useState<number>(MONTHLY_AMOUNTS[1]);
   const [customAmount, setCustomAmount] = useState<string>("");
   const [activeStoryIndex, setActiveStoryIndex] = useState(0);
+  const [paymentError, setPaymentError] = useState<string | null>(null);
+  const [thankYou, setThankYou] = useState<DonationReceipt | null>(null);
+  const [emailStatus, setEmailStatus] = useState<"idle" | "sending" | "sent" | "failed">("idle");
 
   const amountOptions = frequency === "monthly" ? MONTHLY_AMOUNTS : ONE_TIME_AMOUNTS;
 
@@ -114,9 +124,9 @@ export default function DonatePage() {
     return selectedAmount;
   }, [customAmount, selectedAmount]);
 
-  const ctaText =
-    frequency === "monthly" ? `Give $${finalAmount}/month` : `Give $${finalAmount} today`;
+  const canDonate = finalAmount >= 1;
   const activeStory = DONOR_STORIES[activeStoryIndex];
+  const paypalClientId = import.meta.env.VITE_PAYPAL_CLIENT_ID?.trim();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -125,23 +135,41 @@ export default function DonatePage() {
     return () => clearInterval(interval);
   }, []);
 
+  const handleDonationSuccess = async (receipt: DonationReceipt) => {
+    setPaymentError(null);
+    setThankYou(receipt);
+    setEmailStatus("sending");
+    const sent = await sendDonationThankYouEmail(receipt);
+    setEmailStatus(sent ? "sent" : "failed");
+  };
+
   return (
     <>
       <Header variant="dark" />
+      <PayPalScriptProvider
+        options={{
+          clientId: paypalClientId ?? "",
+          currency: "USD",
+          intent: "capture",
+          components: "buttons",
+        }}
+        deferLoading={!paypalClientId}
+      >
       <div className="min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] font-sans flex flex-col bg-[#FAFCFF] selection:bg-violet-100 overflow-x-hidden">
 
       <main className="flex-1">
         {/* Bento hero */}
         <section className="px-4 sm:px-6 pt-10 pb-16 md:pt-14 md:pb-20">
           <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-12 gap-5 md:gap-6 auto-rows-auto">
+            <div className="grid lg:grid-cols-12 gap-5 md:gap-6 items-start">
+              <div className="lg:col-span-7 flex flex-col gap-5 md:gap-6 min-w-0">
               {/* Headline block */}
-              <div className="lg:col-span-7 rounded-2xl sm:rounded-[2rem] bg-white border border-slate-100 p-5 sm:p-8 md:p-10 shadow-[0_4px_32px_rgba(148,163,184,0.1)] relative overflow-hidden">
+              <div className="rounded-2xl sm:rounded-[2rem] bg-white border border-slate-100 p-5 sm:p-8 md:p-10 shadow-[0_4px_32px_rgba(148,163,184,0.1)] relative overflow-hidden">
                 <div className="absolute -top-16 -right-16 w-48 h-48 bg-violet-100/60 rounded-full blur-2xl pointer-events-none" />
                 <div className="absolute -bottom-12 -left-12 w-40 h-40 bg-sky-100/70 rounded-full blur-2xl pointer-events-none" />
 
                 <div className="relative">
-                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 border border-amber-200 text-[10px] font-bold text-amber-800 uppercase tracking-widest mb-6">
+                  <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFFBEA] border border-[#F3E8C8] text-[10px] font-bold text-amber-800 uppercase tracking-widest mb-6">
                     <Sparkles size={11} className="text-violet-500" />
                     Give Hope Today
                   </span>
@@ -164,7 +192,11 @@ export default function DonatePage() {
                         key={stat.label}
                         className={`rounded-2xl border px-5 py-3 ${palette[stat.key].card}`}
                       >
-                        <p className={`text-xl font-black ${palette[stat.key].heading}`}>{stat.value}</p>
+                        <p
+                          className={`text-xl font-black ${stat.value === "501(c)(3)" ? "text-black" : palette[stat.key].heading}`}
+                        >
+                          {stat.value}
+                        </p>
                         <p className="text-xs font-semibold text-slate-500 mt-0.5">{stat.label}</p>
                       </div>
                     ))}
@@ -172,10 +204,29 @@ export default function DonatePage() {
                 </div>
               </div>
 
+              {/* Image bento */}
+              <div className="rounded-[2rem] overflow-hidden border-2 border-sky-100 bg-sky-50/50 relative aspect-[16/10] md:aspect-[2/1] lg:aspect-[16/9]">
+                <img
+                  src={siteImages.donationPage}
+                  alt="Community support"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-sky-900/50 via-transparent to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-amber-200 mb-1">
+                    Why give today
+                  </p>
+                  <p className="text-white font-bold text-lg md:text-xl max-w-md leading-snug">
+                    A single gift can put real help in a family&apos;s hands this week.
+                  </p>
+                </div>
+              </div>
+              </div>
+
               {/* Donate form */}
               <div
                 id="top-donate-card"
-                className="lg:col-span-5 lg:row-span-2 rounded-2xl sm:rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.12)]"
+                className="lg:col-span-5 lg:sticky lg:top-24 rounded-2xl sm:rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.12)]"
               >
                 <div className="rounded-[calc(2rem-3px)] bg-white h-full flex flex-col overflow-hidden">
                   <div className="px-5 sm:px-7 pt-6 sm:pt-7 pb-5 border-b border-slate-100 bg-gradient-to-r from-sky-50/80 via-white to-amber-50/80">
@@ -204,6 +255,7 @@ export default function DonatePage() {
                               setFrequency(mode);
                               setSelectedAmount(isMonthly ? MONTHLY_AMOUNTS[1] : ONE_TIME_AMOUNTS[1]);
                               setCustomAmount("");
+                              setPaymentError(null);
                             }}
                             className={`rounded-2xl border-2 px-4 py-4 text-left transition-all ${
                               active
@@ -238,7 +290,6 @@ export default function DonatePage() {
                     <div className="flex flex-wrap gap-2 mb-5">
                       {amountOptions.map((amount) => {
                         const active = !customAmount && selectedAmount === amount;
-                        const recommended = amount === amountOptions[1];
                         return (
                           <button
                             key={amount}
@@ -246,19 +297,15 @@ export default function DonatePage() {
                             onClick={() => {
                               setCustomAmount("");
                               setSelectedAmount(amount);
+                              setPaymentError(null);
                             }}
                             className={`relative min-w-[4.5rem] flex-1 rounded-full border-2 px-4 py-2.5 font-black text-base transition-all ${
                               active
-                                ? "border-amber-400 bg-amber-100 text-amber-900"
+                                ? "border-[#F3E8C8] bg-[#FFFBEA] text-amber-900"
                                 : "border-slate-100 bg-white text-slate-600 hover:border-sky-200 hover:bg-sky-50"
                             }`}
                           >
                             ${amount}
-                            {recommended && (
-                              <span className="absolute -top-2.5 right-1 text-[7px] px-1.5 py-0.5 rounded-full bg-violet-500 text-white font-black uppercase">
-                                Best
-                              </span>
-                            )}
                           </button>
                         );
                       })}
@@ -273,7 +320,10 @@ export default function DonatePage() {
                       </span>
                       <input
                         value={customAmount}
-                        onChange={(e) => setCustomAmount(e.target.value.replace(/[^\d]/g, ""))}
+                        onChange={(e) => {
+                          setCustomAmount(e.target.value.replace(/[^\d]/g, ""));
+                          setPaymentError(null);
+                        }}
                         inputMode="numeric"
                         placeholder="0"
                         className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 py-3.5 pl-10 pr-4 text-xl font-black text-slate-800 focus:outline-none focus:border-violet-300 focus:bg-white"
@@ -292,40 +342,42 @@ export default function DonatePage() {
                       </p>
                     </div>
 
-                    <button
-                      type="button"
-                      className="w-full rounded-2xl py-4 font-black text-sm uppercase tracking-wider bg-sky-500 hover:bg-sky-600 text-white transition-colors shadow-md shadow-sky-200/80"
-                    >
-                      {ctaText}
-                    </button>
+                    {!canDonate && (
+                      <p className="mb-3 text-center text-xs font-medium text-amber-700">
+                        Enter at least $1 to continue with PayPal.
+                      </p>
+                    )}
+
+                    <div className="min-h-[150px]">
+                    <PayPalDonateButtons
+                      amount={finalAmount}
+                      frequency={frequency}
+                      disabled={!canDonate}
+                      onSuccess={handleDonationSuccess}
+                      onError={(message) => {
+                        if (message.includes("cancelled")) {
+                          setPaymentError(null);
+                          return;
+                        }
+                        setPaymentError(message);
+                      }}
+                    />
+                    </div>
+
+                    {paymentError && (
+                      <p className="mt-3 text-center text-xs font-medium text-red-600">{paymentError}</p>
+                    )}
+
                     <p className="mt-3 text-center text-xs text-slate-400">
                       {frequency === "monthly"
-                        ? "Update or pause anytime."
+                        ? "PayPal will charge your selected monthly amount now. You can set up automatic renewals in your PayPal account after checkout."
                         : "Goes where help is needed most."}
                     </p>
                     <div className="mt-3 inline-flex items-center justify-center gap-2 mx-auto px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-[11px] text-slate-500">
                       <Lock size={12} className="text-sky-500" />
-                      Secure form. Payment coming soon.
+                      Secure checkout powered by PayPal
                     </div>
                   </div>
-                </div>
-              </div>
-
-              {/* Image bento */}
-              <div className="lg:col-span-7 rounded-[2rem] overflow-hidden border-2 border-sky-100 bg-sky-50/50 min-h-[220px] md:min-h-[260px] relative">
-                <img
-                  src={siteImages.donation}
-                  alt="Community support"
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-sky-900/50 via-transparent to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                  <p className="text-[10px] font-bold uppercase tracking-widest text-amber-200 mb-1">
-                    Why give today
-                  </p>
-                  <p className="text-white font-bold text-lg md:text-xl max-w-md leading-snug">
-                    A single gift can put real help in a family&apos;s hands this week.
-                  </p>
                 </div>
               </div>
             </div>
@@ -383,7 +435,11 @@ export default function DonatePage() {
                         style={{ width: `${item.percentValue}%` }}
                       />
                     </div>
-                    <img src={resolveMediaUrl(item.image)} alt={item.title} className="w-full h-44 object-cover" />
+                    <img
+                      src={resolveMediaUrl(item.image)}
+                      alt={item.title}
+                      className={`w-full h-44 object-cover ${item.title === "Education" ? "object-top" : "object-center"}`}
+                    />
                     <div className="p-6">
                       <span className={`inline-block text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border mb-3 ${c.chip}`}>
                         {item.percent}
@@ -465,7 +521,20 @@ export default function DonatePage() {
       </main>
 
       <Footer className="mt-0" topPaddingClass="pt-12" />
+
+      <DonationThankYouModal
+        open={Boolean(thankYou)}
+        amount={thankYou?.amount ?? finalAmount}
+        frequency={thankYou?.frequency ?? frequency}
+        payerName={thankYou?.payerName}
+        emailStatus={emailStatus}
+        onClose={() => {
+          setThankYou(null);
+          setEmailStatus("idle");
+        }}
+      />
     </div>
+      </PayPalScriptProvider>
     </>
   );
 }

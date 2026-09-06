@@ -1,9 +1,9 @@
 import { motion, useScroll, useTransform } from "motion/react";
-import { ArrowUpRight, ArrowLeft, ArrowRight, Scale, Accessibility, BookOpen, Equal, Megaphone, Handshake, Globe, Youtube } from "lucide-react";
+import { ArrowUpRight, ArrowLeft, ArrowRight, Scale, Accessibility, BookOpen, Megaphone, Handshake, Globe, Youtube } from "lucide-react";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
-import { BLOG_POSTS, type BlogPost } from "../data/blogPosts";
+import { type BlogPost } from "../data/blogPosts";
 import Header from "../components/Header";
 import { siteImages } from "../assets/siteImages";
 import { resolveMediaUrl } from "../lib/publicUrl";
@@ -20,7 +20,7 @@ const PILLARS = [
     title: "Advocacy",
     headline: "Every voice deserves to be heard.",
     desc: "We stand beside differently-abled individuals and families, ensuring they are seen, respected, and represented. We challenge barriers, confront ableism, and work to create lasting change that protects dignity and expands opportunity.",
-    icon: Scale,
+    icon: Megaphone,
     border: "#7107E7",
   },
   {
@@ -44,11 +44,10 @@ const PILLARS = [
     title: "Equality",
     headline: "Every person deserves the same dignity, respect, and opportunity.",
     desc: "Every voice matters. Every future matters. Every life matters. We believe differently-abled individuals deserve the same opportunities to pursue their dreams, contribute to their communities, and live fulfilling lives as everyone else.",
-    icon: Equal,
+    icon: Scale,
     border: "#7107E7",
   },
 ];
-
 const IMPACT_ACTIONS = [
   {
     text: "Advance accessibility in schools, businesses, and public spaces.",
@@ -123,14 +122,13 @@ const getVisibleProgramCount = () => {
   return 1;
 };
 
-export default function HomePage() {
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
-  const [activeWorkIndex, setActiveWorkIndex] = useState(0);
-  const [activeProgramIndex, setActiveProgramIndex] = useState(0);
-  const [visibleProgramCount, setVisibleProgramCount] = useState(3);
-  const [blogPosts, setBlogPosts] = useState<BlogPost[]>(BLOG_POSTS);
-  const testimonialsRef = useRef<HTMLDivElement>(null);
-  const programsRef = useRef<HTMLDivElement>(null);
+function HomepageBlogGrid({
+  featured,
+  sidebar,
+}: {
+  featured: BlogPost;
+  sidebar: BlogPost[];
+}) {
   const blogFeaturedRef = useRef<HTMLDivElement>(null);
   const blogSidebarRef = useRef<HTMLDivElement>(null);
 
@@ -163,6 +161,102 @@ export default function HomePage() {
     { x: blogSidebar2X, opacity: blogSidebar2Opacity },
     { x: blogSidebar3X, opacity: blogSidebar3Opacity },
   ];
+
+  return (
+    <>
+      <div ref={blogFeaturedRef} className="bg-[#FBFAFF] rounded-2xl p-5 md:p-6">
+        <div className="group">
+          <motion.div
+            style={{ opacity: blogBlock1Opacity, y: blogBlock1Y }}
+            className="relative aspect-[21/9] rounded-2xl overflow-hidden mb-6 border border-gray-100 bg-slate-50"
+          >
+            <img
+              src={resolveMediaUrl(featured.image)}
+              alt={featured.title}
+              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            />
+          </motion.div>
+
+          <motion.div style={{ opacity: blogBlock2Opacity, y: blogBlock2Y }}>
+            {featured.category ? (
+              <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest block mb-4">
+                {featured.category}
+              </span>
+            ) : null}
+            <h3 className="text-[1.5rem] font-bold text-slate-900 mb-6 tracking-tight leading-snug group-hover:text-purple-600 transition-colors">
+              {featured.title}
+            </h3>
+          </motion.div>
+
+          <motion.div style={{ opacity: blogBlock3Opacity, y: blogBlock3Y }}>
+            <p className="text-gray-400 font-medium leading-relaxed mb-3 text-[1rem]">
+              {featured.excerpt}
+            </p>
+            <div className="flex items-center justify-between pt-6 border-t border-gray-200/70">
+              <span className="text-[10px] font-bold text-gray-300 uppercase tracking-[0.2em]">
+                {featured.date}
+              </span>
+              <Link to={`/blog/${featured.id}`} className="flex items-center gap-3 text-purple-600 font-black text-sm hover:gap-4 transition-all">
+                Read More <ArrowRight size={20} />
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+      </div>
+
+      <div
+        ref={blogSidebarRef}
+        className="space-y-4 bg-[#FBFAFF] rounded-2xl p-5 md:p-6 overflow-hidden"
+      >
+        {sidebar.map((post, i) => {
+          const motionStyle = blogSidebarMotion[i] ?? blogSidebarMotion[blogSidebarMotion.length - 1];
+          return (
+            <Link key={post.id} to={`/blog/${post.slug ?? post.id}`} className="block mb-5 last:mb-0">
+              <motion.div
+                style={{ x: motionStyle.x, opacity: motionStyle.opacity }}
+                className="relative overflow-hidden flex flex-col md:flex-row gap-6 p-6 rounded-2xl bg-white border border-gray-100 hover:border-purple-100 transition-all group cursor-pointer will-change-transform"
+              >
+                <div className="w-full md:w-28 h-28 rounded-xl overflow-hidden flex-shrink-0 bg-slate-50">
+                  <img src={resolveMediaUrl(post.image)} alt={post.title} className="w-full h-full object-cover object-top group-hover:scale-110 transition-all duration-700" />
+                </div>
+                <div className="flex flex-col justify-center flex-1">
+                  {post.category ? (
+                    <span className="text-[9px] font-bold text-gray-300 uppercase tracking-widest mb-2">
+                      {post.category}
+                    </span>
+                  ) : null}
+                  <h4 className="text-lg font-bold text-slate-900 mb-2 leading-snug group-hover:text-purple-600 transition-colors">
+                    {post.title}
+                  </h4>
+                  <p className="text-gray-400 text-xs font-medium mb-4 line-clamp-1">
+                    {post.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[8px] font-bold text-gray-300 uppercase tracking-widest">
+                      {post.date}
+                    </span>
+                    <div className="flex items-center gap-1.5 text-[9px] font-black uppercase text-slate-900 group-hover:text-purple-600">
+                      Read More <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </Link>
+          );
+        })}
+      </div>
+    </>
+  );
+}
+
+export default function HomePage() {
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [activeWorkIndex, setActiveWorkIndex] = useState(0);
+  const [activeProgramIndex, setActiveProgramIndex] = useState(0);
+  const [visibleProgramCount, setVisibleProgramCount] = useState(3);
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const testimonialsRef = useRef<HTMLDivElement>(null);
+  const programsRef = useRef<HTMLDivElement>(null);
 
   const scrollToTestimonial = useCallback((index: number) => {
     if (testimonialsRef.current) {
@@ -256,19 +350,10 @@ export default function HomePage() {
     (async () => {
       try {
         const cmsPosts = await getAllBlogPosts();
-        if (!isMounted || !cmsPosts.length) return;
-        setBlogPosts((prev) => {
-          const merged = [...cmsPosts, ...prev];
-          const seen = new Set<string>();
-          return merged.filter((post) => {
-            const key = post.slug ?? post.id ?? post.title;
-            if (seen.has(key)) return false;
-            seen.add(key);
-            return true;
-          });
-        });
+        if (!isMounted) return;
+        setBlogPosts(cmsPosts);
       } catch {
-        // Keep local fallback posts when CMS is unavailable.
+        if (isMounted) setBlogPosts([]);
       }
     })();
 
@@ -694,7 +779,8 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
         </div>
       </section>
 
-      {/* Voices from Our Community Section */}
+      {/* Voices from Our Community Section — hidden for now */}
+      {false && (
       <section id="stories" className="px-4 sm:px-6 py-16 sm:py-20 md:py-28 relative overflow-hidden">
         <div className="max-w-7xl mx-auto">
           <div className="relative mb-12 flex flex-col items-center text-center">
@@ -766,6 +852,7 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
           </div>
         </div>
       </section>
+      )}
 
       {/* Our Language */}
       <section className="relative px-4 sm:px-6 py-16 sm:py-20 md:py-28 overflow-hidden bg-[#F7F7F8]">
@@ -798,11 +885,11 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
 
             <div className="lg:col-span-7">
               <p className="text-base md:text-lg text-slate-600 font-medium leading-[1.85] tracking-[-0.01em]">
-                Whether someone uses &ldquo;disabled,&rdquo; &ldquo;person with a disability,&rdquo; &ldquo;differently-abled,&rdquo; or another term, the language they choose is shaped by their lived experience and what they believe best represents them. We respect and support each person&apos;s choice of language.
+                Whether someone uses &ldquo;disabled,&rdquo; &ldquo;handicap,&rdquo; &ldquo;person with a disability,&rdquo; &ldquo;differently-abled,&rdquo; or another term, the language they choose is shaped by their lived experience and what they believe best represents them. We respect and support each person&apos;s choice of language.
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-x-3 gap-y-3">
-                {["disabled", "person with a disability", "differently-abled"].map((term, index, arr) => (
+                {["disabled", "person with a disability", "differently-abled", "handicap"].map((term, index, arr) => (
                   <motion.div
                     key={term}
                     initial={{ opacity: 0, y: 8 }}
@@ -838,17 +925,17 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
       {/* Our Vision */}
       <section
         aria-label="Our Vision"
-        className="relative min-h-[20rem] sm:min-h-[24rem] md:min-h-[48vh] flex items-center"
+        className="relative min-h-[20rem] sm:min-h-[24rem] md:min-h-[48vh] flex items-center overflow-hidden bg-[#c8daf2]"
       >
-        <div
+        <img
+          src={siteImages.logoLul}
+          alt=""
           aria-hidden
-          className="absolute inset-0 bg-cover bg-no-repeat bg-scroll md:bg-fixed bg-[center_42%]"
-          style={{ backgroundImage: `url(${siteImages.ourVision})` }}
+          className="absolute inset-0 z-0 h-full w-full object-cover object-center pointer-events-none select-none"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/25 to-black/10" />
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12 md:py-16">
-          <div className="max-w-xl">
+          <div className="max-w-xl md:max-w-lg lg:max-w-xl">
             <div className="rounded-2xl bg-white/95 backdrop-blur-sm border border-slate-200/80 p-5 sm:p-7 md:p-10 flex flex-col justify-center shadow-[0_16px_50px_rgba(15,23,42,0.08)]">
               <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.28em] text-[#7107E7] mb-4">
                 Our Vision
@@ -906,7 +993,7 @@ From her wheelchair she rises, leading Light Upon Light with a fire that cannot 
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-full overflow-hidden ring-1 ring-slate-200 shrink-0">
                 <img
-                  src={siteImages.founder}
+                  src={siteImages.ronahi}
                   alt="Founder & CEO of Light Upon Light"
                   className="w-full h-full object-cover object-top"
                 />
@@ -965,87 +1052,18 @@ From her wheelchair she rises, leading Light Upon Light with a fire that cannot 
           </div>
 
           <div className="grid lg:grid-cols-[1.6fr_1fr] gap-6 lg:gap-8">
-            {/* Featured Post (Left) */}
-            <div ref={blogFeaturedRef} className="bg-[#FBFAFF] rounded-2xl p-5 md:p-6">
-              {[featuredBlogPost].filter(Boolean).map(post => (
-                <div key={post!.id} className="group">
-                  <motion.div
-                    style={{ opacity: blogBlock1Opacity, y: blogBlock1Y }}
-                    className="relative aspect-[21/9] rounded-2xl overflow-hidden mb-6 border border-gray-100"
-                  >
-                    <img
-                      src={resolveMediaUrl(post!.image)}
-                      alt={post!.title}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
-                  </motion.div>
-
-                  <motion.div style={{ opacity: blogBlock2Opacity, y: blogBlock2Y }}>
-                    <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest block mb-4">
-                      {post!.category}
-                    </span>
-                    <h3 className="text-[1.5rem] font-bold text-slate-900 mb-6 tracking-tight leading-snug group-hover:text-purple-600 transition-colors">
-                      {post!.title}
-                    </h3>
-                  </motion.div>
-
-                  <motion.div style={{ opacity: blogBlock3Opacity, y: blogBlock3Y }}>
-                    <p className="text-gray-400 font-medium leading-relaxed mb-3 text-[1rem]">
-                      {post!.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between pt-6 border-t border-gray-200/70">
-                      <span className="text-[10px] font-bold text-gray-300 uppercase tracking-[0.2em]">
-                        {post!.date}
-                      </span>
-                      <Link to={`/blog/${post!.id}`} className="flex items-center gap-3 text-purple-600 font-black text-sm hover:gap-4 transition-all">
-                        Read More <ArrowRight size={20} />
-                      </Link>
-                    </div>
-                  </motion.div>
-                </div>
-              ))}
-            </div>
-
-            {/* Sidebar Posts (Right) */}
-            <div
-              ref={blogSidebarRef}
-              className="space-y-4 bg-[#FBFAFF] rounded-2xl p-5 md:p-6 overflow-hidden"
-            >
-              {homepageSidebarPosts.map((post, i) => {
-                const motionStyle = blogSidebarMotion[i] ?? blogSidebarMotion[blogSidebarMotion.length - 1];
-                return (
-                  <Link key={post.id} to={`/blog/${post.slug ?? post.id}`} className="block mb-5 last:mb-0">
-                    <motion.div
-                      style={{ x: motionStyle.x, opacity: motionStyle.opacity }}
-                      className="relative overflow-hidden flex flex-col md:flex-row gap-6 p-6 rounded-2xl bg-white border border-gray-100 hover:border-purple-100 transition-all group cursor-pointer will-change-transform"
-                    >
-                      <div className="w-full md:w-28 h-28 rounded-xl overflow-hidden flex-shrink-0">
-                        <img src={resolveMediaUrl(post.image)} alt={post.title} className="w-full h-full object-cover group-hover:scale-110 transition-all duration-700" />
-                      </div>
-                      <div className="flex flex-col justify-center flex-1">
-                        <span className="text-[9px] font-bold text-gray-300 uppercase tracking-widest mb-2">
-                          {post.category}
-                        </span>
-                        <h4 className="text-lg font-bold text-slate-900 mb-2 leading-snug group-hover:text-purple-600 transition-colors">
-                          {post.title}
-                        </h4>
-                        <p className="text-gray-400 text-xs font-medium mb-4 line-clamp-1">
-                          {post.excerpt}
-                        </p>
-                        <div className="flex items-center justify-between">
-                          <span className="text-[8px] font-bold text-gray-300 uppercase tracking-widest">
-                            {post.date}
-                          </span>
-                          <div className="flex items-center gap-1.5 text-[9px] font-black uppercase text-slate-900 group-hover:text-purple-600">
-                            Read More <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </Link>
-                );
-              })}
-            </div>
+            {blogPosts.length === 0 || !featuredBlogPost ? (
+              <div className="lg:col-span-2 rounded-2xl border border-gray-100 bg-[#FBFAFF] px-6 py-16 text-center">
+                <p className="text-gray-400 font-medium">
+                  New stories are on the way. Check back soon.
+                </p>
+              </div>
+            ) : (
+              <HomepageBlogGrid
+                featured={featuredBlogPost}
+                sidebar={homepageSidebarPosts}
+              />
+            )}
           </div>
         </div>
       </section>

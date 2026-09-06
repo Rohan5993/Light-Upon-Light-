@@ -5,14 +5,14 @@ import { Link } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { resolveMediaUrl } from "../lib/publicUrl";
-import { BLOG_POSTS } from "../data/blogPosts";
+import { type BlogPost } from "../data/blogPosts";
 import { getAllBlogPosts } from "../services/blogService";
 
 const POSTS_PER_PAGE = 9;
 
 export default function BlogPage() {
   const [page, setPage] = useState(1);
-  const [posts, setPosts] = useState(BLOG_POSTS);
+  const [posts, setPosts] = useState<BlogPost[]>([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -20,20 +20,10 @@ export default function BlogPage() {
     (async () => {
       try {
         const cmsPosts = await getAllBlogPosts();
-        if (!isMounted || !cmsPosts.length) return;
-
-        setPosts((prev) => {
-          const merged = [...cmsPosts, ...prev];
-          const seen = new Set<string>();
-          return merged.filter((post) => {
-            const key = post.slug ?? post.id ?? post.title;
-            if (seen.has(key)) return false;
-            seen.add(key);
-            return true;
-          });
-        });
+        if (!isMounted) return;
+        setPosts(cmsPosts);
       } catch {
-        // Keep local fallback posts if Strapi is unreachable.
+        if (isMounted) setPosts([]);
       }
     })();
 
@@ -69,10 +59,17 @@ export default function BlogPage() {
             Stories that Inspire Action
           </h1>
           <p className="text-xl text-gray-500 font-medium max-w-3xl">
-            Explore 10 stories from our community, programs, and impact journey.
+            Explore stories from our community, programs, and impact journey.
           </p>
         </div>
 
+        {posts.length === 0 ? (
+          <div className="mb-20 rounded-2xl border border-gray-100 bg-gray-50 px-6 py-16 text-center">
+            <p className="text-gray-500 font-medium">
+              New stories are on the way. Check back soon.
+            </p>
+          </div>
+        ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
           {paginatedPosts.map((post, i) => (
             <motion.article
@@ -83,11 +80,13 @@ export default function BlogPage() {
               className="group bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all"
             >
               <Link to={`/blog/${post.slug ?? post.id}`}>
-                <div className="aspect-[16/10] overflow-hidden">
-                  <img src={resolveMediaUrl(post.image)} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div className="aspect-[16/10] overflow-hidden bg-slate-50">
+                  <img src={resolveMediaUrl(post.image)} alt={post.title} className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700" />
                 </div>
                 <div className="p-6">
-                  <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">{post.category}</p>
+                  {post.category ? (
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">{post.category}</p>
+                  ) : null}
                   <h2 className="text-xl font-bold text-gray-900 leading-snug mb-3 group-hover:text-purple-600 transition-colors">
                     {post.title}
                   </h2>
@@ -104,7 +103,9 @@ export default function BlogPage() {
             </motion.article>
           ))}
         </div>
+        )}
 
+        {posts.length > 0 && (
         <div className="mt-14 mb-20 flex flex-wrap items-center justify-center gap-3 px-2">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
             <button
@@ -118,6 +119,8 @@ export default function BlogPage() {
             </button>
           ))}
         </div>
+        )}
+        {posts.length === 0 && <div className="mb-10" />}
       </main>
 
       <Footer />
