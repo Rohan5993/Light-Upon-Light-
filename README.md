@@ -8,24 +8,26 @@ This contains everything you need to run your app locally.
 
 View your app in AI Studio: https://ai.studio/apps/87fd0d22-f9a4-487f-99c0-d1a8d8389af7
 
-## Live Site (GitHub Pages)
+## Live Site
 
-**https://rohan5993.github.io/Light-Upon-Light-/**
+**https://thelightuponlight.org/**
+
+Also on GitHub Pages: https://rohan5993.github.io/Light-Upon-Light-/
 
 | Page | URL |
 | --- | --- |
-| Home | https://rohan5993.github.io/Light-Upon-Light-/ |
-| About | https://rohan5993.github.io/Light-Upon-Light-/about |
-| Programs | https://rohan5993.github.io/Light-Upon-Light-/programs |
-| Volunteer | https://rohan5993.github.io/Light-Upon-Light-/volunteer |
-| Blog | https://rohan5993.github.io/Light-Upon-Light-/blog |
-| Donate | https://rohan5993.github.io/Light-Upon-Light-/donate |
-| Contact | https://rohan5993.github.io/Light-Upon-Light-/contact |
+| Home | https://thelightuponlight.org/ |
+| About | https://thelightuponlight.org/about |
+| Programs | https://thelightuponlight.org/programs |
+| Volunteer | https://thelightuponlight.org/volunteer |
+| Blog | https://thelightuponlight.org/blog |
+| Donate | https://thelightuponlight.org/donate |
+| Contact | https://thelightuponlight.org/contact |
 
 **CMS (Strapi on Render):** https://light-upon-light-strapi.onrender.com  
 **Admin:** https://light-upon-light-strapi.onrender.com/admin
 
-Use the trailing slash on the home URL. Pushes to `main` deploy automatically via GitHub Actions to the `gh-pages` branch.
+Pushes to `main` deploy the site via GitHub Actions. Strapi CORS must allow `https://thelightuponlight.org`.
 
 ## Run Locally
 
