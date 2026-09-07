@@ -1,0 +1,40 @@
+# Free content admin for non-technical editors.
+# Open: https://thelightuponlight.org/admin/
+#
+# One-time setup (tech person):
+# 1) GitHub → Settings → Developer settings → OAuth Apps → New OAuth App
+#    Homepage URL: https://thelightuponlight.org
+#    Authorization callback URL: https://api.netlify.com/auth/done
+# 2) Put the Client ID below in app_id
+# 3) Invite editors as collaborators on this GitHub repo (Write access)
+
+backend:
+  name: github
+  repo: Rohan5993/Light-Upon-Light-
+  branch: main
+  base_url: https://api.netlify.com
+  auth_endpoint: auth
+  # Replace with your GitHub OAuth App Client ID after creating it:
+  app_id: REPLACE_WITH_GITHUB_OAUTH_CLIENT_ID
+
+media_folder: public/blog
+public_folder: /blog
+
+collections:
+  - name: blog
+    label: Blog Posts
+    label_singular: Blog Post
+    folder: content/blog
+    extension: json
+    format: json
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Excerpt, name: excerpt, widget: text, hint: "Short summary shown on cards" }
+      - { label: Date label, name: date, widget: string, hint: "Example: SEPTEMBER 07, 2026" }
+      - { label: Category, name: category, widget: string, required: false }
+      - { label: Cover image, name: image, widget: image }
+      - { label: Featured on homepage, name: isFeatured, widget: boolean, default: false }
+      - { label: Body, name: body, widget: text, hint: "Full story. Use blank lines between paragraphs." }

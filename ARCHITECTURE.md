@@ -30,5 +30,6 @@ No Render / Strapi hosting required for the public site.
 | `VITE_PAYPAL_CLIENT_ID` | Donate buttons |
 | `VITE_EMAILJS_*` | Donation thank-you emails |
 
-Blog content lives in `src/data/staticBlogPosts.json` and images in `public/blog/`.
-To update a story: edit that JSON (and images if needed), then push to `main`.
+Blog content lives in `content/blog/*.json` (edit via **https://thelightuponlight.org/admin/**).
+Images live in `public/blog/`.
+See `SETUP-CHECKLIST.md` for the non-technical editor guide.
