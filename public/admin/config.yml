@@ -2,9 +2,9 @@ backend:
   name: github
   repo: Rohan5993/Light-Upon-Light-
   branch: main
-  # PKCE login (no Netlify account required). Create a GitHub OAuth App and paste Client ID below.
-  auth_type: pkce
-  app_id: Ov23liBkuS1YSx4PSdZO
+  # GitHub requires a small server for OAuth (client secret). Handled by /api on Vercel.
+  base_url: https://thelightuponlight.org
+  auth_endpoint: api/auth
 
 media_folder: public/blog
 public_folder: /blog

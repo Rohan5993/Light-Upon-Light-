@@ -24,13 +24,16 @@ They do **not** need to know code.
 
 ### One-time setup (tech person only)
 
-1. GitHub → **Settings → Developer settings → OAuth Apps → New OAuth App**
-2. Application name: `Light Upon Light CMS`
-3. Homepage URL: `https://thelightuponlight.org`
-4. Authorization callback URL: `https://thelightuponlight.org/admin/`
-5. Copy the **Client ID** into `public/admin/config.yml` → `app_id`
-6. Commit and push that change
-7. Invite your editor as a repo collaborator
+1. GitHub → **Settings → Developer settings → OAuth Apps** (edit the existing app)
+2. Homepage URL: `https://thelightuponlight.org`
+3. Authorization callback URL must be exactly:  
+   `https://thelightuponlight.org/api/callback`
+4. Copy **Client ID** and **Client Secret**
+5. In Vercel project env vars, set:
+   - `GITHUB_CLIENT_ID`
+   - `GITHUB_CLIENT_SECRET`
+6. Redeploy the Vercel site
+7. Invite editors as repo collaborators (Write access)
 
 ## Backup method (no admin login)
 
