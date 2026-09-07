@@ -2,6 +2,8 @@
 
 interface ImportMetaEnv {
   readonly VITE_BASE_PATH?: string;
+  readonly VITE_SUPABASE_URL?: string;
+  readonly VITE_SUPABASE_ANON_KEY?: string;
   readonly VITE_STRAPI_URL?: string;
   readonly VITE_STRAPI_TOKEN?: string;
   readonly VITE_PAYPAL_CLIENT_ID?: string;

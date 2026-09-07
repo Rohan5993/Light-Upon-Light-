@@ -13,3 +13,6 @@ coverage/
 # Local npm cache (do not commit)
 .npm_cache/
 .vercel
+
+.supabase-setup.env
+.supabase-setup.env.local

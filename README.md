@@ -2,57 +2,33 @@
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Run and deploy your AI Studio app
+# Light Upon Light
 
-This contains everything you need to run your app locally.
-
-View your app in AI Studio: https://ai.studio/apps/87fd0d22-f9a4-487f-99c0-d1a8d8389af7
+Nonprofit site for **Light Upon Light**.
 
 ## Live Site
 
 **https://thelightuponlight.org/**
 
-Also on GitHub Pages: https://rohan5993.github.io/Light-Upon-Light-/
-
 | Page | URL |
 | --- | --- |
 | Home | https://thelightuponlight.org/ |
-| About | https://thelightuponlight.org/about |
-| Programs | https://thelightuponlight.org/programs |
-| Volunteer | https://thelightuponlight.org/volunteer |
 | Blog | https://thelightuponlight.org/blog |
+| Admin (Google login) | https://thelightuponlight.org/admin |
 | Donate | https://thelightuponlight.org/donate |
-| Contact | https://thelightuponlight.org/contact |
 
-**CMS (Strapi on Render):** https://light-upon-light-strapi.onrender.com  
-**Admin:** https://light-upon-light-strapi.onrender.com/admin
-
-Pushes to `main` deploy the site via GitHub Actions. Strapi CORS must allow `https://thelightuponlight.org`.
+Blog posts live in **Supabase** (free). Editors sign in with Google at `/admin`.  
+See [SETUP-CHECKLIST.md](SETUP-CHECKLIST.md) and [ARCHITECTURE.md](ARCHITECTURE.md).
 
 ## Run Locally
 
-**Prerequisites:** Node.js
+1. `npm install`
+2. Copy `.env.example` → `.env.local` and set:
+   - `VITE_SUPABASE_URL`
+   - `VITE_SUPABASE_ANON_KEY`
+3. `npm run dev` (http://localhost:3001)
 
-1. Install dependencies:
-   `npm install`
-2. Create `.env.local` and set:
-   - `VITE_STRAPI_URL=https://light-upon-light-strapi.onrender.com` (or `http://localhost:1337` for local Strapi)
-   - `VITE_STRAPI_TOKEN=your_strapi_read_token` (optional if your Strapi API is public)
-3. Run the app:
-   `npm run dev`
+## Deploy
 
-## Deploy to Netlify
-
-This frontend is ready to deploy on Netlify with `netlify.toml`.
-
-1. Push this project to GitHub.
-2. In Netlify, create a new site from your GitHub repo.
-3. Use these settings (auto-detected from `netlify.toml`):
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-4. Add environment variables in Netlify site settings:
-   - `VITE_STRAPI_URL=https://your-strapi-domain`
-   - `VITE_STRAPI_TOKEN=your_strapi_read_token` (if required)
-5. Deploy.
-
-If you use client-side routing (like `/blog/:id`), Netlify SPA redirects are already configured in `netlify.toml`.
+- **Vercel** hosts `thelightuponlight.org` (set the same `VITE_SUPABASE_*` env vars).
+- Push to `main` also deploys the GitHub Pages mirror via Actions.

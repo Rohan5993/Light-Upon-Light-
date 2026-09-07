@@ -10,5 +10,5 @@ export interface BlogPost {
   isFeatured?: boolean;
 }
 
-/** Demo posts removed — blog content comes from Strapi only. */
+/** Demo posts removed — blog content comes from Supabase (with local JSON fallback). */
 export const BLOG_POSTS: BlogPost[] = [];
