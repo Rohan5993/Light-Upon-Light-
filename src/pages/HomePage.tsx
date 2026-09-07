@@ -255,6 +255,7 @@ export default function HomePage() {
   const [activeProgramIndex, setActiveProgramIndex] = useState(0);
   const [visibleProgramCount, setVisibleProgramCount] = useState(3);
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+  const [blogsLoading, setBlogsLoading] = useState(true);
   const testimonialsRef = useRef<HTMLDivElement>(null);
   const programsRef = useRef<HTMLDivElement>(null);
 
@@ -348,12 +349,15 @@ export default function HomePage() {
     let isMounted = true;
 
     (async () => {
+      setBlogsLoading(true);
       try {
         const cmsPosts = await getAllBlogPosts();
         if (!isMounted) return;
         setBlogPosts(cmsPosts);
       } catch {
         if (isMounted) setBlogPosts([]);
+      } finally {
+        if (isMounted) setBlogsLoading(false);
       }
     })();
 
@@ -1052,7 +1056,13 @@ From her wheelchair she rises, leading Light Upon Light with a fire that cannot 
           </div>
 
           <div className="grid lg:grid-cols-[1.6fr_1fr] gap-6 lg:gap-8">
-            {blogPosts.length === 0 || !featuredBlogPost ? (
+            {blogsLoading ? (
+              <div className="lg:col-span-2 rounded-2xl border border-gray-100 bg-[#FBFAFF] px-6 py-16 text-center">
+                <p className="text-gray-400 font-medium">
+                  Loading stories… this can take a moment if the server is waking up.
+                </p>
+              </div>
+            ) : blogPosts.length === 0 || !featuredBlogPost ? (
               <div className="lg:col-span-2 rounded-2xl border border-gray-100 bg-[#FBFAFF] px-6 py-16 text-center">
                 <p className="text-gray-400 font-medium">
                   New stories are on the way. Check back soon.
