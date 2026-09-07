@@ -157,11 +157,28 @@ async function fetchStrapi(path: string): Promise<unknown> {
   const headers: HeadersInit = {};
   if (STRAPI_TOKEN) headers.Authorization = `Bearer ${STRAPI_TOKEN}`;
 
-  const response = await fetch(`${STRAPI_URL}${path}`, { headers });
-  if (!response.ok) {
-    throw new Error(`Strapi request failed: ${response.status}`);
+  const maxAttempts = 4;
+  let lastError: unknown;
+
+  for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+    try {
+      const response = await fetch(`${STRAPI_URL}${path}`, { headers });
+      if (!response.ok) {
+        throw new Error(`Strapi request failed: ${response.status}`);
+      }
+      return response.json();
+    } catch (error) {
+      lastError = error;
+      // Render free tier can cold-start for 30–60s; retry before giving up.
+      if (attempt < maxAttempts) {
+        await new Promise((resolve) => setTimeout(resolve, attempt * 2500));
+      }
+    }
   }
-  return response.json();
+
+  throw lastError instanceof Error
+    ? lastError
+    : new Error("Strapi request failed");
 }
 
 function extractDataArray(payload: unknown): StrapiRecord[] {

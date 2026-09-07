@@ -13,17 +13,26 @@ const POSTS_PER_PAGE = 9;
 export default function BlogPage() {
   const [page, setPage] = useState(1);
   const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
 
     (async () => {
+      setLoading(true);
+      setLoadError(false);
       try {
         const cmsPosts = await getAllBlogPosts();
         if (!isMounted) return;
         setPosts(cmsPosts);
       } catch {
-        if (isMounted) setPosts([]);
+        if (isMounted) {
+          setPosts([]);
+          setLoadError(true);
+        }
+      } finally {
+        if (isMounted) setLoading(false);
       }
     })();
 
@@ -63,10 +72,18 @@ export default function BlogPage() {
           </p>
         </div>
 
-        {posts.length === 0 ? (
+        {loading ? (
           <div className="mb-20 rounded-2xl border border-gray-100 bg-gray-50 px-6 py-16 text-center">
             <p className="text-gray-500 font-medium">
-              New stories are on the way. Check back soon.
+              Loading stories… this can take up to a minute if the server is waking up.
+            </p>
+          </div>
+        ) : posts.length === 0 ? (
+          <div className="mb-20 rounded-2xl border border-gray-100 bg-gray-50 px-6 py-16 text-center">
+            <p className="text-gray-500 font-medium">
+              {loadError
+                ? "We couldn’t reach the blog right now. Please refresh in a moment."
+                : "New stories are on the way. Check back soon."}
             </p>
           </div>
         ) : (
@@ -120,7 +137,7 @@ export default function BlogPage() {
           ))}
         </div>
         )}
-        {posts.length === 0 && <div className="mb-10" />}
+        {posts.length === 0 && !loading && <div className="mb-10" />}
       </main>
 
       <Footer />
