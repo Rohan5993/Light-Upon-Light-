@@ -151,7 +151,7 @@ export default function ContactPage() {
             >
               <div className="rounded-2xl sm:rounded-[2rem] overflow-hidden aspect-[16/10] ring-1 ring-slate-200/70">
                 <img
-                  src={siteImages.ourStory}
+                  src={siteImages.contactHero}
                   alt="Light Upon Light community"
                   className="w-full h-full object-cover"
                 />

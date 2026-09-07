@@ -15,7 +15,8 @@ import getInvolvedExplorePrograms from "./images/Exploreprograms.PNG";
 import getInvolvedReadOurStories from "./images/read-our -story.png";
 import education from "./images/education.PNG";
 import workforce from "./images/workforce.PNG";
-import aboutHero from "./images/about-hero.webp";
+import aboutHero from "./images/about-hs.jpeg";
+import contactHero from "./images/contact-hs.jpeg";
 import volunteerHero from "./images/volunteer-hero.webp";
 import ourStory from "./images/our-story.webp";
 import ctaBanner from "./images/cta-banner.webp";
@@ -58,6 +59,7 @@ export const siteImages = {
   education,
   workforce,
   aboutHero,
+  contactHero,
   volunteerHero,
   ourStory,
   ctaBanner,

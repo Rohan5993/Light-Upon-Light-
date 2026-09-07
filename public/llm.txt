@@ -20,6 +20,7 @@ We help differently-abled people through advocacy, accessibility, equality, and 
 - Programs: https://rohan5993.github.io/Light-Upon-Light-/programs
 - Volunteer: https://rohan5993.github.io/Light-Upon-Light-/volunteer
 - Donate: https://rohan5993.github.io/Light-Upon-Light-/donate
+- Contact: https://rohan5993.github.io/Light-Upon-Light-/contact
 - Blog: https://rohan5993.github.io/Light-Upon-Light-/blog
 
 ## Programs
@@ -34,6 +35,8 @@ We help differently-abled people through advocacy, accessibility, equality, and 
 ## How to help
 
 - Donate: https://rohan5993.github.io/Light-Upon-Light-/donate
+- Contact: https://rohan5993.github.io/Light-Upon-Light-/contact
+- Blog: https://rohan5993.github.io/Light-Upon-Light-/blog
 - Volunteer: https://rohan5993.github.io/Light-Upon-Light-/volunteer
 - Partner / program inquiries: lightuponlight1408@gmail.com
 
@@ -41,3 +44,4 @@ We help differently-abled people through advocacy, accessibility, equality, and 
 
 - Sitemap: https://rohan5993.github.io/Light-Upon-Light-/sitemap.xml
 - Robots: https://rohan5993.github.io/Light-Upon-Light-/robots.txt
+- LLM: https://rohan5993.github.io/Light-Upon-Light-/llm.txt
