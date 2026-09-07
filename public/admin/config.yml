@@ -4,7 +4,7 @@ backend:
   branch: main
   # PKCE login (no Netlify account required). Create a GitHub OAuth App and paste Client ID below.
   auth_type: pkce
-  app_id: REPLACE_WITH_GITHUB_OAUTH_CLIENT_ID
+  app_id: Ov23liBkuS1YSx4PSdZO
 
 media_folder: public/blog
 public_folder: /blog
