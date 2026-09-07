@@ -14,7 +14,7 @@ The live site updates immediately (no redeploy needed).
 
 Anyone whose **Google email** is listed in the Supabase table `blog_editors`.
 
-Ask a tech person to add a teammate’s email there (Table Editor → `blog_editors` → Insert).
+Ask a tech person to add a teammate’s email there (Table Editor → `cms_blog_editors` → Insert).
 
 ## One-time setup (tech person only)
 
@@ -24,13 +24,13 @@ Ask a tech person to add a teammate’s email there (Table Editor → `blog_edit
 4. Set on Vercel (and GitHub Actions secrets for Pages):
    - `VITE_SUPABASE_URL`
    - `VITE_SUPABASE_ANON_KEY`
-5. Seed editors: insert emails into `blog_editors`
+5. Seed editors: insert emails into `cms_blog_editors`
 6. Optional: `SUPABASE_URL` + `SUPABASE_SERVICE_ROLE_KEY` →  
    `node scripts/migrate-blog-to-supabase.mjs` to import existing JSON posts
 
 ## Backup method (no admin)
 
-Edit rows directly in Supabase → Table Editor → `blog_posts`, or upload images in Storage → `blog`.
+Edit rows directly in Supabase → Table Editor → `cms_blog_posts`, or upload images in Storage → `blog`.
 
 ## Forms (contact / volunteer)
 

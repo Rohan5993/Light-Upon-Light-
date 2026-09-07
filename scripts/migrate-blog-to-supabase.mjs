@@ -87,7 +87,7 @@ async function migratePosts() {
       published: true,
     };
 
-    const { error } = await supabase.from("blog_posts").upsert(row, {
+    const { error } = await supabase.from("cms_blog_posts").upsert(row, {
       onConflict: "slug",
     });
     if (error) {

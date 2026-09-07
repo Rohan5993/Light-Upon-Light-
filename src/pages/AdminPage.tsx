@@ -70,7 +70,7 @@ function AdminShell({
           <div className="mb-6 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900">
             You’re signed in, but this Google account is not on the editor list.
             Ask an admin to add <strong>{user.email}</strong> in Supabase →{" "}
-            <code>blog_editors</code>.
+            <code>cms_blog_editors</code>.
           </div>
         ) : null}
         {children}

@@ -76,7 +76,7 @@ export async function getAllBlogPosts(): Promise<BlogPost[]> {
 
   try {
     const { data, error } = await getSupabase()
-      .from("blog_posts")
+      .from("cms_blog_posts")
       .select("*")
       .eq("published", true)
       .order("is_featured", { ascending: false })
@@ -99,7 +99,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
   if (isSupabaseConfigured) {
     try {
       const { data, error } = await getSupabase()
-        .from("blog_posts")
+        .from("cms_blog_posts")
         .select("*")
         .eq("slug", slug)
         .eq("published", true)
@@ -120,7 +120,7 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
 
 export async function listAllPostsForAdmin(): Promise<BlogPostRow[]> {
   const { data, error } = await getSupabase()
-    .from("blog_posts")
+    .from("cms_blog_posts")
     .select("*")
     .order("updated_at", { ascending: false });
 
@@ -132,7 +132,7 @@ export async function getPostByIdForAdmin(
   id: string,
 ): Promise<BlogPostRow | null> {
   const { data, error } = await getSupabase()
-    .from("blog_posts")
+    .from("cms_blog_posts")
     .select("*")
     .eq("id", id)
     .maybeSingle();
@@ -155,7 +155,7 @@ export type BlogPostInput = {
 
 export async function createBlogPost(input: BlogPostInput): Promise<BlogPostRow> {
   const { data, error } = await getSupabase()
-    .from("blog_posts")
+    .from("cms_blog_posts")
     .insert(input)
     .select("*")
     .single();
@@ -169,7 +169,7 @@ export async function updateBlogPost(
   input: Partial<BlogPostInput>,
 ): Promise<BlogPostRow> {
   const { data, error } = await getSupabase()
-    .from("blog_posts")
+    .from("cms_blog_posts")
     .update(input)
     .eq("id", id)
     .select("*")
@@ -180,7 +180,7 @@ export async function updateBlogPost(
 }
 
 export async function deleteBlogPost(id: string): Promise<void> {
-  const { error } = await getSupabase().from("blog_posts").delete().eq("id", id);
+  const { error } = await getSupabase().from("cms_blog_posts").delete().eq("id", id);
   if (error) throw error;
 }
 
@@ -217,7 +217,7 @@ export async function isCurrentUserBlogEditor(): Promise<boolean> {
   if (!email) return false;
 
   const { data, error } = await supabase
-    .from("blog_editors")
+    .from("cms_blog_editors")
     .select("email")
     .eq("email", email)
     .maybeSingle();

@@ -41,4 +41,4 @@ No Render / Strapi / Decap required for the public site or blog editing.
 | `VITE_PAYPAL_CLIENT_ID` | Donate buttons |
 | `VITE_EMAILJS_*` | Donation thank-you emails |
 
-Editors are allowlisted in Supabase table `blog_editors`. Schema: `supabase/schema.sql`.
+Editors are allowlisted in Supabase table `cms_blog_editors`. Schema: `supabase/schema.sql`.

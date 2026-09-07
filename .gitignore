@@ -16,3 +16,6 @@ coverage/
 
 .supabase-setup.env
 .supabase-setup.env.local
+.supabase-access-token
+.google-oauth-client-id
+.google-oauth-client-secret
