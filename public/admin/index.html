@@ -4,8 +4,101 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Light Upon Light — Content Admin</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: Georgia, "Times New Roman", serif;
+        background: #f7f5f2;
+        color: #1f2937;
+      }
+      #setup {
+        display: none;
+        max-width: 40rem;
+        margin: 4rem auto;
+        padding: 2rem;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 1rem;
+        line-height: 1.5;
+      }
+      #setup h1 {
+        font-size: 1.5rem;
+        margin: 0 0 1rem;
+      }
+      #setup ol {
+        padding-left: 1.25rem;
+      }
+      #setup code {
+        background: #f3f4f6;
+        padding: 0.1rem 0.35rem;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+      }
+      #setup a {
+        color: #7107e7;
+      }
+    </style>
   </head>
   <body>
-    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    <div id="setup">
+      <h1>One-time login setup needed</h1>
+      <p>
+        The “Not Found” message appears because GitHub login is not configured yet.
+        A technical person must do this once (free):
+      </p>
+      <ol>
+        <li>
+          Open
+          <a
+            href="https://github.com/settings/applications/new"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub → New OAuth App</a
+          >
+        </li>
+        <li>
+          Set <strong>Application name</strong> to
+          <code>Light Upon Light CMS</code>
+        </li>
+        <li>
+          Set <strong>Homepage URL</strong> to
+          <code>https://thelightuponlight.org</code>
+        </li>
+        <li>
+          Set <strong>Authorization callback URL</strong> to
+          <code>https://thelightuponlight.org/admin/</code>
+        </li>
+        <li>Click <strong>Register application</strong></li>
+        <li>
+          Copy the <strong>Client ID</strong> and send it to your developer (or
+          paste it into <code>public/admin/config.yml</code> as
+          <code>app_id</code>, then push to <code>main</code>)
+        </li>
+        <li>
+          Invite editors as GitHub collaborators on
+          <code>Rohan5993/Light-Upon-Light-</code> (Write access)
+        </li>
+      </ol>
+      <p>
+        Until that Client ID is added, login cannot work. After it is added,
+        refresh this page and use <strong>Login with GitHub</strong>.
+      </p>
+    </div>
+    <script>
+      fetch("./config.yml")
+        .then((r) => r.text())
+        .then((text) => {
+          if (text.includes("REPLACE_WITH_GITHUB_OAUTH_CLIENT_ID")) {
+            document.getElementById("setup").style.display = "block";
+            return;
+          }
+          var s = document.createElement("script");
+          s.src = "https://unpkg.com/decap-cms@^3.3.3/dist/decap-cms.js";
+          document.body.appendChild(s);
+        })
+        .catch(function () {
+          document.getElementById("setup").style.display = "block";
+        });
+    </script>
   </body>
 </html>

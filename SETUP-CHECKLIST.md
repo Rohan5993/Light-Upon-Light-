@@ -27,7 +27,7 @@ They do **not** need to know code.
 1. GitHub → **Settings → Developer settings → OAuth Apps → New OAuth App**
 2. Application name: `Light Upon Light CMS`
 3. Homepage URL: `https://thelightuponlight.org`
-4. Authorization callback URL: `https://api.netlify.com/auth/done`
+4. Authorization callback URL: `https://thelightuponlight.org/admin/`
 5. Copy the **Client ID** into `public/admin/config.yml` → `app_id`
 6. Commit and push that change
 7. Invite your editor as a repo collaborator

@@ -1,20 +1,9 @@
-# Free content admin for non-technical editors.
-# Open: https://thelightuponlight.org/admin/
-#
-# One-time setup (tech person):
-# 1) GitHub → Settings → Developer settings → OAuth Apps → New OAuth App
-#    Homepage URL: https://thelightuponlight.org
-#    Authorization callback URL: https://api.netlify.com/auth/done
-# 2) Put the Client ID below in app_id
-# 3) Invite editors as collaborators on this GitHub repo (Write access)
-
 backend:
   name: github
   repo: Rohan5993/Light-Upon-Light-
   branch: main
-  base_url: https://api.netlify.com
-  auth_endpoint: auth
-  # Replace with your GitHub OAuth App Client ID after creating it:
+  # PKCE login (no Netlify account required). Create a GitHub OAuth App and paste Client ID below.
+  auth_type: pkce
   app_id: REPLACE_WITH_GITHUB_OAUTH_CLIENT_ID
 
 media_folder: public/blog
