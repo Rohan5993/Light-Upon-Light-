@@ -1,40 +1,34 @@
-# Architecture (free stack)
+# Architecture (free forever)
 
 ```
-┌──────────────────┐
-│  GitHub Pages    │  Vite + React website
-│  (live site)     │
-└────────┬─────────┘
-         │ API calls
-         ▼
-┌──────────────────┐
-│      Render      │  Strapi CMS (free)
-└────────┬─────────┘
-         │ PostgreSQL
-         ▼
-┌──────────────────┐
-│    Supabase      │  Postgres (free)
-└──────────────────┘
+┌──────────────────────────┐
+│  thelightuponlight.org   │  GitHub Pages (free)
+│  (static Vite + React)   │
+└────────────┬─────────────┘
+             │
+     ┌───────┴────────┐
+     ▼                ▼
+ Blog posts        Forms
+ (in repo JSON     (FormSubmit → org email)
+  + /public/blog)  free forever
 ```
+
+No Render / Strapi hosting required for the public site.
 
 ### Final links
 
 | What | URL |
 | --- | --- |
-| Website | https://rohan5993.github.io/Light-Upon-Light-/ |
-| Strapi API / Admin | https://light-upon-light-strapi.onrender.com |
-| Strapi Admin UI | https://light-upon-light-strapi.onrender.com/admin |
-| Strapi repo | https://github.com/Rohan5993/Light-Upon-Light-Strapi |
+| Website | https://thelightuponlight.org/ |
+| GitHub Pages mirror | https://rohan5993.github.io/Light-Upon-Light-/ |
+| Blog | https://thelightuponlight.org/blog |
 
-See the Strapi repo `DEPLOY.md` for full setup steps:
-https://github.com/Rohan5993/Light-Upon-Light-Strapi/blob/main/DEPLOY.md
-
-### Website env (GitHub Pages / Actions)
+### Optional (not required)
 
 | Variable | Purpose |
 | --- | --- |
-| `VITE_STRAPI_URL` | `https://light-upon-light-strapi.onrender.com` |
 | `VITE_PAYPAL_CLIENT_ID` | Donate buttons |
 | `VITE_EMAILJS_*` | Donation thank-you emails |
 
-Set `VITE_STRAPI_URL` as a repo secret so Pages builds talk to Render (not localhost).
+Blog content lives in `src/data/staticBlogPosts.json` and images in `public/blog/`.
+To update a story: edit that JSON (and images if needed), then push to `main`.

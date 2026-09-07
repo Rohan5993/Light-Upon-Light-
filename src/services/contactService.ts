@@ -1,4 +1,8 @@
-import { getStrapiUrl } from "../lib/strapiUrl";
+/**
+ * Free-forever form delivery via FormSubmit (no paid hosting / Render).
+ */
+const FORMSUBMIT_ENDPOINT =
+  "https://formsubmit.co/ajax/lightuponlight1408@gmail.com";
 
 export type ContactInquiryType = "message" | "appointment";
 
@@ -11,7 +15,31 @@ export type ContactMessageInput = {
   message?: string;
 };
 
-const STRAPI_URL = getStrapiUrl();
+async function submitViaFormSubmit(payload: Record<string, string>): Promise<void> {
+  const response = await fetch(FORMSUBMIT_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify({
+      ...payload,
+      _template: "table",
+      _captcha: "false",
+    }),
+  });
+
+  if (!response.ok) {
+    let detail = "";
+    try {
+      const body = (await response.json()) as { message?: string };
+      detail = body.message ?? "";
+    } catch {
+      // ignore
+    }
+    throw new Error(detail || `Form submission failed (${response.status})`);
+  }
+}
 
 export async function submitContactMessage(
   input: ContactMessageInput,
@@ -26,47 +54,13 @@ export async function submitContactMessage(
       ? "This person chose Book an Appointment on the contact form."
       : "");
 
-  const endpoint =
-    inquiryType === "appointment"
-      ? `${STRAPI_URL}/api/appointments`
-      : `${STRAPI_URL}/api/contact-messages`;
-
-  const payload =
-    inquiryType === "appointment"
-      ? {
-          name: input.name.trim(),
-          email: input.email.trim(),
-          phone: input.phone?.trim() || "",
-          subject,
-          message,
-        }
-      : {
-          inquiryType: "message" as const,
-          name: input.name.trim(),
-          email: input.email.trim(),
-          phone: input.phone?.trim() || "",
-          subject,
-          message,
-        };
-
-  const response = await fetch(endpoint, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ data: payload }),
+  await submitViaFormSubmit({
+    _subject: `${inquiryType === "appointment" ? "Appointment" : "Contact"} — ${input.name.trim()}`,
+    form_type: inquiryType,
+    name: input.name.trim(),
+    email: input.email.trim(),
+    phone: input.phone?.trim() || "",
+    subject,
+    message,
   });
-
-  if (!response.ok) {
-    let detail = "";
-    try {
-      const body = (await response.json()) as { error?: { message?: string } };
-      detail = body.error?.message ?? "";
-    } catch {
-      // ignore JSON parse errors
-    }
-    throw new Error(
-      detail || `Contact form submission failed (${response.status})`,
-    );
-  }
 }
