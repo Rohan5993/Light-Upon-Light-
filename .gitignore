@@ -19,3 +19,4 @@ coverage/
 .supabase-access-token
 .google-oauth-client-id
 .google-oauth-client-secret
+supabase/.temp/
