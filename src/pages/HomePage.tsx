@@ -457,6 +457,83 @@ export default function HomePage() {
         </main>
       </div>
 
+      {/* Founder's Diary */}
+      <section id="our-mission" className="px-4 sm:px-6 py-12 md:py-16 relative overflow-hidden">
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            backgroundImage: `
+              radial-gradient(ellipse at 0% 0%, rgba(113, 7, 231, 0.06) 0%, transparent 55%),
+              radial-gradient(ellipse at 100% 20%, rgba(56, 189, 248, 0.07) 0%, transparent 50%),
+              radial-gradient(ellipse at 50% 100%, rgba(250, 204, 21, 0.08) 0%, transparent 55%),
+              linear-gradient(135deg, #FBFAFF 0%, #F7FBFF 52%, #FFFDF5 100%)
+            `,
+          }}
+        />
+        <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+          <FadeIn className="lg:col-span-6">
+            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#7107E7] mb-4">
+              Founder&apos;s Diary
+            </p>
+
+            <h2 className="text-xl md:text-[1.5rem] font-bold text-slate-900 tracking-[-0.03em] leading-[1.3] mb-10">
+              Hear the story behind the movement in her own words.
+            </h2>
+
+            <ScrollColorWords
+              text={`Our Founder and CEO isn't just passionate about this cause. She has lived it. As a differently-abled woman herself, she knows the pain, the overlooked moments, and what it feels like to be denied basic dignity.
+
+It started when she was denied something as simple as a cup of tea. That one small, deeply unfair moment sparked everything. And she made sure it would never happen to anyone else.
+
+From her wheelchair she rises, leading Light Upon Light with a fire that cannot be dimmed, fighting every single day so that no differently-abled individual ever feels unseen, unheard, or unworthy again.`}
+              highlights={["sparked everything"]}
+              className="text-[15px] md:text-base font-medium leading-[1.75] tracking-[-0.01em] mb-8"
+            />
+
+            <div className="flex items-center gap-3">
+              <div className="w-11 h-11 rounded-full overflow-hidden ring-1 ring-slate-200 shrink-0">
+                <img
+                  src={ronahi}
+                  alt="Founder & CEO of Light Upon Light"
+                  width={88}
+                  height={88}
+                  decoding="async"
+                  loading="lazy"
+                  className="w-full h-full object-cover object-top"
+                />
+              </div>
+              <div>
+                <p className="font-semibold text-[#7107E7] text-sm">Founder &amp; CEO</p>
+                <p className="text-sm text-slate-400">Light Upon Light</p>
+              </div>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.12} className="lg:col-span-6 lg:sticky lg:top-28">
+            <div className="rounded-2xl overflow-hidden ring-1 ring-slate-200/80 aspect-[16/10] bg-slate-900">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/ls7bEYWfP9w?autoplay=1&mute=1&playsinline=1&rel=0"
+                title="I Was Denied a Cup of Tea Because of My Disability — The Founder's Diary"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
+
+            <a
+              href="https://www.youtube.com/@TheFoundersDiary24"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#7107E7] hover:text-[#5a06b8] transition-colors"
+            >
+              <Youtube size={18} className="text-red-600" />
+              Visit YouTube Channel
+              <ArrowUpRight size={16} />
+            </a>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* Our Pillars */}
       <section className="relative px-4 sm:px-6 py-16 sm:py-20 md:py-28 overflow-hidden bg-white">
         <div className="max-w-7xl mx-auto">
@@ -979,83 +1056,6 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
               />
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Founder's Diary */}
-      <section id="our-mission" className="px-4 sm:px-6 py-12 md:py-16 relative overflow-hidden">
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: `
-              radial-gradient(ellipse at 0% 0%, rgba(113, 7, 231, 0.06) 0%, transparent 55%),
-              radial-gradient(ellipse at 100% 20%, rgba(56, 189, 248, 0.07) 0%, transparent 50%),
-              radial-gradient(ellipse at 50% 100%, rgba(250, 204, 21, 0.08) 0%, transparent 55%),
-              linear-gradient(135deg, #FBFAFF 0%, #F7FBFF 52%, #FFFDF5 100%)
-            `,
-          }}
-        />
-        <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          <FadeIn className="lg:col-span-6">
-            <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#7107E7] mb-4">
-              Founder&apos;s Diary
-            </p>
-
-            <h2 className="text-xl md:text-[1.5rem] font-bold text-slate-900 tracking-[-0.03em] leading-[1.3] mb-10">
-              Hear the story behind the movement in her own words.
-            </h2>
-
-            <ScrollColorWords
-              text={`Our Founder and CEO isn't just passionate about this cause. She has lived it. As a differently-abled woman herself, she knows the pain, the overlooked moments, and what it feels like to be denied basic dignity.
-
-It started when she was denied something as simple as a cup of tea. That one small, deeply unfair moment sparked everything. And she made sure it would never happen to anyone else.
-
-From her wheelchair she rises, leading Light Upon Light with a fire that cannot be dimmed, fighting every single day so that no differently-abled individual ever feels unseen, unheard, or unworthy again.`}
-              highlights={["sparked everything"]}
-              className="text-[15px] md:text-base font-medium leading-[1.75] tracking-[-0.01em] mb-8"
-            />
-
-            <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full overflow-hidden ring-1 ring-slate-200 shrink-0">
-                <img
-                  src={ronahi}
-                  alt="Founder & CEO of Light Upon Light"
-                  width={88}
-                  height={88}
-                  decoding="async"
-                  loading="lazy"
-                  className="w-full h-full object-cover object-top"
-                />
-              </div>
-              <div>
-                <p className="font-semibold text-[#7107E7] text-sm">Founder &amp; CEO</p>
-                <p className="text-sm text-slate-400">Light Upon Light</p>
-              </div>
-            </div>
-          </FadeIn>
-
-          <FadeIn delay={0.12} className="lg:col-span-6 lg:sticky lg:top-28">
-            <div className="rounded-2xl overflow-hidden ring-1 ring-slate-200/80 aspect-[16/10] bg-slate-900">
-              <iframe
-                className="w-full h-full"
-                src="https://www.youtube.com/embed/ls7bEYWfP9w?autoplay=1&mute=1&playsinline=1&rel=0"
-                title="I Was Denied a Cup of Tea Because of My Disability — The Founder's Diary"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowFullScreen
-              />
-            </div>
-
-            <a
-              href="https://www.youtube.com/@TheFoundersDiary24"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-[#7107E7] hover:text-[#5a06b8] transition-colors"
-            >
-              <Youtube size={18} className="text-red-600" />
-              Visit YouTube Channel
-              <ArrowUpRight size={16} />
-            </a>
-          </FadeIn>
         </div>
       </section>
 
