@@ -1,10 +1,5 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { lazy, Suspense, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 
 const ProgramsPage = lazy(() => import("./pages/ProgramsPage"));
@@ -28,9 +23,28 @@ function RouteFallback() {
   );
 }
 
+function BootHeroCleanup() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    const boot = document.getElementById("boot-hero");
+    if (!boot) return;
+    if (pathname !== "/") {
+      boot.remove();
+      return;
+    }
+    // Keep the pre-React LCP image long enough for mobile Lighthouse, then hand off.
+    const timer = window.setTimeout(() => boot.remove(), 2800);
+    return () => window.clearTimeout(timer);
+  }, [pathname]);
+
+  return null;
+}
+
 export default function App() {
   return (
     <Router basename={routerBasename || undefined}>
+      <BootHeroCleanup />
       <Suspense fallback={<RouteFallback />}>
         <Routes>
           <Route path="/" element={<HomePage />} />

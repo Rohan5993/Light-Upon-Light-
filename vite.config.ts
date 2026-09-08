@@ -20,11 +20,19 @@ export default defineConfig(({mode}) => {
     build: {
       target: 'es2020',
       cssCodeSplit: true,
+      modulePreload: {
+        resolveDependencies: (_filename, deps) =>
+          deps.filter((dep) => !dep.includes('motion')),
+      },
       rollupOptions: {
         output: {
-          manualChunks: {
-            react: ['react', 'react-dom', 'react-router-dom'],
-            motion: ['motion'],
+          manualChunks(id) {
+            if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/') || id.includes('react-router')) {
+              return 'react';
+            }
+            if (id.includes('node_modules/motion') || id.includes('node_modules/framer-motion')) {
+              return 'motion';
+            }
           },
         },
       },

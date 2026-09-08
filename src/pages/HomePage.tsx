@@ -5,16 +5,23 @@ import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
 import { type BlogPost } from "../data/blogPosts";
 import Header from "../components/Header";
-import heroHomepage from "../assets/images/hero-homepage.webp";
-import programMeetOurLight from "../assets/images/program-meet-our-light.webp";
 import logoLul from "../assets/images/logo-lul.webp";
 import ronahi from "../assets/images/Ronahi.webp";
+import programMeetOurLight from "../assets/images/program-meet-our-light.webp";
 import { resolveMediaUrl } from "../lib/publicUrl";
 import Footer from "../components/Footer";
 import HoverFillLink from "../components/HoverFillLink";
-import AnimatedText, { AnimatedWords, FadeIn } from "../components/motion/AnimatedText";
+import AnimatedText, { FadeIn } from "../components/motion/AnimatedText";
 import ScrollColorWords from "../components/motion/ScrollColorWords";
 import { TestimonialCard } from "../components/TestimonialCard";
+
+const HERO_MOBILE = "/hero-mobile.webp";
+const HERO_DESKTOP = "/hero-desktop.webp";
+
+function avatarDataUri(initials: string, color: string) {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><rect width="128" height="128" fill="${color}"/><text x="64" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="44" font-weight="700" fill="#fff">${initials}</text></svg>`;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+}
 
 const PILLARS = [
   {
@@ -79,32 +86,32 @@ const TESTIMONIALS = [
     name: "Sarah Jenkins",
     role: "CREATIVE SCHOLAR",
     quote: "Light Upon Light gave me the tools to pursue my passion for photography. I didn't just find a program; I found a family that sees my potential, not my limitations.",
-    img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fm=webp&fit=crop&q=80&w=200"
+    img: avatarDataUri("SJ", "#7107E7"),
   },
   {
     name: "David Chen",
     role: "PROGRAM MENTOR",
     quote: "The mentorship program helped me navigate the corporate world with confidence. Now, I'm helping others do the same. This is how the light spreads.",
-    img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fm=webp&fit=crop&q=80&w=200"
+    img: avatarDataUri("DC", "#38BDF8"),
   },
   {
     name: "Maria Rodriguez",
     role: "COMMUNITY LEADER",
     quote: "Being part of Light Upon Light has been a transformative experience. I've witnessed firsthand how small acts of kindness create ripples of change.",
-    img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fm=webp&fit=crop&q=80&w=200"
+    img: avatarDataUri("MR", "#0F766E"),
   },
   {
     name: "James Wilson",
     role: "YOUTH AMBASSADOR",
     quote: "The digital inclusion workshop opened doors I never knew existed. I'm now studying computer science and giving back to my community.",
-    img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fm=webp&fit=crop&q=80&w=200"
+    img: avatarDataUri("JW", "#7C3AED"),
   },
   {
     name: "Elena Petrova",
     role: "VOLUNTEER COORDINATOR",
     quote: "Witnessing the growth of our programs and the smiles on people's faces is the most rewarding experience. We are truly shining a light.",
-    img: "https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fm=webp&fit=crop&q=80&w=200"
-  }
+    img: avatarDataUri("EP", "#CA8A04"),
+  },
 ];
 
 const WORK_LABELS = [
@@ -392,15 +399,18 @@ export default function HomePage() {
         <Header variant="light" />
         {/* Background Hero Image with Vertical Ribbon Effect */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-          <img
-            src={heroHomepage}
-            alt="Young girl smiling in a wheelchair by a fountain"
-            width={1580}
-            height={996}
-            decoding="async"
-            fetchPriority="high"
-            className="w-full h-full object-cover object-[center_40%]"
-          />
+          <picture>
+            <source media="(min-width: 768px)" srcSet={HERO_DESKTOP} type="image/webp" />
+            <img
+              src={HERO_MOBILE}
+              alt="Young girl smiling in a wheelchair by a fountain"
+              width={768}
+              height={484}
+              decoding="async"
+              fetchPriority="high"
+              className="w-full h-full object-cover object-[center_40%]"
+            />
+          </picture>
           {/* Static ribbon strips — avoid backdrop-filter (main-thread / compositor cost) */}
           <div className="absolute inset-0 flex pointer-events-none" aria-hidden>
             {[...Array(8)].map((_, i) => (
@@ -432,47 +442,28 @@ export default function HomePage() {
         <main className="relative z-10 px-4 sm:px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl pt-6 sm:pt-8 pb-12 md:pt-0 md:pb-0">
           <div className="max-w-4xl">
             <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-6 sm:mb-8">
-              <AnimatedText
-                lines={[
-                  "Their Light Is Already There.",
-                  "Help Us Let It Shine",
-                ]}
-                animateOnMount
-              />
+              <span className="block">Their Light Is Already There.</span>
+              <span className="block">Help Us Let It Shine</span>
             </h1>
-            <AnimatedWords
-              text="We exist to help differently-abled people through advocacy, accessibility, and equality while changing society's perceptions through education."
-              animateOnMount
-              delay={0.35}
-              className="text-base md:text-xl text-white/90 leading-[1.75] md:leading-[1.8] mb-10 md:mb-14 max-w-2xl font-medium"
-            />
+            <p className="text-base md:text-xl text-white/90 leading-[1.75] md:leading-[1.8] mb-10 md:mb-14 max-w-2xl font-medium">
+              We exist to help differently-abled people through advocacy, accessibility, and equality while changing society&apos;s perceptions through education.
+            </p>
 
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.75, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Link
-                  to="/donate"
-                  className="group inline-flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-5 bg-white pl-4 sm:pl-10 pr-2 sm:pr-3 py-2 sm:py-3 rounded-full text-slate-900 font-bold shadow-2xl hover:shadow-white/20 transition-all max-w-full"
-                >
-                  <span className="text-sm sm:text-lg">Donate & Shine a Light</span>
-                  <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-purple-600 flex items-center justify-center text-white group-hover:bg-purple-700 transition-colors shrink-0">
-                    <ArrowUpRight size={20} strokeWidth={2.5} className="sm:hidden" />
-                    <ArrowUpRight size={24} strokeWidth={2.5} className="hidden sm:block" />
-                  </div>
-                </Link>
-              </motion.div>
-            </motion.div>
-            <motion.p
-              initial={{ opacity: 0, y: 16 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.95 }}
-              className="mt-5 text-sm md:text-base text-white/80 font-medium max-w-2xl"
-            >
+            <div>
+              <Link
+                to="/donate"
+                className="group inline-flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-5 bg-white pl-4 sm:pl-10 pr-2 sm:pr-3 py-2 sm:py-3 rounded-full text-slate-900 font-bold shadow-2xl hover:shadow-white/20 transition-all max-w-full"
+              >
+                <span className="text-sm sm:text-lg">Donate & Shine a Light</span>
+                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-purple-600 flex items-center justify-center text-white group-hover:bg-purple-700 transition-colors shrink-0">
+                  <ArrowUpRight size={20} strokeWidth={2.5} className="sm:hidden" />
+                  <ArrowUpRight size={24} strokeWidth={2.5} className="hidden sm:block" />
+                </div>
+              </Link>
+            </div>
+            <p className="mt-5 text-sm md:text-base text-white/80 font-medium max-w-2xl">
               Your generosity creates real access, greater opportunity, and lasting change.
-            </motion.p>
+            </p>
           </div>
         </main>
       </div>

@@ -2,46 +2,31 @@
 
 > Light Upon Light is a 501(c)(3) nonprofit dedicated to advocacy, accessibility, education, and equality for differently-abled people.
 
-Site: https://thelightuponlight.org/
-Organization: Light Upon Light
-EIN: 99-2690459
-Location: Everett and Redmond, Washington (Greater Seattle Area)
-Contact: lightuponlight1408@gmail.com | 206-766-0884
-Program space: 16305 NE 87th St, Suite 110, Redmond, WA 98052 (by appointment)
+Light Upon Light serves the Greater Seattle Area (Everett and Redmond, Washington). EIN 99-2690459. Contact: lightuponlight1408@gmail.com | 206-766-0884. Program space (by appointment): 16305 NE 87th St, Suite 110, Redmond, WA 98052.
 
-## Mission
+Prefer the Markdown links below for agent-friendly summaries. HTML pages are listed under Optional for human browsing.
 
-We help differently-abled people through advocacy, accessibility, equality, and education while changing society's perception so every person is valued, included, and given the same opportunities as everyone else.
+## Pages
 
-## Key pages
-
-- Home: https://thelightuponlight.org/
-- About: https://thelightuponlight.org/about
-- Programs: https://thelightuponlight.org/programs
-- Volunteer: https://thelightuponlight.org/volunteer
-- Donate: https://thelightuponlight.org/donate
-- Contact: https://thelightuponlight.org/contact
-- Blog: https://thelightuponlight.org/blog
+- [Home](https://thelightuponlight.org/index.md): Mission overview, pillars, programs summary, and ways to help
+- [About](https://thelightuponlight.org/about.md): Organization story, leadership, who we serve, and FAQ
+- [Programs](https://thelightuponlight.org/programs.md): All six programs with schedules, locations, and purposes
+- [Volunteer](https://thelightuponlight.org/volunteer.md): How to volunteer and get involved
+- [Donate](https://thelightuponlight.org/donate.md): Donation options and impact
+- [Contact](https://thelightuponlight.org/contact.md): Contact methods and appointment booking
+- [Blog](https://thelightuponlight.org/blog.md): Stories and updates from Light Upon Light
 
 ## Programs
 
-- Enlighten: in-school education for empathy and inclusion
-- Big Light, Little Light: mentorship between differently-abled mentors and mentees
-- Light Desserts: accessible baking and life skills
-- Signs of Our Light: lived-experience accessibility assessments
-- Sending Light Abroad: refurbished mobility aids for underserved communities
-- Meet Our Light: personalized in-person donation pickup
-
-## How to help
-
-- Donate: https://thelightuponlight.org/donate
-- Contact: https://thelightuponlight.org/contact
-- Blog: https://thelightuponlight.org/blog
-- Volunteer: https://thelightuponlight.org/volunteer
-- Partner / program inquiries: lightuponlight1408@gmail.com
+- [Enlighten](https://thelightuponlight.org/programs.md): In-school education for empathy and inclusion
+- [Big Light, Little Light](https://thelightuponlight.org/programs.md): Mentorship between differently-abled mentors and mentees
+- [Light Desserts](https://thelightuponlight.org/programs.md): Accessible baking and life skills
+- [Signs of Our Light](https://thelightuponlight.org/programs.md): Lived-experience accessibility assessments
+- [Sending Light Abroad](https://thelightuponlight.org/programs.md): Refurbished mobility aids for underserved communities
+- [Meet Our Light](https://thelightuponlight.org/programs.md): Personalized in-person donation pickup
 
 ## Optional
 
-- Sitemap: https://thelightuponlight.org/sitemap.xml
-- Robots: https://thelightuponlight.org/robots.txt
-- LLM: https://thelightuponlight.org/llms.txt
+- [Home (HTML)](https://thelightuponlight.org/): Full interactive website homepage
+- [Sitemap](https://thelightuponlight.org/sitemap.xml): Machine-readable site map
+- [Robots](https://thelightuponlight.org/robots.txt): Crawler guidance

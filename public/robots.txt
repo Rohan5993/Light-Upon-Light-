@@ -3,3 +3,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://thelightuponlight.org/sitemap.xml
+
+# LLM / agent guidance
+# https://thelightuponlight.org/llms.txt
