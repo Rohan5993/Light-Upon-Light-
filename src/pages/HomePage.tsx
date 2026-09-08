@@ -411,13 +411,15 @@ export default function HomePage() {
               className="w-full h-full object-cover object-[center_40%] [image-rendering:auto]"
             />
           </picture>
-          {/* Base left scrim for overall contrast */}
+          {/* Scrim behind copy — fades out below text so no black band under the hero */}
           <div
             aria-hidden
             className="absolute inset-0 pointer-events-none"
             style={{
-              background:
-                "linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.5) 34%, rgba(0,0,0,0.22) 58%, rgba(0,0,0,0.06) 78%, transparent 100%)",
+              background: [
+                "linear-gradient(to bottom, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.38) 42%, rgba(0,0,0,0.12) 68%, transparent 82%)",
+                "linear-gradient(to right, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.22) 42%, transparent 72%)",
+              ].join(", "),
             }}
           />
         </div>
@@ -425,15 +427,6 @@ export default function HomePage() {
         {/* Hero Content */}
         <main className="relative z-10 px-4 sm:px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl pt-6 sm:pt-8 pb-12 md:pt-0 md:pb-0">
           <div className="relative max-w-4xl">
-            {/* Text-focused overlay so copy stays readable over the photo */}
-            <div
-              aria-hidden
-              className="absolute -inset-x-3 -inset-y-4 sm:-inset-x-6 sm:-inset-y-6 md:-inset-x-8 md:-inset-y-8 rounded-3xl pointer-events-none"
-              style={{
-                background:
-                  "radial-gradient(ellipse 90% 80% at 20% 45%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.28) 55%, transparent 78%)",
-              }}
-            />
             <div className="relative">
               <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-6 sm:mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
                 <span className="block">Their Light Is</span>
