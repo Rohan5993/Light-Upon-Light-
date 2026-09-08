@@ -1,0 +1,47 @@
+# Light Upon Light
+
+> Light Upon Light is a 501(c)(3) nonprofit dedicated to advocacy, accessibility, education, and equality for differently-abled people.
+
+Site: https://rohan5993.github.io/Light-Upon-Light-/
+Organization: Light Upon Light
+EIN: 99-2690459
+Location: Everett and Redmond, Washington (Greater Seattle Area)
+Contact: lightuponlight1408@gmail.com | 206-766-0884
+Program space: 16305 NE 87th St, Suite 110, Redmond, WA 98052 (by appointment)
+
+## Mission
+
+We help differently-abled people through advocacy, accessibility, equality, and education while changing society's perception so every person is valued, included, and given the same opportunities as everyone else.
+
+## Key pages
+
+- Home: https://rohan5993.github.io/Light-Upon-Light-/
+- About: https://rohan5993.github.io/Light-Upon-Light-/about
+- Programs: https://rohan5993.github.io/Light-Upon-Light-/programs
+- Volunteer: https://rohan5993.github.io/Light-Upon-Light-/volunteer
+- Donate: https://rohan5993.github.io/Light-Upon-Light-/donate
+- Contact: https://rohan5993.github.io/Light-Upon-Light-/contact
+- Blog: https://rohan5993.github.io/Light-Upon-Light-/blog
+
+## Programs
+
+- Enlighten: in-school education for empathy and inclusion
+- Big Light, Little Light: mentorship between differently-abled mentors and mentees
+- Light Desserts: accessible baking and life skills
+- Signs of Our Light: lived-experience accessibility assessments
+- Sending Light Abroad: refurbished mobility aids for underserved communities
+- Meet Our Light: personalized in-person donation pickup
+
+## How to help
+
+- Donate: https://rohan5993.github.io/Light-Upon-Light-/donate
+- Contact: https://rohan5993.github.io/Light-Upon-Light-/contact
+- Blog: https://rohan5993.github.io/Light-Upon-Light-/blog
+- Volunteer: https://rohan5993.github.io/Light-Upon-Light-/volunteer
+- Partner / program inquiries: lightuponlight1408@gmail.com
+
+## Optional
+
+- Sitemap: https://rohan5993.github.io/Light-Upon-Light-/sitemap.xml
+- Robots: https://rohan5993.github.io/Light-Upon-Light-/robots.txt
+- LLM: https://rohan5993.github.io/Light-Upon-Light-/llm.txt
