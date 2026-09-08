@@ -19,7 +19,7 @@
   <link
     rel="preload"
     as="image"
-    href="/hero-mobile.webp"
+    href="/hero-mobile.webp?v=2"
     type="image/webp"
     media="(max-width: 767px)"
     fetchpriority="high"
@@ -27,7 +27,7 @@
   <link
     rel="preload"
     as="image"
-    href="/hero-desktop.webp"
+    href="/hero-desktop.webp?v=2"
     type="image/webp"
     media="(min-width: 768px)"
     fetchpriority="high"
@@ -62,8 +62,8 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(to right, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.28) 58%, rgba(0,0,0,0.08) 82%, transparent 100%);
-      width: 60%;
+      background: linear-gradient(to right, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.22) 52%, rgba(0,0,0,0.06) 78%, transparent 100%);
+      width: 58%;
     }
     #root { position: relative; z-index: 1; min-height: 100dvh; background: #ffffff; }
   </style>
@@ -72,12 +72,12 @@
 <body>
   <div id="boot-hero" aria-hidden="true">
     <picture>
-      <source media="(min-width: 768px)" srcset="/hero-desktop.webp" type="image/webp" />
+      <source media="(min-width: 768px)" srcset="/hero-desktop.webp?v=2" type="image/webp" />
       <img
-        src="/hero-mobile.webp"
+        src="/hero-mobile.webp?v=2"
         alt=""
-        width="768"
-        height="484"
+        width="1200"
+        height="756"
         fetchpriority="high"
         decoding="async"
       />

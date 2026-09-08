@@ -15,8 +15,8 @@ import AnimatedText, { FadeIn } from "../components/motion/AnimatedText";
 import ScrollColorWords from "../components/motion/ScrollColorWords";
 import { TestimonialCard } from "../components/TestimonialCard";
 
-const HERO_MOBILE = "/hero-mobile.webp";
-const HERO_DESKTOP = "/hero-desktop.webp";
+const HERO_MOBILE = "/hero-mobile.webp?v=2";
+const HERO_DESKTOP = "/hero-desktop.webp?v=2";
 
 function avatarDataUri(initials: string, color: string) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><rect width="128" height="128" fill="${color}"/><text x="64" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="44" font-weight="700" fill="#fff">${initials}</text></svg>`;
@@ -397,43 +397,27 @@ export default function HomePage() {
     <>
       <div className="relative min-h-screen min-h-[100dvh] overflow-hidden selection:bg-purple-100 font-sans flex flex-col">
         <Header variant="light" />
-        {/* Background Hero Image with Vertical Ribbon Effect */}
+        {/* Background Hero Image */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <picture>
             <source media="(min-width: 768px)" srcSet={HERO_DESKTOP} type="image/webp" />
             <img
               src={HERO_MOBILE}
               alt="Young girl smiling in a wheelchair by a fountain"
-              width={768}
-              height={484}
+              width={1080}
+              height={680}
               decoding="async"
               fetchPriority="high"
-              className="w-full h-full object-cover object-[center_40%]"
+              className="w-full h-full object-cover object-[center_40%] [image-rendering:auto]"
             />
           </picture>
-          {/* Static ribbon strips — avoid backdrop-filter (main-thread / compositor cost) */}
-          <div className="absolute inset-0 flex pointer-events-none" aria-hidden>
-            {[...Array(8)].map((_, i) => (
-              <div
-                key={i}
-                className="h-full flex-1 border-r border-white/5"
-                style={{
-                  backgroundColor:
-                    i % 3 === 0
-                      ? "rgba(255, 255, 255, 0.05)"
-                      : i % 2 === 0
-                        ? "rgba(0, 0, 0, 0.04)"
-                        : "transparent",
-                }}
-              />
-            ))}
-          </div>
+          {/* Soft readability scrim only — no ribbon blur overlays */}
           <div
             aria-hidden
-            className="absolute inset-y-0 left-0 w-[60%] pointer-events-none"
+            className="absolute inset-y-0 left-0 w-[58%] pointer-events-none"
             style={{
               background:
-                "linear-gradient(to right, rgba(0,0,0,0.48) 0%, rgba(0,0,0,0.28) 55%, rgba(0,0,0,0.08) 80%, transparent 100%)",
+                "linear-gradient(to right, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.22) 52%, rgba(0,0,0,0.06) 78%, transparent 100%)",
             }}
           />
         </div>
