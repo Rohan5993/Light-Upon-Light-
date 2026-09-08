@@ -433,7 +433,7 @@ export default function HomePage() {
             className="absolute inset-y-0 left-0 w-[60%] pointer-events-none"
             style={{
               background:
-                "linear-gradient(to right, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.16) 82%, transparent 100%)",
+                "linear-gradient(to right, rgba(0,0,0,0.48) 0%, rgba(0,0,0,0.28) 55%, rgba(0,0,0,0.08) 80%, transparent 100%)",
             }}
           />
         </div>

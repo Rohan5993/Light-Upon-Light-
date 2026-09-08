@@ -17,7 +17,7 @@ const routerBasename = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 function RouteFallback() {
   return (
-    <div className="min-h-[40vh] flex items-center justify-center text-slate-500 font-medium" role="status">
+    <div className="min-h-[40vh] flex items-center justify-center text-slate-500 font-medium bg-white" role="status">
       Loading…
     </div>
   );
