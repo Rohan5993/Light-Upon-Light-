@@ -58,10 +58,10 @@ export default function BlogPage() {
             <div className="w-1.5 h-1.5 rounded-full bg-purple-600" />
             Blog
           </div>
-          <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">
+          <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight mb-4">
             Stories that Inspire Action
           </h1>
-          <p className="text-xl text-gray-500 font-medium max-w-3xl">
+          <p className="text-base sm:text-xl text-gray-500 font-medium max-w-3xl leading-snug">
             Explore stories from our community, programs, and impact journey.
           </p>
         </div>
@@ -72,7 +72,7 @@ export default function BlogPage() {
           </div>
         ) : posts.length === 0 ? (
           <div className="mb-20 rounded-2xl border border-gray-100 bg-gray-50 px-6 py-16 text-center">
-            <p className="text-gray-500 font-medium">
+            <p className="text-gray-500 font-medium leading-snug">
               New stories are on the way. Check back soon.
             </p>
           </div>
@@ -92,12 +92,12 @@ export default function BlogPage() {
                 </div>
                 <div className="p-6">
                   {post.category ? (
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">{post.category}</p>
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{post.category}</p>
                   ) : null}
-                  <h2 className="text-xl font-bold text-gray-900 leading-snug mb-3 group-hover:text-purple-600 transition-colors">
+                  <h2 className="!text-xl font-bold text-gray-900 !leading-snug mb-2 group-hover:text-purple-600 transition-colors">
                     {post.title}
                   </h2>
-                  <p className="text-gray-500 text-sm leading-relaxed mb-5">{post.excerpt}</p>
+                  <p className="text-gray-500 text-sm !leading-[1.35] mb-4">{post.excerpt}</p>
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">{post.date}</span>
                     <span className="inline-flex items-center gap-1 text-sm font-black text-purple-600">

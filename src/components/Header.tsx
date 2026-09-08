@@ -2,6 +2,8 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import HoverFillLink from "./HoverFillLink";
+import { siteImages } from "../assets/siteImages";
+import { resolveMediaUrl } from "../lib/publicUrl";
 
 interface HeaderProps {
   variant?: "light" | "dark";
@@ -23,17 +25,27 @@ export default function Header({ variant = "light" }: HeaderProps) {
 
   const navVariant = (active: boolean) => (active ? "purple" as const : "ghost" as const);
   const useLightChrome = isDark || isScrolled;
-  const logoDotClass = useLightChrome ? "bg-purple-600" : "bg-white";
-  const logoTextClass = useLightChrome ? "text-gray-900" : "text-white";
+  const brandLogo = useLightChrome ? siteImages.logoLulLight : siteImages.logoLulDark;
+  const isHeroLogo = !useLightChrome;
+  // Mobile/tablet: larger, readable mark that fills the bar
+  const logoMobileClass = isHeroLogo
+    ? "h-[58px] sm:h-[72px] md:h-[80px] w-auto max-w-full object-contain object-left bg-transparent group-hover:scale-[1.02] transition-transform duration-300"
+    : "h-[54px] sm:h-[64px] md:h-[72px] w-auto max-w-full object-contain object-left bg-transparent group-hover:scale-[1.02] transition-transform duration-300";
+  const logoDesktopClass = isHeroLogo
+    ? "h-16 xl:h-20 2xl:h-24 w-auto max-w-[min(28vw,320px)] xl:max-w-[min(36vw,400px)] 2xl:max-w-[min(42vw,480px)] object-contain object-left bg-transparent group-hover:scale-[1.02] transition-transform duration-300"
+    : "h-14 xl:h-16 2xl:h-20 w-auto max-w-[min(26vw,280px)] xl:max-w-[min(32vw,360px)] 2xl:max-w-[min(36vw,400px)] object-contain object-left bg-transparent group-hover:scale-[1.02] transition-transform duration-300";
   const mobileHeaderGlass = isDark
-    ? "bg-white/55 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/50 shadow-[0_8px_32px_rgba(15,23,42,0.08)]"
-    : "bg-white/20 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.12)]";
+    ? "bg-white/95 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/70 shadow-[0_8px_32px_rgba(15,23,42,0.08)]"
+    : "bg-white/30 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/35 shadow-[0_8px_32px_rgba(0,0,0,0.12)]";
+  const mobileLogoWrapClass = "inline-flex items-center max-w-full";
   const mobileMenuButtonClass = useLightChrome
     ? "border border-white/60 bg-white/50 backdrop-blur-md text-gray-900"
     : "border border-white/35 bg-white/15 backdrop-blur-md text-white";
-  const donateChromeClass = useLightChrome
-    ? "border-2 border-purple-600 max-lg:border-purple-600 max-lg:text-purple-600"
-    : "border-2 max-lg:border-white lg:border-purple-600 max-lg:text-white max-lg:!bg-transparent max-lg:shadow-none";
+  // Mobile/tablet: white chip + thin 0.5px purple border; hover text white via fill animation
+  const donateChromeClass =
+    "border-[0.5px] max-lg:!border-[0.5px] max-lg:!border-[#7107E7] max-lg:!bg-white max-lg:!text-[#7107E7] max-lg:shadow-sm max-lg:hover:!border-[#7107E7] lg:border-2 lg:border-purple-600";
+  const donateMobileLabelClass =
+    "max-lg:!text-[#7107E7] max-lg:group-hover:!text-white";
 
   useEffect(() => {
     const onScroll = () => {
@@ -57,9 +69,18 @@ export default function Header({ variant = "light" }: HeaderProps) {
 
   return (
     <>
-      <div className="h-[50px] sm:h-[88px] md:h-[148px] lg:h-[132px]" aria-hidden="true" />
+      <div
+        className={
+          !isDark
+            ? "h-20 sm:h-24 lg:h-[160px]"
+            : "h-20 sm:h-24 lg:h-[128px]"
+        }
+        aria-hidden="true"
+      />
       <header
-        className={`fixed top-0 left-0 w-full z-50 pointer-events-none h-[50px] lg:h-auto px-4 sm:px-6 md:px-16 lg:py-0 lg:pt-[20px] flex items-center ${mobileHeaderGlass} lg:bg-transparent lg:backdrop-blur-none lg:backdrop-saturate-100 lg:border-b-0 lg:shadow-none ${
+        className={`fixed top-0 left-0 w-full z-50 pointer-events-none h-20 sm:h-24 lg:h-auto px-3 sm:px-6 md:px-10 lg:px-16 lg:py-0 lg:pt-[16px] flex items-center ${
+          useLightChrome ? mobileHeaderGlass : "bg-transparent border-b-0 shadow-none"
+        } lg:bg-transparent lg:backdrop-blur-none lg:backdrop-saturate-100 lg:border-b-0 lg:shadow-none ${
           isScrolled ? "lg:pb-3" : "lg:pb-8"
         }`}
       >
@@ -67,16 +88,15 @@ export default function Header({ variant = "light" }: HeaderProps) {
         <div className="flex lg:hidden items-center w-full min-w-0 gap-2 pointer-events-auto max-w-7xl mx-auto h-full justify-between">
           <Link
             to="/"
-            className="flex items-center gap-2 min-w-0 flex-1 max-w-[calc(100%-8.5rem)] group"
+            className="flex items-center min-w-0 flex-1 max-w-[calc(100%-6.75rem)] sm:max-w-[calc(100%-9rem)] group"
+            aria-label="Light Upon Light home"
           >
-            <div className="grid grid-cols-2 gap-0.5 group-hover:rotate-12 transition-transform duration-500 shrink-0">
-              <div className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${logoDotClass} rounded-full`} />
-              <div className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${logoDotClass} rounded-full`} />
-              <div className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${logoDotClass} rounded-full`} />
-              <div className={`w-3 h-3 sm:w-3.5 sm:h-3.5 ${logoDotClass} rounded-full`} />
-            </div>
-            <span className={`${logoTextClass} font-bold text-xs sm:text-base md:text-xl tracking-tight whitespace-nowrap leading-none min-w-0`}>
-              Light Upon Light
+            <span className={mobileLogoWrapClass}>
+              <img
+                src={resolveMediaUrl(brandLogo)}
+                alt="Light Upon Light"
+                className={logoMobileClass}
+              />
             </span>
           </Link>
 
@@ -84,7 +104,8 @@ export default function Header({ variant = "light" }: HeaderProps) {
             <HoverFillLink
               to="/donate"
               variant="white"
-              className={`h-9 sm:h-10 md:h-11 px-3 sm:px-5 md:px-8 text-[10px] sm:text-xs md:text-sm font-black whitespace-nowrap uppercase tracking-wide sm:tracking-wider max-lg:!bg-transparent max-lg:shadow-none ${donateChromeClass}`}
+              className={`h-9 sm:h-10 md:h-11 px-2.5 sm:px-5 md:px-8 text-[10px] sm:text-xs md:text-sm font-black whitespace-nowrap uppercase tracking-wide sm:tracking-wider max-lg:shadow-none ${donateChromeClass}`}
+              labelClassName={donateMobileLabelClass}
             >
               <span className="sm:hidden">Donate</span>
               <span className="hidden sm:inline">Donate Now</span>
@@ -110,35 +131,31 @@ export default function Header({ variant = "light" }: HeaderProps) {
           }`}
         >
           {!isScrolled && (
-            <Link to="/" className="flex items-center gap-2.5 group justify-self-start">
-              <div className="grid grid-cols-2 gap-0.5 group-hover:rotate-12 transition-transform duration-500 shrink-0">
-                <div className={`w-3.5 h-3.5 ${logoDotClass} rounded-full`} />
-                <div className={`w-3.5 h-3.5 ${logoDotClass} rounded-full`} />
-                <div className={`w-3.5 h-3.5 ${logoDotClass} rounded-full`} />
-                <div className={`w-3.5 h-3.5 ${logoDotClass} rounded-full`} />
-              </div>
-              <span className={`${logoTextClass} font-bold text-xl tracking-tight whitespace-nowrap leading-none`}>
-                Light Upon Light
-              </span>
+            <Link
+              to="/"
+              className="flex items-center group justify-self-start"
+              aria-label="Light Upon Light home"
+            >
+              <img
+                src={resolveMediaUrl(brandLogo)}
+                alt="Light Upon Light"
+                className={logoDesktopClass}
+              />
             </Link>
           )}
 
-          <nav className="flex items-center bg-white px-3 py-3 rounded-full shadow-xl gap-1 justify-self-center">
+          <nav className="flex items-center bg-white px-2 xl:px-3 py-2.5 xl:py-3 rounded-full shadow-xl gap-0.5 xl:gap-1 justify-self-center max-w-[calc(100vw-2rem)] overflow-hidden">
             {isScrolled && (
-              <Link to="/" className="flex items-center gap-2 pl-2 pr-2 group shrink-0" aria-label="Light Upon Light home">
-                <div className="grid grid-cols-2 gap-0.5 group-hover:rotate-12 transition-transform duration-500 shrink-0">
-                  <div className="w-3 h-3 bg-purple-600 rounded-full" />
-                  <div className="w-3 h-3 bg-purple-600 rounded-full" />
-                  <div className="w-3 h-3 bg-purple-600 rounded-full" />
-                  <div className="w-3 h-3 bg-purple-600 rounded-full" />
-                </div>
-                <span className="text-gray-900 font-bold text-sm tracking-tight whitespace-nowrap">
-                  Light Upon Light
-                </span>
+              <Link to="/" className="flex items-center pl-1 pr-1.5 xl:pr-2 group shrink-0" aria-label="Light Upon Light home">
+                <img
+                  src={resolveMediaUrl(siteImages.logoLulLight)}
+                  alt="Light Upon Light"
+                  className="h-9 xl:h-11 w-auto max-w-[120px] xl:max-w-[180px] object-contain object-left bg-transparent group-hover:scale-[1.02] transition-transform duration-300"
+                />
               </Link>
             )}
 
-            <ul className="flex items-center gap-1 text-[12px]">
+            <ul className="flex items-center gap-0.5 xl:gap-1 text-[11px] xl:text-[12px]">
               {NAV_LINKS.map((link) => {
                 const active = link.isActive(pathname);
                 return (
@@ -146,7 +163,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
                     <HoverFillLink
                       to={link.to}
                       variant={navVariant(active)}
-                      className="px-5 py-2.5"
+                      className="px-2.5 xl:px-5 py-2 xl:py-2.5"
                       labelClassName={`uppercase tracking-wider ${active ? "font-black" : "font-bold"}`}
                     >
                       {link.label}
@@ -160,7 +177,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
               <HoverFillLink
                 to="/donate"
                 variant="white"
-                className="h-10 px-6 text-xs font-black whitespace-nowrap uppercase tracking-wider border-2 border-purple-600 ml-1"
+                className="h-9 xl:h-10 px-3 xl:px-6 text-[10px] xl:text-xs font-black whitespace-nowrap uppercase tracking-wider border-2 border-purple-600 ml-0.5 xl:ml-1"
               >
                 Donate Now
               </HoverFillLink>
@@ -172,6 +189,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
               to="/donate"
               variant="white"
               className={`h-11 px-8 text-sm font-black whitespace-nowrap uppercase tracking-wider justify-self-end ${donateChromeClass}`}
+              labelClassName={donateMobileLabelClass}
             >
               Donate Now
             </HoverFillLink>
@@ -189,7 +207,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
 
       <nav
         id="mobile-nav-menu"
-        className={`fixed top-[50px] sm:top-[4.25rem] left-3 right-3 sm:left-4 sm:right-4 z-50 lg:hidden rounded-2xl bg-white shadow-2xl border border-gray-100 p-3 sm:p-4 transition-all duration-300 origin-top max-h-[calc(100dvh-3.125rem)] overflow-y-auto ${
+        className={`fixed top-20 sm:top-24 left-3 right-3 sm:left-4 sm:right-4 z-50 lg:hidden rounded-2xl bg-white shadow-2xl border border-gray-100 p-3 sm:p-4 transition-all duration-300 origin-top max-h-[calc(100dvh-6rem)] overflow-y-auto ${
           mobileOpen ? "opacity-100 scale-100 pointer-events-auto" : "opacity-0 scale-95 pointer-events-none"
         }`}
         aria-hidden={!mobileOpen}
@@ -215,8 +233,8 @@ export default function Header({ variant = "light" }: HeaderProps) {
             <HoverFillLink
               to="/donate"
               variant="white"
-              className="w-full h-11 text-sm font-black uppercase tracking-wider border-2 border-purple-600"
-              labelClassName="w-full text-center"
+              className="w-full h-11 text-sm font-black uppercase tracking-wider !border-[0.5px] !border-[#7107E7] !bg-white !text-[#7107E7] shadow-sm"
+              labelClassName="w-full text-center !text-[#7107E7] group-hover:!text-white"
               onClick={() => setMobileOpen(false)}
             >
               Donate Now

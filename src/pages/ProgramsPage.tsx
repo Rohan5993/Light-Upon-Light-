@@ -29,7 +29,7 @@ export default function ProgramsPage() {
           <h1 className="text-[1.75rem] sm:text-[2.25rem] md:text-[2.75rem] font-bold text-slate-900 tracking-tight leading-tight max-w-3xl">
             Our Radiant Programs
           </h1>
-          <p className="text-lg md:text-xl text-slate-500 font-medium mt-5 max-w-3xl leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-slate-500 font-medium mt-5 max-w-3xl leading-relaxed">
             Every program at Light Upon Light was developed from lived experience to remove barriers, educate society, and build a future where differently-abled people are valued, included, and given the same opportunities as everyone else.
           </p>
         </div>

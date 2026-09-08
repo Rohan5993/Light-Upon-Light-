@@ -112,7 +112,7 @@ export default function BlogDetailPage() {
     [content],
   );
 
-  const SIDEBAR_TOP_OFFSET = 144;
+  const SIDEBAR_TOP_OFFSET = 112;
   const MORE_BLOGS_GAP = 16;
   const MIN_SIDEBAR_HEIGHT = 100;
 
@@ -341,7 +341,7 @@ export default function BlogDetailPage() {
     <>
       <Header variant="dark" />
       <div className="relative bg-[#f8f5ff] min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col overflow-x-hidden">
-      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-10 pb-24 md:pb-0">
+      <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-10 pb-10 md:pb-0">
         <div className="mb-10">
           <nav className="flex flex-wrap items-center gap-2 text-sm text-gray-500 font-bold">
             <Link to="/" className="inline-flex items-center text-purple-600 hover:text-purple-700 transition-colors">
@@ -375,7 +375,7 @@ export default function BlogDetailPage() {
               Tap any section below to jump there while listening.
             </p>
 
-            <div className="space-y-7 text-base text-gray-600 leading-relaxed">
+            <div className="space-y-3.5 text-base text-gray-600 !leading-[1.45]">
               {paragraphs.map((paragraph, paragraphIndex) => {
                 let wordCursor = wordOffsetForParagraph(paragraphIndex);
 
@@ -392,7 +392,7 @@ export default function BlogDetailPage() {
                         handleParagraphClick(paragraphIndex);
                       }
                     }}
-                    className="rounded-lg -mx-2 px-2 py-1 cursor-pointer hover:bg-purple-50/80 transition-colors"
+                    className="rounded-lg -mx-2 px-2 py-0.5 cursor-pointer hover:bg-purple-50/80 transition-colors !leading-[1.45]"
                     aria-label={`Listen from section ${paragraphIndex + 1}`}
                   >
                     {paragraph.split(/(\s+)/).map((token, tokenIndex) => {
@@ -478,10 +478,10 @@ export default function BlogDetailPage() {
                       {item.category ? (
                         <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">{item.category}</p>
                       ) : null}
-                      <h3 className="text-lg font-bold text-gray-900 leading-snug mb-3 group-hover:text-purple-600 transition-colors line-clamp-2">
+                      <h3 className="text-lg font-bold text-gray-900 leading-snug mb-2 group-hover:text-purple-600 transition-colors line-clamp-2">
                         {item.title}
                       </h3>
-                      <p className="text-gray-500 text-sm leading-relaxed mb-5 line-clamp-2">{item.excerpt}</p>
+                      <p className="text-gray-500 text-sm leading-snug mb-4 line-clamp-2">{item.excerpt}</p>
                       <div className="flex items-center justify-between">
                         <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">{item.date}</span>
                         <span className="inline-flex items-center gap-1 text-sm font-black text-purple-600">

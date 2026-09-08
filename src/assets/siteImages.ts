@@ -10,6 +10,9 @@ import heroHomepage from "./images/hero-homepage.webp";
 import wheelchairMeeting from "./images/wheelchair-meeting.webp";
 import ourVision from "./images/our-vision.webp";
 import logoLul from "./images/logo-lul.png";
+import logoLulLight from "./images/logo-lul-light.png";
+import logoLulDark from "./images/logo-lul-dark.png";
+import logo from "./images/logo.png";
 import getInvolvedDonate from "./images/Donate.png";
 import getInvolvedExplorePrograms from "./images/Exploreprograms.PNG";
 import getInvolvedReadOurStories from "./images/read-our -story.png";
@@ -53,6 +56,9 @@ export const siteImages = {
   wheelchairMeeting,
   ourVision,
   logoLul,
+  logoLulLight,
+  logoLulDark,
+  logo,
   getInvolvedDonate,
   getInvolvedExplorePrograms,
   getInvolvedReadOurStories,

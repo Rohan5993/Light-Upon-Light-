@@ -168,7 +168,7 @@ function HomepageBlogGrid({
         <div className="group">
           <motion.div
             style={{ opacity: blogBlock1Opacity, y: blogBlock1Y }}
-            className="relative aspect-[21/9] rounded-2xl overflow-hidden mb-6 border border-gray-100 bg-slate-50"
+            className="relative aspect-[16/10] sm:aspect-[21/9] rounded-2xl overflow-hidden mb-6 border border-gray-100 bg-slate-50"
           >
             <img
               src={resolveMediaUrl(featured.image)}
@@ -404,9 +404,9 @@ export default function HomePage() {
         </div>
 
         {/* Hero Content */}
-        <main className="relative z-10 px-4 sm:px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl pt-16 sm:pt-20 pb-16 md:pt-0 md:pb-0">
+        <main className="relative z-10 px-4 sm:px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl pt-6 sm:pt-8 pb-12 md:pt-0 md:pb-0">
           <div className="max-w-4xl">
-            <h1 className="text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-8">
+            <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-6 sm:mb-8">
               <AnimatedText
                 lines={[
                   "Their Light Is Already There.",
@@ -459,7 +459,7 @@ export default function HomePage() {
             <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.28em] text-[#7107E7] mb-4">
               Our Pillars
             </p>
-            <h2 className="text-[2rem] font-bold text-slate-900 tracking-[-0.03em] mb-12 md:mb-16">
+            <h2 className="text-xl sm:text-[2rem] font-bold text-slate-900 tracking-[-0.03em] mb-12 md:mb-16">
               How we let their light shine.
             </h2>
           </FadeIn>
@@ -724,10 +724,10 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
                 Impact
               </p>
             </div>
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-[-0.03em] leading-tight">
+            <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-slate-900 tracking-[-0.03em] leading-tight">
               Your Light in Action
             </h2>
-            <p className="mt-4 text-lg text-slate-500 font-medium leading-relaxed">
+            <p className="mt-4 text-base sm:text-lg text-slate-500 font-medium leading-relaxed">
               Every act of generosity creates lasting change.
             </p>
           </motion.div>
@@ -769,12 +769,12 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
             transition={{ duration: 0.55, delay: 0.1 }}
             className="relative rounded-2xl border border-slate-200/80 bg-white px-7 py-8 md:px-10 md:py-9 flex flex-col md:flex-row md:items-center md:justify-between gap-6 shadow-[0_12px_40px_rgba(15,23,42,0.05)]"
           >
-            <p className="text-xl md:text-2xl font-bold text-slate-900 leading-snug tracking-tight max-w-xl">
+            <p className="text-base sm:text-xl md:text-2xl font-bold text-slate-900 leading-snug tracking-tight max-w-xl">
               Together, we&apos;re building a future where every person has the opportunity to shine.
             </p>
             <Link
               to="/donate"
-              className="inline-flex items-center justify-center gap-2 shrink-0 px-8 py-4 rounded-full bg-[#7107E7] text-white font-bold text-sm hover:bg-[#5f06c4] transition-colors shadow-[0_10px_28px_rgba(113,7,231,0.28)]"
+              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto shrink-0 px-8 py-4 rounded-full bg-[#7107E7] text-white font-bold text-sm hover:bg-[#5f06c4] transition-colors shadow-[0_10px_28px_rgba(113,7,231,0.28)]"
             >
               Donate & Shine a Light
               <ArrowRight size={16} />
@@ -880,7 +880,7 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
               <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.28em] text-[#7107E7] mb-5">
                 Our Language
               </p>
-              <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-[-0.03em] leading-[1.12]">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-slate-900 tracking-[-0.03em] leading-[1.12]">
                 Words Matter.
                 <br />
                 <span className="text-[#7107E7]">Choice Matters More.</span>
@@ -1044,7 +1044,7 @@ From her wheelchair she rises, leading Light Upon Light with a fire that cannot 
                 <div className="w-1 h-1 rounded-full bg-gray-300" />
                 Blog
               </div>
-              <h2 className="font-bold text-slate-900 tracking-tight leading-tight">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 tracking-tight leading-tight">
                 Stories that Inspires Action
               </h2>
             </div>
@@ -1105,17 +1105,17 @@ From her wheelchair she rises, leading Light Upon Light with a fire that cannot 
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row md:flex-col gap-3 shrink-0 md:min-w-[220px]">
+              <div className="flex flex-col sm:flex-row md:flex-col gap-3 shrink-0 w-full sm:w-auto md:min-w-[220px]">
                 <Link
                   to="/donate"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-[#7107E7] text-white font-bold text-sm hover:bg-[#5f06c4] transition-colors"
+                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-4 rounded-full bg-[#7107E7] text-white font-bold text-sm hover:bg-[#5f06c4] transition-colors"
                 >
                   Donate Now
                   <ArrowRight size={16} />
                 </Link>
                 <Link
                   to="/volunteer"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full border border-slate-300 bg-white text-slate-700 font-bold text-sm hover:border-[#7107E7] hover:text-[#7107E7] transition-colors"
+                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-4 rounded-full border border-slate-300 bg-white text-slate-700 font-bold text-sm hover:border-[#7107E7] hover:text-[#7107E7] transition-colors"
                 >
                   Get Involved
                 </Link>

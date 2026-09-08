@@ -142,7 +142,7 @@ export default function VolunteerPage() {
               <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-[#7107E7] mb-5">
                 Volunteer
               </p>
-              <h1 className="text-[1.875rem] sm:text-[2.5rem] md:text-[3.15rem] font-bold text-slate-900 tracking-[-0.04em] leading-[1.08] mb-6">
+              <h1 className="text-[1.75rem] sm:text-[2.15rem] md:text-[2.75rem] lg:text-[3.15rem] font-bold text-slate-900 tracking-[-0.04em] leading-[1.08] mb-6">
                 Your Time Can Change
                 <span className="block text-[#7107E7]">Someone&apos;s World.</span>
               </h1>
@@ -152,14 +152,14 @@ export default function VolunteerPage() {
               <div className="flex flex-col sm:flex-row gap-3">
                 <a
                   href="#register"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#7107E7] text-white font-bold text-sm hover:bg-[#5c06bb] transition-colors"
+                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 rounded-full bg-[#7107E7] text-white font-bold text-sm hover:bg-[#5c06bb] transition-colors"
                 >
                   Complete the Volunteer Form
                   <ArrowRight size={16} />
                 </a>
                 <Link
                   to="/programs"
-                  className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-slate-200 bg-white text-slate-700 font-bold text-sm hover:border-[#7107E7] hover:text-[#7107E7] transition-colors"
+                  className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-7 py-3.5 rounded-full border border-slate-200 bg-white text-slate-700 font-bold text-sm hover:border-[#7107E7] hover:text-[#7107E7] transition-colors"
                 >
                   Explore Programs
                 </Link>

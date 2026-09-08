@@ -96,10 +96,10 @@ export default function ProgramDetailPage() {
                 <span className="w-1.5 h-1.5 rounded-full bg-violet-500" />
                 {program.tag}
               </span>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 tracking-tight leading-tight mb-4">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight leading-tight mb-4">
                 {program.title}
               </h1>
-              <p className="text-lg md:text-xl text-slate-600 font-medium leading-relaxed mb-8 max-w-xl">
+              <p className="text-base sm:text-lg md:text-xl text-slate-600 font-medium leading-relaxed mb-8 max-w-xl">
                 {program.headline}
               </p>
 

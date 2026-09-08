@@ -50,7 +50,7 @@ export default function DonationThankYouModal({
         aria-label="Close thank you dialog"
         onClick={onClose}
       />
-      <div className="relative w-full max-w-md rounded-[1.75rem] bg-white border border-slate-100 shadow-[0_24px_80px_rgba(15,23,42,0.25)] overflow-hidden">
+      <div className="relative w-full max-w-md max-h-[90dvh] overflow-y-auto rounded-[1.75rem] bg-white border border-slate-100 shadow-[0_24px_80px_rgba(15,23,42,0.25)]">
         <div className="bg-gradient-to-br from-sky-50 via-violet-50 to-amber-50 px-6 pt-6 pb-5 border-b border-slate-100">
           <button
             type="button"

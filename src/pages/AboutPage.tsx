@@ -364,7 +364,7 @@ export default function AboutPage() {
             <h1 className="text-[1.875rem] sm:text-[2.5rem] md:text-[3rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">
               More Than a Nonprofit. A Movement for Change.
             </h1>
-            <p className="text-lg text-gray-500 font-medium leading-relaxed max-w-2xl">
+            <p className="text-base sm:text-lg text-gray-500 font-medium leading-relaxed max-w-2xl">
               What began with one moment of exclusion has grown into a movement dedicated to creating a world where differently-abled people are treated with dignity and respect, valued for who they are, and given the same opportunities as everyone else.
             </p>
           </div>
@@ -622,7 +622,7 @@ export default function AboutPage() {
               <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-[#7107E7] mb-4">
                 Leadership
               </p>
-              <h2 className="text-4xl md:text-5xl font-bold text-slate-900 tracking-[-0.04em] leading-[1.05]">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 tracking-[-0.04em] leading-[1.05]">
                 Our Board
                 <span className="block text-slate-300">Members</span>
               </h2>
@@ -666,7 +666,7 @@ export default function AboutPage() {
                       <h3 className="text-sm sm:text-base font-bold text-white tracking-tight leading-tight">
                         {member.name}
                       </h3>
-                      <p className="mt-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.08em] leading-snug text-white/90">
+                      <p className="mt-1 text-[9px] sm:text-[10px] font-bold uppercase tracking-normal sm:tracking-[0.06em] leading-tight text-white/90">
                         {member.designation}
                       </p>
                     </div>

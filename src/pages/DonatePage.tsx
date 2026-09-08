@@ -226,9 +226,9 @@ export default function DonatePage() {
               {/* Donate form */}
               <div
                 id="top-donate-card"
-                className="lg:col-span-5 lg:sticky lg:top-24 rounded-2xl sm:rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.12)]"
+                className="lg:col-span-5 lg:sticky lg:top-28 xl:top-32 rounded-2xl sm:rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.12)]"
               >
-                <div className="rounded-[calc(2rem-3px)] bg-white h-full flex flex-col overflow-hidden">
+                <div className="rounded-[calc(1rem-3px)] sm:rounded-[calc(2rem-3px)] bg-white h-full flex flex-col overflow-hidden">
                   <div className="px-5 sm:px-7 pt-6 sm:pt-7 pb-5 border-b border-slate-100 bg-gradient-to-r from-sky-50/80 via-white to-amber-50/80">
                     <div className="flex items-center gap-2 mb-3">
                       <span className="w-2 h-2 rounded-full bg-sky-400" />
@@ -299,7 +299,7 @@ export default function DonatePage() {
                               setSelectedAmount(amount);
                               setPaymentError(null);
                             }}
-                            className={`relative min-w-[4.5rem] flex-1 rounded-full border-2 px-4 py-2.5 font-black text-base transition-all ${
+                            className={`relative min-w-[3.75rem] sm:min-w-[4.5rem] flex-1 rounded-full border-2 px-3 sm:px-4 py-2.5 font-black text-sm sm:text-base transition-all ${
                               active
                                 ? "border-[#F3E8C8] bg-[#FFFBEA] text-amber-900"
                                 : "border-slate-100 bg-white text-slate-600 hover:border-sky-200 hover:bg-sky-50"
@@ -456,17 +456,17 @@ export default function DonatePage() {
 
         {/* Donor story */}
         <section className="px-4 sm:px-6 pb-16 md:pb-20">
-          <div className="max-w-7xl mx-auto rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-8 md:p-12">
-            <div className="grid lg:grid-cols-[1fr_auto] gap-10 items-start">
-              <div className="flex gap-5">
+          <div className="max-w-7xl mx-auto rounded-2xl sm:rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-5 sm:p-8 md:p-12">
+            <div className="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-10 items-start">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
                 <img
                   src={resolveMediaUrl(activeStory.image)}
                   alt=""
                   className="w-16 h-16 md:w-20 md:h-20 rounded-2xl object-cover border-2 border-violet-200 shrink-0"
                 />
-                <div>
+                <div className="min-w-0">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-violet-500 mb-3">Donor story</p>
-                  <blockquote className="text-lg md:text-xl font-bold text-slate-700 leading-snug mb-4">
+                  <blockquote className="text-base sm:text-lg md:text-xl font-bold text-slate-700 leading-snug mb-4">
                     &ldquo;{activeStory.quote}&rdquo;
                   </blockquote>
                   <p className="text-sm font-semibold text-violet-600">

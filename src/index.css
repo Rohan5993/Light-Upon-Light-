@@ -20,7 +20,8 @@
   svg {
     @apply max-w-full;
   }
-  img {
+  /* Don't force height:auto on utility-sized/cover images — breaks object-cover boxes */
+  img:not([class*="h-"]):not([class*="object-"]) {
     height: auto;
   }
   iframe {

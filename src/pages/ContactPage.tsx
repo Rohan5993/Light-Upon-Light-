@@ -134,11 +134,11 @@ export default function ContactPage() {
               <p className="text-[11px] font-bold uppercase tracking-[0.28em] text-[#7107E7] mb-5">
                 Contact Us
               </p>
-              <h1 className="text-[1.875rem] sm:text-[2.6rem] md:text-[3.15rem] font-bold text-slate-900 tracking-[-0.04em] leading-[1.08] mb-6">
+              <h1 className="text-[1.75rem] sm:text-[2.15rem] md:text-[2.75rem] lg:text-[3.15rem] font-bold text-slate-900 tracking-[-0.04em] leading-[1.08] mb-6">
                 We would love to
                 <span className="block text-[#38BDF8]">hear from you.</span>
               </h1>
-              <p className="text-lg text-slate-500 font-medium leading-relaxed max-w-xl">
+              <p className="text-base sm:text-lg text-slate-500 font-medium leading-relaxed max-w-xl">
                 Whether you want to volunteer, partner, bring a program to your school, or simply ask a question, reach out. A real person on our team will get back to you.
               </p>
             </motion.div>

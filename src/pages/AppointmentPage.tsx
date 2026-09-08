@@ -43,10 +43,10 @@ export default function AppointmentPage() {
                 <CalendarDays size={14} />
                 Book an Appointment
               </p>
-              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-[-0.03em] mb-3">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 tracking-[-0.03em] mb-3">
                 Choose a time that works for you.
               </h1>
-              <p className="text-slate-500 font-medium leading-relaxed max-w-2xl">
+              <p className="text-sm sm:text-base text-slate-500 font-medium leading-relaxed max-w-2xl">
                 Pick a slot below and we will confirm your appointment. If you need to send a written message instead, you can return to the contact form anytime.
               </p>
             </motion.div>
@@ -54,11 +54,11 @@ export default function AppointmentPage() {
         </section>
 
         <section className="px-4 sm:px-6 pb-14 sm:pb-20">
-          <div className="max-w-5xl mx-auto rounded-2xl sm:rounded-[1.75rem] overflow-hidden border border-slate-100 bg-[#F7FBFF] shadow-sm">
+          <div className="max-w-5xl mx-auto rounded-2xl sm:rounded-[1.75rem] overflow-hidden border border-slate-100 bg-[#F7FBFF] shadow-sm max-w-full">
             <iframe
               title="Book an appointment with Light Upon Light"
               src={embedUrl}
-              className="w-full min-h-[720px] md:min-h-[820px] border-0 bg-white"
+              className="w-full min-h-[560px] sm:min-h-[720px] md:min-h-[820px] border-0 bg-white"
               loading="lazy"
               allow="camera; microphone; fullscreen"
             />
