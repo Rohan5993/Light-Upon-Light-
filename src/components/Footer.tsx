@@ -29,9 +29,9 @@ function SocialLinks({ className = "" }: { className?: string }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={item.label}
-            className="w-11 h-11 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-all"
+            className="w-9 h-9 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white/10 transition-all"
           >
-            <Icon size={18} />
+            <Icon size={16} />
           </a>
         );
       })}
@@ -39,45 +39,45 @@ function SocialLinks({ className = "" }: { className?: string }) {
   );
 }
 
-export default function Footer({ className = "", topPaddingClass = "pt-12 md:pt-16" }: FooterProps) {
+export default function Footer({ className = "", topPaddingClass = "pt-8 md:pt-10" }: FooterProps) {
   return (
-    <footer className={`relative bg-[#270E32] ${topPaddingClass} pb-6 px-4 sm:px-6 md:px-16 overflow-hidden ${className}`}>
+    <footer className={`relative bg-[#270E32] ${topPaddingClass} pb-4 px-4 sm:px-6 md:px-16 overflow-hidden ${className}`}>
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-6 mb-6">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-5 mb-4">
           {/* Logo & Description */}
-          <div className="space-y-4 md:max-w-[280px] lg:max-w-[320px] shrink-0">
+          <div className="space-y-3 md:max-w-[260px] lg:max-w-[300px] shrink-0">
             <Link to="/" className="inline-flex items-center" aria-label="Light Upon Light home">
               <img
                 src={resolveMediaUrl(brandLogos.logoLulDark)}
                 alt="Light Upon Light"
-                width={320}
-                height={142}
+                width={280}
+                height={124}
                 decoding="async"
                 loading="lazy"
-                className="h-14 sm:h-16 md:h-20 w-auto max-w-[min(100%,320px)] object-contain object-left bg-transparent"
+                className="h-11 sm:h-12 md:h-14 w-auto max-w-[min(100%,260px)] object-contain object-left bg-transparent"
               />
             </Link>
-            <p className="text-gray-300 leading-relaxed text-sm sm:text-[15px] font-medium">
+            <p className="text-gray-300 leading-snug text-sm font-medium">
               Uniting hearts and actions to create positive change that lasts beyond a single moment.
             </p>
-            <SocialLinks className="hidden md:flex flex-wrap gap-3" />
+            <SocialLinks className="hidden md:flex flex-wrap gap-2.5" />
           </div>
 
-          {/* Quick Links & Contact — stack on very small screens, 2-col from sm */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:contents">
-            <div className="space-y-4 shrink-0">
-              <h2 className="text-white font-bold text-lg">Quick Links</h2>
-              <ul className="space-y-3">
+          {/* Quick Links & Contact */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:contents">
+            <div className="space-y-3 shrink-0">
+              <h2 className="text-white font-bold text-base">Quick Links</h2>
+              <ul className="space-y-2">
                 {[
-                  { label: 'Programs', path: '/programs' },
-                  { label: 'About Us', path: '/about' },
-                  { label: 'Blogs', path: '/blog' },
-                  { label: 'Volunteer', path: '/volunteer' },
-                  { label: 'Contact Us', path: '/contact' },
-                  { label: 'Donate', path: '/donate' },
+                  { label: "Programs", path: "/programs" },
+                  { label: "About Us", path: "/about" },
+                  { label: "Blogs", path: "/blog" },
+                  { label: "Volunteer", path: "/volunteer" },
+                  { label: "Contact Us", path: "/contact" },
+                  { label: "Donate", path: "/donate" },
                 ].map((link) => (
                   <li key={link.label}>
-                    <Link to={link.path} className="text-gray-300 hover:text-white transition-colors text-[15px] font-medium">
+                    <Link to={link.path} className="text-gray-300 hover:text-white transition-colors text-sm font-medium">
                       {link.label}
                     </Link>
                   </li>
@@ -85,34 +85,39 @@ export default function Footer({ className = "", topPaddingClass = "pt-12 md:pt-
               </ul>
             </div>
 
-            <div className="space-y-4 md:max-w-[260px] shrink-0">
-              <h2 className="text-white font-bold text-lg">Contact</h2>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-2 sm:gap-4 text-gray-300">
-                  <MapPin className="w-5 h-5 flex-shrink-0 text-white" />
-                  <span className="text-sm sm:text-[15px] font-medium leading-tight pt-0.5">Greater Seattle Area</span>
+            <div className="space-y-3 md:max-w-[280px] shrink-0">
+              <h2 className="text-white font-bold text-base">Contact</h2>
+              <ul className="space-y-3">
+                <li className="flex items-start gap-2 sm:gap-3 text-gray-300">
+                  <MapPin className="w-4 h-4 flex-shrink-0 text-white mt-0.5" />
+                  <span className="text-sm font-medium leading-snug">
+                    16305 NE 87th St, Redmond, WA 98052
+                  </span>
                 </li>
-                <li className="flex items-start gap-2 sm:gap-4 text-gray-300 min-w-0">
-                  <Mail className="w-5 h-5 flex-shrink-0 text-white mt-0.5" />
-                  <a href="mailto:lightuponlight1408@gmail.com" className="text-sm sm:text-[15px] font-medium break-all hover:text-white transition-colors">
-                    lightuponlight1408@gmail.com
+                <li className="flex items-start gap-2 sm:gap-3 text-gray-300 min-w-0">
+                  <Mail className="w-4 h-4 flex-shrink-0 text-white mt-0.5" />
+                  <a
+                    href="mailto:Info@thelightuponlight.org"
+                    className="text-sm font-medium break-all hover:text-white transition-colors"
+                  >
+                    Info@thelightuponlight.org
                   </a>
                 </li>
-                <li className="flex items-center gap-2 sm:gap-4 text-gray-300">
-                  <Phone className="w-5 h-5 flex-shrink-0 text-white" />
-                  <a href="tel:2067660884" className="text-sm sm:text-[15px] font-medium hover:text-white transition-colors">
+                <li className="flex items-center gap-2 sm:gap-3 text-gray-300">
+                  <Phone className="w-4 h-4 flex-shrink-0 text-white" />
+                  <a href="tel:2067660884" className="text-sm font-medium hover:text-white transition-colors">
                     206-766-0884
                   </a>
                 </li>
               </ul>
-              <SocialLinks className="flex md:hidden flex-wrap gap-2 sm:gap-3 pt-1" />
+              <SocialLinks className="flex md:hidden flex-wrap gap-2 pt-0.5" />
             </div>
           </div>
         </div>
 
-        <div className="pt-4 text-center text-[13px] text-gray-400 font-medium space-y-2">
+        <div className="pt-3 border-t border-white/10 text-center text-xs text-gray-400 font-medium space-y-1.5">
           <p>© 2026 Light Upon Light. All rights reserved.</p>
-          <p className="text-[11px] text-gray-400 max-w-3xl mx-auto">
+          <p className="text-[11px] text-gray-400 max-w-3xl mx-auto leading-snug">
             A 501(c)(3) nonprofit organization (EIN 99-2690459). Donations are tax-deductible as allowed by law. Verify our status on the IRS website.
           </p>
         </div>

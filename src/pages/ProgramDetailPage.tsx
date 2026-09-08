@@ -236,7 +236,7 @@ export default function ProgramDetailPage() {
         </div>
       </section>
 
-      <Footer topPaddingClass="pt-24" />
+      <Footer topPaddingClass="pt-8 md:pt-10" />
     </div>
     </>
   );

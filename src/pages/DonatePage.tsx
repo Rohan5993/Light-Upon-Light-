@@ -520,7 +520,7 @@ export default function DonatePage() {
         </section>
       </main>
 
-      <Footer className="mt-0" topPaddingClass="pt-12" />
+      <Footer className="mt-0" topPaddingClass="pt-8" />
 
       <DonationThankYouModal
         open={Boolean(thankYou)}

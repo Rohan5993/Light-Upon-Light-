@@ -458,7 +458,7 @@ export default function HomePage() {
       </div>
 
       {/* Founder's Diary */}
-      <section id="our-mission" className="px-4 sm:px-6 py-12 md:py-16 relative overflow-hidden">
+      <section id="our-mission" className="px-4 sm:px-6 py-12 md:py-16 mt-8 md:mt-12 relative overflow-hidden">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -1150,7 +1150,7 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
         </div>
       </section>
 
-      <Footer topPaddingClass="pt-8 md:pt-10" />
+      <Footer topPaddingClass="pt-6 md:pt-8" />
     </>
   );
 }

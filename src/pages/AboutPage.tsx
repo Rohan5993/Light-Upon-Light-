@@ -876,7 +876,7 @@ export default function AboutPage() {
         </div>
       </motion.section>
 
-      <Footer topPaddingClass="pt-24" />
+      <Footer topPaddingClass="pt-8 md:pt-10" />
     </div>
     </>
   );
