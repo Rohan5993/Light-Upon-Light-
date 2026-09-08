@@ -12,15 +12,17 @@
     </linearGradient>
   </defs>
 
+  <!-- Violet tile only — never black -->
   <rect width="64" height="64" rx="14" ry="14" fill="url(#tile)"/>
   <rect x="1.25" y="1.25" width="61.5" height="61.5" rx="12.75" ry="12.75" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="1.25"/>
 
-  <!-- Brand mark: open ring + exactly 3 strokes (not a sun) -->
-  <g fill="none" stroke="url(#mark)" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round">
-    <circle cx="32" cy="32" r="10.2"/>
-    <path d="M24.1 24.1 L15.2 15.2"/>
-    <path d="M39.9 24.1 L48.8 15.2"/>
-    <path d="M39.9 39.9 L48.8 48.8"/>
+  <!-- Matches the “Upon” O: open ring + four equal diagonal strokes -->
+  <g fill="none" stroke="url(#mark)" stroke-width="4.3" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="32" cy="32" r="10"/>
+    <path d="M24.2 24.2 L15.5 15.5"/>
+    <path d="M39.8 24.2 L48.5 15.5"/>
+    <path d="M39.8 39.8 L48.5 48.5"/>
+    <path d="M24.2 39.8 L15.5 48.5"/>
   </g>
 
   <circle cx="23" cy="20.5" r="7.5" fill="#FFFFFF" fill-opacity="0.12"/>
