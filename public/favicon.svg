@@ -6,23 +6,27 @@
       <stop offset="100%" stop-color="#6109D4"/>
     </linearGradient>
     <linearGradient id="mark" x1="18" y1="14" x2="48" y2="50" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#FFF4CC"/>
+      <stop offset="0%" stop-color="#FFF6D0"/>
       <stop offset="45%" stop-color="#F6CB4A"/>
       <stop offset="100%" stop-color="#E59A12"/>
     </linearGradient>
   </defs>
 
-  <!-- Violet tile only — never black -->
+  <!-- Violet tile — never black -->
   <rect width="64" height="64" rx="14" ry="14" fill="url(#tile)"/>
   <rect x="1.25" y="1.25" width="61.5" height="61.5" rx="12.75" ry="12.75" fill="none" stroke="#FFFFFF" stroke-opacity="0.18" stroke-width="1.25"/>
 
-  <!-- Matches the “Upon” O: open ring + four equal diagonal strokes -->
+  <!-- Same as the Upon "O": open ring + 4 diagonal lines (one shorter) -->
   <g fill="none" stroke="url(#mark)" stroke-width="4.3" stroke-linecap="round" stroke-linejoin="round">
     <circle cx="32" cy="32" r="10"/>
-    <path d="M24.2 24.2 L15.5 15.5"/>
-    <path d="M39.8 24.2 L48.5 15.5"/>
-    <path d="M39.8 39.8 L48.5 48.5"/>
-    <path d="M24.2 39.8 L15.5 48.5"/>
+    <!-- Top-left -->
+    <path d="M24.2 24.2 L15.4 15.4"/>
+    <!-- Top-right -->
+    <path d="M39.8 24.2 L48.6 15.4"/>
+    <!-- Bottom-right -->
+    <path d="M39.8 39.8 L48.6 48.6"/>
+    <!-- Bottom-left — shorter, matching the logo -->
+    <path d="M24.2 39.8 L19.2 44.8"/>
   </g>
 
   <circle cx="23" cy="20.5" r="7.5" fill="#FFFFFF" fill-opacity="0.12"/>
