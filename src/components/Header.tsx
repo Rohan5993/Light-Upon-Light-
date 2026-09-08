@@ -104,7 +104,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
             <HoverFillLink
               to="/donate"
               variant="white"
-              className={`h-9 sm:h-10 md:h-11 px-2.5 sm:px-5 md:px-8 text-[10px] sm:text-xs md:text-sm font-black whitespace-nowrap uppercase tracking-wide sm:tracking-wider max-lg:shadow-none ${donateChromeClass}`}
+              className={`min-h-11 h-11 sm:h-11 md:h-11 px-2.5 sm:px-5 md:px-8 text-[10px] sm:text-xs md:text-sm font-black whitespace-nowrap uppercase tracking-wide sm:tracking-wider max-lg:shadow-none ${donateChromeClass}`}
               labelClassName={donateMobileLabelClass}
             >
               <span className="sm:hidden">Donate</span>
@@ -114,12 +114,12 @@ export default function Header({ variant = "light" }: HeaderProps) {
             <button
               type="button"
               onClick={() => setMobileOpen((open) => !open)}
-              className={`flex items-center justify-center w-8 h-8 sm:w-11 sm:h-11 rounded-full transition-colors shrink-0 ${mobileMenuButtonClass}`}
+              className={`flex items-center justify-center w-11 h-11 rounded-full transition-colors shrink-0 ${mobileMenuButtonClass}`}
               aria-expanded={mobileOpen}
               aria-controls="mobile-nav-menu"
               aria-label={mobileOpen ? "Close menu" : "Open menu"}
             >
-              {mobileOpen ? <X size={18} className="sm:w-5 sm:h-5" /> : <Menu size={18} className="sm:w-5 sm:h-5" />}
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>

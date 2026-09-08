@@ -179,7 +179,7 @@ function HomepageBlogGrid({
 
           <motion.div style={{ opacity: blogBlock2Opacity, y: blogBlock2Y }}>
             {featured.category ? (
-              <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest block mb-4">
+              <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest block mb-4">
                 {featured.category}
               </span>
             ) : null}
@@ -189,15 +189,15 @@ function HomepageBlogGrid({
           </motion.div>
 
           <motion.div style={{ opacity: blogBlock3Opacity, y: blogBlock3Y }}>
-            <p className="text-gray-400 font-medium leading-relaxed mb-3 text-[1rem]">
+            <p className="text-slate-600 font-medium leading-relaxed mb-3 text-[1rem]">
               {featured.excerpt}
             </p>
             <div className="flex items-center justify-between pt-6 border-t border-gray-200/70">
-              <span className="text-[10px] font-bold text-gray-300 uppercase tracking-[0.2em]">
+              <span className="text-[10px] font-bold text-slate-600 uppercase tracking-[0.2em]">
                 {featured.date}
               </span>
-              <Link to={`/blog/${featured.id}`} className="flex items-center gap-3 text-purple-600 font-black text-sm hover:gap-4 transition-all">
-                Read More <ArrowRight size={20} />
+              <Link to={`/blog/${featured.slug ?? featured.id}`} className="flex items-center gap-3 text-purple-600 font-black text-sm hover:gap-4 transition-all" aria-label={`Read article: ${featured.title}`}>
+                Read article <ArrowRight size={20} />
               </Link>
             </div>
           </motion.div>
@@ -221,22 +221,22 @@ function HomepageBlogGrid({
                 </div>
                 <div className="flex flex-col justify-center flex-1">
                   {post.category ? (
-                    <span className="text-[9px] font-bold text-gray-300 uppercase tracking-widest mb-2">
+                    <span className="text-[9px] font-bold text-slate-600 uppercase tracking-widest mb-2">
                       {post.category}
                     </span>
                   ) : null}
                   <h4 className="text-lg font-bold text-slate-900 mb-2 leading-snug group-hover:text-purple-600 transition-colors">
                     {post.title}
                   </h4>
-                  <p className="text-gray-400 text-xs font-medium mb-4 line-clamp-1">
+                  <p className="text-slate-600 text-xs font-medium mb-4 line-clamp-1">
                     {post.excerpt}
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-[8px] font-bold text-gray-300 uppercase tracking-widest">
+                    <span className="text-[8px] font-bold text-slate-600 uppercase tracking-widest">
                       {post.date}
                     </span>
                     <div className="flex items-center gap-1.5 text-[9px] font-black uppercase text-slate-900 group-hover:text-purple-600">
-                      Read More <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                      Read article <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                     </div>
                   </div>
                 </div>
@@ -378,6 +378,10 @@ export default function HomePage() {
           <img
             src={siteImages.heroHomepage}
             alt="Young girl smiling in a wheelchair by a fountain"
+            width={1920}
+            height={1080}
+            decoding="async"
+            fetchPriority="high"
             className="w-full h-full object-cover object-[center_40%]"
           />
           {/* Vertical ribbon overlay - matching the image's distinct strips */}
@@ -654,7 +658,7 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
                         {program.desc}
                       </p>
                       <span className="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-[#7107E7] group-hover:gap-3 transition-all">
-                        Learn More <ArrowRight className="w-3.5 h-3.5" />
+                        Learn about this program <ArrowRight className="w-3.5 h-3.5" />
                       </span>
                     </div>
                   </Link>
@@ -667,7 +671,7 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
                 <button
                   type="button"
                   onClick={prevProgram}
-                  className="w-10 h-10 rounded-full bg-[#F5F0E8] text-slate-600 flex items-center justify-center hover:bg-[#8023FF] hover:text-white transition-colors"
+                  className="w-11 h-11 rounded-full bg-[#F5F0E8] text-slate-600 flex items-center justify-center hover:bg-[#8023FF] hover:text-white transition-colors"
                   aria-label="Previous programs"
                 >
                   <ArrowLeft className="w-5 h-5" />
@@ -675,7 +679,7 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
                 <button
                   type="button"
                   onClick={nextProgram}
-                  className="w-10 h-10 rounded-full bg-[#8023FF] text-white flex items-center justify-center hover:bg-[#6d1de0] transition-colors"
+                  className="w-11 h-11 rounded-full bg-[#8023FF] text-white flex items-center justify-center hover:bg-[#6d1de0] transition-colors"
                   aria-label="Next programs"
                 >
                   <ArrowRight className="w-5 h-5" />
@@ -688,10 +692,14 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
                     type="button"
                     onClick={() => setActiveProgramIndex(i)}
                     aria-label={`Show programs starting at ${i + 1}`}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      i === activeProgramIndex ? "w-6 bg-violet-600" : "w-2 bg-violet-200 hover:bg-violet-300"
-                    }`}
-                  />
+                    className="min-h-11 min-w-11 inline-flex items-center justify-center rounded-full"
+                  >
+                    <span
+                      className={`h-2 rounded-full transition-all duration-300 ${
+                        i === activeProgramIndex ? "w-6 bg-violet-600" : "w-2 bg-violet-200"
+                      }`}
+                    />
+                  </button>
                 ))}
               </div>
             </div>
@@ -803,7 +811,7 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
               <button
                 type="button"
                 onClick={prevTestimonial}
-                className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center text-gray-400 hover:bg-white hover:text-gray-900 transition-all shadow-sm bg-white/50"
+                className="w-12 h-12 rounded-full border border-gray-300 flex items-center justify-center text-slate-600 hover:bg-white hover:text-gray-900 transition-all shadow-sm bg-white/50"
                 aria-label="Previous testimonial"
               >
                 <ArrowLeft className="w-5 h-5" />
@@ -1040,7 +1048,7 @@ From her wheelchair she rises, leading Light Upon Light with a fire that cannot 
           {/* Header */}
           <div className="grid md:grid-cols-[1.5fr_1fr] gap-8 mb-16 items-start">
             <div>
-              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-gray-100 text-[9px] font-bold text-gray-400 mb-6 uppercase tracking-widest bg-gray-50/50">
+              <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-gray-100 text-[9px] font-bold text-slate-600 mb-6 uppercase tracking-widest bg-gray-50/50">
                 <div className="w-1 h-1 rounded-full bg-gray-300" />
                 Blog
               </div>
@@ -1049,7 +1057,7 @@ From her wheelchair she rises, leading Light Upon Light with a fire that cannot 
               </h2>
             </div>
             <div className="pt-6">
-              <p className="text-gray-400 font-medium leading-relaxed max-w-sm">
+              <p className="text-slate-600 font-medium leading-relaxed max-w-sm">
                 Insights, updates, and stories from our events and communities.
               </p>
             </div>
@@ -1058,13 +1066,13 @@ From her wheelchair she rises, leading Light Upon Light with a fire that cannot 
           <div className="grid lg:grid-cols-[1.6fr_1fr] gap-6 lg:gap-8">
             {blogsLoading ? (
               <div className="lg:col-span-2 rounded-2xl border border-gray-100 bg-[#FBFAFF] px-6 py-16 text-center">
-                <p className="text-gray-400 font-medium">
+                <p className="text-slate-600 font-medium">
                   Loading stories… this can take a moment if the server is waking up.
                 </p>
               </div>
             ) : blogPosts.length === 0 || !featuredBlogPost ? (
               <div className="lg:col-span-2 rounded-2xl border border-gray-100 bg-[#FBFAFF] px-6 py-16 text-center">
-                <p className="text-gray-400 font-medium">
+                <p className="text-slate-600 font-medium">
                   New stories are on the way. Check back soon.
                 </p>
               </div>

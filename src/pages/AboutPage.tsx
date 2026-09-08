@@ -23,7 +23,7 @@ import Footer from "../components/Footer";
 import { siteImages } from "../assets/siteImages";
 import { resolveMediaUrl } from "../lib/publicUrl";
 import storyVideo from "../assets/lul.mp4";
-import storyCoverImage from "../assets/images/ourstory.png";
+import storyCoverImage from "../assets/images/ourstory.webp";
 import boardMember8793 from "../assets/board-members/IMG_8793.webp";
 import boardMember8990 from "../assets/board-members/IMG_8990.webp";
 import boardMember9354 from "../assets/board-members/IMG_9354.webp";
@@ -433,7 +433,7 @@ export default function AboutPage() {
                   src={storyVideo}
                   muted
                   playsInline
-                  preload="auto"
+                  preload="metadata"
                   className="w-full h-full object-cover object-center"
                   aria-label="Light Upon Light origin story"
                 />

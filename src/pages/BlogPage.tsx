@@ -92,16 +92,16 @@ export default function BlogPage() {
                 </div>
                 <div className="p-6">
                   {post.category ? (
-                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">{post.category}</p>
+                    <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest mb-2">{post.category}</p>
                   ) : null}
                   <h2 className="!text-xl font-bold text-gray-900 !leading-snug mb-2 group-hover:text-purple-600 transition-colors">
                     {post.title}
                   </h2>
                   <p className="text-gray-500 text-sm !leading-[1.35] mb-4">{post.excerpt}</p>
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">{post.date}</span>
+                    <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">{post.date}</span>
                     <span className="inline-flex items-center gap-1 text-sm font-black text-purple-600">
-                      Read
+                      Read article
                       <ArrowRight size={16} />
                     </span>
                   </div>
@@ -118,6 +118,8 @@ export default function BlogPage() {
             <button
               key={num}
               onClick={() => setPage(num)}
+              aria-label={`Go to blog page ${num}`}
+              aria-current={page === num ? "page" : undefined}
               className={`w-11 h-11 rounded-full text-sm font-black transition-all ${
                 page === num ? "bg-purple-600 text-white shadow-lg shadow-purple-200" : "bg-white border border-gray-200 text-gray-600 hover:border-purple-300"
               }`}

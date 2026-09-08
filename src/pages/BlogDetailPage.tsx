@@ -347,11 +347,11 @@ export default function BlogDetailPage() {
             <Link to="/" className="inline-flex items-center text-purple-600 hover:text-purple-700 transition-colors">
               <House size={16} />
             </Link>
-            <ChevronRight size={14} className="text-gray-400" />
+            <ChevronRight size={14} className="text-slate-600" />
             <Link to="/blog" className="text-gray-900 hover:underline transition-colors">
               Blog
             </Link>
-            <ChevronRight size={14} className="text-gray-400" />
+            <ChevronRight size={14} className="text-slate-600" />
             <span className="text-gray-500 line-clamp-1">{post.title}</span>
           </nav>
         </div>
@@ -366,12 +366,12 @@ export default function BlogDetailPage() {
                 className="w-full h-full object-cover object-top"
               />
             </div>
-            <p className="text-[11px] uppercase tracking-widest text-gray-400 font-black mb-4">
+            <p className="text-[11px] uppercase tracking-widest text-slate-600 font-black mb-4">
               {post.category ? `${post.category} • ${post.date}` : post.date}
             </p>
             <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">{post.title}</h1>
 
-            <p className="text-xs text-gray-400 mb-6">
+            <p className="text-xs text-slate-600 mb-6">
               Tap any section below to jump there while listening.
             </p>
 
@@ -456,7 +456,7 @@ export default function BlogDetailPage() {
                 to="/blog"
                 className="inline-flex items-center gap-2 text-sm font-black text-purple-600 hover:text-purple-700 transition-colors shrink-0"
               >
-                View more
+                View all blog posts
                 <ArrowRight size={18} strokeWidth={2.5} />
               </Link>
             </div>
@@ -476,16 +476,16 @@ export default function BlogDetailPage() {
                     </div>
                     <div className="p-6">
                       {item.category ? (
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">{item.category}</p>
+                        <p className="text-[10px] font-bold text-slate-600 uppercase tracking-widest mb-3">{item.category}</p>
                       ) : null}
                       <h3 className="text-lg font-bold text-gray-900 leading-snug mb-2 group-hover:text-purple-600 transition-colors line-clamp-2">
                         {item.title}
                       </h3>
                       <p className="text-gray-500 text-sm leading-snug mb-4 line-clamp-2">{item.excerpt}</p>
                       <div className="flex items-center justify-between">
-                        <span className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">{item.date}</span>
+                        <span className="text-[10px] font-bold text-slate-600 uppercase tracking-widest">{item.date}</span>
                         <span className="inline-flex items-center gap-1 text-sm font-black text-purple-600">
-                          Read
+                          Read article
                           <ArrowRight size={16} />
                         </span>
                       </div>

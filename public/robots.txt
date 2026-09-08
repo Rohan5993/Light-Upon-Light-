@@ -1,5 +1,5 @@
-# https://rohan5993.github.io/Light-Upon-Light-/
+# https://thelightuponlight.org/
 User-agent: *
 Allow: /
 
-Sitemap: https://rohan5993.github.io/Light-Upon-Light-/sitemap.xml
+Sitemap: https://thelightuponlight.org/sitemap.xml

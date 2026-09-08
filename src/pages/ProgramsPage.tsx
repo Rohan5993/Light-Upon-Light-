@@ -75,7 +75,7 @@ export default function ProgramsPage() {
                     {program.desc}
                   </p>
                   <span className="inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-violet-600 group-hover:gap-3 transition-all">
-                    Learn More
+                    Learn about this program
                     <ArrowRight size={14} />
                   </span>
                 </div>
