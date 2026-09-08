@@ -1,29 +1,10 @@
-import { motion, useScroll, useTransform, type MotionValue } from "motion/react";
-import { useRef } from "react";
-
-const GREY = "#94a3b8";
-const BLACK = "#0f172a";
-const PURPLE = "#7107E7";
-
-function ScrollWord({
-  children,
-  progress,
-  range,
-  toColor,
-}: {
-  children: string;
-  progress: MotionValue<number>;
-  range: [number, number];
-  toColor: string;
-}) {
-  const color = useTransform(progress, range, [GREY, toColor]);
-
-  return (
-    <motion.span style={{ color }} className="inline-block mr-[0.28em]">
-      {children}
-    </motion.span>
-  );
-}
+type ScrollColorWordsProps = {
+  text: string;
+  className?: string;
+  highlights?: string[];
+  /** Kept for API compatibility; scroll-linked color was removed for performance */
+  color?: string;
+};
 
 function getHighlightIndexes(words: string[], highlights: string[]) {
   const indexes = new Set<number>();
@@ -43,33 +24,23 @@ function getHighlightIndexes(words: string[], highlights: string[]) {
   return indexes;
 }
 
-type ScrollColorWordsProps = {
-  text: string;
-  className?: string;
-  highlights?: string[];
-  color?: string;
-};
-
+/**
+ * Lightweight body copy with optional highlight spans.
+ * (Formerly scroll-linked per-word color — that caused heavy main-thread work.)
+ */
 export default function ScrollColorWords({
   text,
   className = "",
   highlights = [],
-  color = BLACK,
+  color = "#0f172a",
 }: ScrollColorWordsProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start 0.9", "end 0.35"],
-  });
-
   const paragraphs = text.trim().split(/\n\s*\n/);
   const allWords = paragraphs.flatMap((paragraph) => paragraph.trim().split(/\s+/));
-  const totalWords = allWords.length;
   const highlighted = getHighlightIndexes(allWords, highlights);
   let wordIndex = 0;
 
   return (
-    <div ref={ref} className={className}>
+    <div className={className} style={{ color }}>
       {paragraphs.map((paragraph, paragraphIndex) => {
         const words = paragraph.trim().split(/\s+/);
         return (
@@ -79,24 +50,14 @@ export default function ScrollColorWords({
           >
             {words.map((word) => {
               const index = wordIndex++;
-              const start = index / totalWords;
-              const end = Math.min(1, start + 1 / totalWords);
-              if (highlighted.has(index)) {
-                return (
-                  <span
-                    key={`${word}-${index}`}
-                    className="inline-block mr-[0.28em] font-semibold"
-                    style={{ color: PURPLE }}
-                  >
-                    {word}
-                  </span>
-                );
-              }
+              const isHighlight = highlighted.has(index);
               return (
-                <span key={`${word}-${index}`}>
-                  <ScrollWord progress={scrollYProgress} range={[start, end]} toColor={color}>
-                    {word}
-                  </ScrollWord>
+                <span
+                  key={`${paragraphIndex}-${index}`}
+                  className="inline-block mr-[0.28em]"
+                  style={isHighlight ? { color: "#7107E7", fontWeight: 600 } : undefined}
+                >
+                  {word}
                 </span>
               );
             })}

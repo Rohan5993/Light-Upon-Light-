@@ -1,4 +1,4 @@
-import { siteImages } from "../assets/siteImages";
+import quoteMark from "../assets/images/quote-mark.webp";
 import { resolveMediaUrl } from "../lib/publicUrl";
 
 function TestimonialCard({
@@ -15,9 +15,13 @@ function TestimonialCard({
   return (
     <article className="w-full h-full min-w-0 bg-white p-6 sm:p-8 md:p-10 rounded-2xl flex flex-col border border-solid border-[1px] border-slate-200">
       <img
-        src={siteImages.quoteMark}
+        src={quoteMark}
         alt=""
         aria-hidden="true"
+        width={112}
+        height={80}
+        decoding="async"
+        loading="lazy"
         className="w-24 h-auto md:w-28 mb-5 shrink-0"
       />
       <p className="text-base md:text-lg text-slate-700 font-medium leading-relaxed flex-1 mb-8 break-words whitespace-normal">
@@ -25,7 +29,16 @@ function TestimonialCard({
       </p>
       <div className="flex flex-row items-center gap-4 pt-4 border-t border-slate-100 min-w-0 mt-auto">
         <div className="w-14 h-14 md:w-16 md:h-16 rounded-full border-2 border-violet-200/70 shadow-md overflow-hidden shrink-0">
-          <img src={resolveMediaUrl(img)} alt={name} className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+          <img
+            src={resolveMediaUrl(img)}
+            alt={name}
+            width={64}
+            height={64}
+            decoding="async"
+            loading="lazy"
+            className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+          />
         </div>
         <div className="flex flex-col gap-1 min-w-0">
           <p className="font-bold text-slate-900 text-sm md:text-base break-words">{name}</p>

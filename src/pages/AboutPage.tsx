@@ -22,7 +22,6 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { siteImages } from "../assets/siteImages";
 import { resolveMediaUrl } from "../lib/publicUrl";
-import storyVideo from "../assets/lul.mp4";
 import storyCoverImage from "../assets/images/ourstory.webp";
 import boardMember8793 from "../assets/board-members/IMG_8793.webp";
 import boardMember8990 from "../assets/board-members/IMG_8990.webp";
@@ -283,10 +282,37 @@ export default function AboutPage() {
   const [flippedBoard, setFlippedBoard] = useState<number | null>(null);
   const storyVideoRef = useRef<HTMLVideoElement>(null);
   const [showStoryCover, setShowStoryCover] = useState(true);
+  const [storyVideoSrc, setStoryVideoSrc] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    let idleId: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+    const loadVideo = () => {
+      void import("../assets/lul.mp4").then((mod) => {
+        if (!cancelled) setStoryVideoSrc(mod.default);
+      });
+    };
+
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(loadVideo, { timeout: 4000 });
+    } else {
+      timeoutId = setTimeout(loadVideo, 1500);
+    }
+
+    return () => {
+      cancelled = true;
+      if (idleId !== undefined && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) clearTimeout(timeoutId);
+    };
+  }, []);
 
   useEffect(() => {
     const video = storyVideoRef.current;
-    if (!video) return;
+    if (!video || !storyVideoSrc) return;
 
     video.muted = true;
     video.defaultMuted = true;
@@ -329,7 +355,7 @@ export default function AboutPage() {
       video.removeEventListener("ended", handleEnded);
       video.pause();
     };
-  }, []);
+  }, [storyVideoSrc]);
 
   useEffect(() => {
     if (!hash) return;
@@ -430,10 +456,10 @@ export default function AboutPage() {
               <div className="relative rounded-[1.5rem] overflow-hidden shadow-xl border-4 border-white h-[20rem] sm:h-[24rem] lg:h-[30rem] bg-slate-900">
                 <video
                   ref={storyVideoRef}
-                  src={storyVideo}
+                  src={storyVideoSrc ?? undefined}
                   muted
                   playsInline
-                  preload="metadata"
+                  preload="none"
                   className="w-full h-full object-cover object-center"
                   aria-label="Light Upon Light origin story"
                 />

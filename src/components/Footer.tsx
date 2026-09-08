@@ -1,7 +1,7 @@
 import { Instagram, Facebook, Linkedin, Youtube, Music2, MapPin, Mail, Phone } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SOCIAL_LINKS } from "../data/socialLinks";
-import { siteImages } from "../assets/siteImages";
+import { brandLogos } from "../assets/brandLogos";
 import { resolveMediaUrl } from "../lib/publicUrl";
 
 const SOCIAL_ICONS = {
@@ -48,8 +48,12 @@ export default function Footer({ className = "", topPaddingClass = "pt-12 md:pt-
           <div className="space-y-4 md:max-w-[280px] lg:max-w-[320px] shrink-0">
             <Link to="/" className="inline-flex items-center" aria-label="Light Upon Light home">
               <img
-                src={resolveMediaUrl(siteImages.logoLulDark)}
+                src={resolveMediaUrl(brandLogos.logoLulDark)}
                 alt="Light Upon Light"
+                width={320}
+                height={142}
+                decoding="async"
+                loading="lazy"
                 className="h-14 sm:h-16 md:h-20 w-auto max-w-[min(100%,320px)] object-contain object-left bg-transparent"
               />
             </Link>

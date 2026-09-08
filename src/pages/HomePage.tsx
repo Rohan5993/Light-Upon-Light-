@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
 import { type BlogPost } from "../data/blogPosts";
 import Header from "../components/Header";
-import { siteImages } from "../assets/siteImages";
+import heroHomepage from "../assets/images/hero-homepage.webp";
+import programMeetOurLight from "../assets/images/program-meet-our-light.webp";
+import logoLul from "../assets/images/logo-lul.webp";
+import ronahi from "../assets/images/Ronahi.webp";
 import { resolveMediaUrl } from "../lib/publicUrl";
 import Footer from "../components/Footer";
 import HoverFillLink from "../components/HoverFillLink";
-import { getAllBlogPosts } from "../services/blogService";
 import AnimatedText, { AnimatedWords, FadeIn } from "../components/motion/AnimatedText";
 import ScrollColorWords from "../components/motion/ScrollColorWords";
 import { TestimonialCard } from "../components/TestimonialCard";
@@ -347,22 +349,37 @@ export default function HomePage() {
 
   useEffect(() => {
     let isMounted = true;
+    let idleId: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
-    (async () => {
-      setBlogsLoading(true);
-      try {
-        const cmsPosts = await getAllBlogPosts();
-        if (!isMounted) return;
-        setBlogPosts(cmsPosts);
-      } catch {
-        if (isMounted) setBlogPosts([]);
-      } finally {
-        if (isMounted) setBlogsLoading(false);
-      }
-    })();
+    const loadPosts = () => {
+      void (async () => {
+        setBlogsLoading(true);
+        try {
+          const { getAllBlogPosts } = await import("../services/blogService");
+          const cmsPosts = await getAllBlogPosts();
+          if (!isMounted) return;
+          setBlogPosts(cmsPosts);
+        } catch {
+          if (isMounted) setBlogPosts([]);
+        } finally {
+          if (isMounted) setBlogsLoading(false);
+        }
+      })();
+    };
+
+    if (typeof window !== "undefined" && "requestIdleCallback" in window) {
+      idleId = window.requestIdleCallback(loadPosts, { timeout: 2500 });
+    } else {
+      timeoutId = setTimeout(loadPosts, 1200);
+    }
 
     return () => {
       isMounted = false;
+      if (idleId !== undefined && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) clearTimeout(timeoutId);
     };
   }, []);
 
@@ -376,23 +393,27 @@ export default function HomePage() {
         {/* Background Hero Image with Vertical Ribbon Effect */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
-            src={siteImages.heroHomepage}
+            src={heroHomepage}
             alt="Young girl smiling in a wheelchair by a fountain"
-            width={1920}
-            height={1080}
+            width={1580}
+            height={996}
             decoding="async"
             fetchPriority="high"
             className="w-full h-full object-cover object-[center_40%]"
           />
-          {/* Vertical ribbon overlay - matching the image's distinct strips */}
-          <div className="absolute inset-0 flex">
+          {/* Static ribbon strips — avoid backdrop-filter (main-thread / compositor cost) */}
+          <div className="absolute inset-0 flex pointer-events-none" aria-hidden>
             {[...Array(8)].map((_, i) => (
               <div
                 key={i}
                 className="h-full flex-1 border-r border-white/5"
                 style={{
-                  backdropFilter: i >= 4 ? "none" : i % 2 === 0 ? "blur(4px)" : "none",
-                  backgroundColor: i % 3 === 0 ? "rgba(255, 255, 255, 0.04)" : "transparent",
+                  backgroundColor:
+                    i % 3 === 0
+                      ? "rgba(255, 255, 255, 0.05)"
+                      : i % 2 === 0
+                        ? "rgba(0, 0, 0, 0.04)"
+                        : "transparent",
                 }}
               />
             ))}
@@ -536,8 +557,12 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
             <FadeIn className="lg:col-span-6" delay={0.08}>
               <div className="relative rounded-2xl overflow-hidden aspect-[16/10] ring-1 ring-slate-200/70">
                 <img
-                  src={siteImages.programMeetOurLight}
+                  src={programMeetOurLight}
                   alt="Light Upon Light team visiting a community member at their door"
+                  width={960}
+                  height={600}
+                  decoding="async"
+                  loading="lazy"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -643,6 +668,10 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
                       <img
                         src={resolveMediaUrl(program.img)}
                         alt={program.title}
+                        width={960}
+                        height={720}
+                        decoding="async"
+                        loading="lazy"
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         referrerPolicy="no-referrer"
                       />
@@ -940,9 +969,13 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
         className="relative min-h-[20rem] sm:min-h-[24rem] md:min-h-[48vh] flex items-center overflow-hidden bg-[#c8daf2]"
       >
         <img
-          src={siteImages.logoLul}
+          src={logoLul}
           alt=""
           aria-hidden
+          width={1200}
+          height={800}
+          decoding="async"
+          loading="lazy"
           className="absolute inset-0 z-0 h-full w-full object-cover object-center pointer-events-none select-none"
         />
 
@@ -1005,8 +1038,12 @@ From her wheelchair she rises, leading Light Upon Light with a fire that cannot 
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-full overflow-hidden ring-1 ring-slate-200 shrink-0">
                 <img
-                  src={siteImages.ronahi}
+                  src={ronahi}
                   alt="Founder & CEO of Light Upon Light"
+                  width={88}
+                  height={88}
+                  decoding="async"
+                  loading="lazy"
                   className="w-full h-full object-cover object-top"
                 />
               </div>

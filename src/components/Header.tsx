@@ -2,7 +2,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import HoverFillLink from "./HoverFillLink";
-import { siteImages } from "../assets/siteImages";
+import { brandLogos } from "../assets/brandLogos";
 import { resolveMediaUrl } from "../lib/publicUrl";
 
 interface HeaderProps {
@@ -25,7 +25,7 @@ export default function Header({ variant = "light" }: HeaderProps) {
 
   const navVariant = (active: boolean) => (active ? "purple" as const : "ghost" as const);
   const useLightChrome = isDark || isScrolled;
-  const brandLogo = useLightChrome ? siteImages.logoLulLight : siteImages.logoLulDark;
+  const brandLogo = useLightChrome ? brandLogos.logoLulLight : brandLogos.logoLulDark;
   const isHeroLogo = !useLightChrome;
   // Mobile/tablet: larger, readable mark that fills the bar
   const logoMobileClass = isHeroLogo
@@ -95,6 +95,10 @@ export default function Header({ variant = "light" }: HeaderProps) {
               <img
                 src={resolveMediaUrl(brandLogo)}
                 alt="Light Upon Light"
+                width={320}
+                height={142}
+                decoding="async"
+                fetchPriority="high"
                 className={logoMobileClass}
               />
             </span>
@@ -139,6 +143,10 @@ export default function Header({ variant = "light" }: HeaderProps) {
               <img
                 src={resolveMediaUrl(brandLogo)}
                 alt="Light Upon Light"
+                width={400}
+                height={177}
+                decoding="async"
+                fetchPriority="high"
                 className={logoDesktopClass}
               />
             </Link>
@@ -148,8 +156,11 @@ export default function Header({ variant = "light" }: HeaderProps) {
             {isScrolled && (
               <Link to="/" className="flex items-center pl-1 pr-1.5 xl:pr-2 group shrink-0" aria-label="Light Upon Light home">
                 <img
-                  src={resolveMediaUrl(siteImages.logoLulLight)}
+                  src={resolveMediaUrl(brandLogos.logoLulLight)}
                   alt="Light Upon Light"
+                  width={180}
+                  height={80}
+                  decoding="async"
                   className="h-9 xl:h-11 w-auto max-w-[120px] xl:max-w-[180px] object-contain object-left bg-transparent group-hover:scale-[1.02] transition-transform duration-300"
                 />
               </Link>

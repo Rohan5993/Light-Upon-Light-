@@ -1,4 +1,9 @@
-import { siteImages } from "../assets/siteImages";
+import programEnlighten from "../assets/images/program-enlighten.webp";
+import programBigLightLittleLight from "../assets/images/program-big-light-little-light.webp";
+import programLightDesserts from "../assets/images/program-light-desserts.webp";
+import programSignsOfOurLight from "../assets/images/program-signs-of-our-light.webp";
+import programSendingLightAbroad from "../assets/images/program-sending-light-abroad.webp";
+import programMeetOurLight from "../assets/images/program-meet-our-light.webp";
 
 export interface ProgramCta {
   label: string;
@@ -21,6 +26,7 @@ export interface Program {
   ctaSecondary: ProgramCta;
 }
 
+/** Card/list images only — gallery assets live in programGalleries.ts */
 export const PROGRAMS: Program[] = [
   {
     id: "enlighten",
@@ -37,11 +43,8 @@ export const PROGRAMS: Program[] = [
     date: "In-school sessions",
     location: "Greater Seattle Area",
     tag: "Education",
-    img: siteImages.programEnlighten,
-    gallery: [
-      siteImages.programEnlighten2,
-      siteImages.programEnlighten3,
-    ],
+    img: programEnlighten,
+    gallery: [],
     ctaPrimary: {
       label: "Bring Enlighten to Your School",
       to: "mailto:lightuponlight1408@gmail.com?subject=Bring%20Enlighten%20to%20Our%20School",
@@ -65,11 +68,8 @@ export const PROGRAMS: Program[] = [
     date: "2nd & last Monday monthly",
     location: "Virtual + In Person",
     tag: "Mentorship",
-    img: siteImages.programBigLightLittleLight,
-    gallery: [
-      siteImages.programBigLightLittleLight2,
-      siteImages.programBigLightLittleLight3,
-    ],
+    img: programBigLightLittleLight,
+    gallery: [],
     ctaPrimary: {
       label: "Become a Mentor",
       to: "/volunteer",
@@ -92,11 +92,8 @@ export const PROGRAMS: Program[] = [
     date: "1st & 3rd Thursday monthly",
     location: "Accessible Kitchen",
     tag: "Life Skills",
-    img: siteImages.programLightDesserts,
-    gallery: [
-      siteImages.programLightDesserts2,
-      siteImages.programLightDesserts3,
-    ],
+    img: programLightDesserts,
+    gallery: [],
     ctaPrimary: {
       label: "Volunteer With Us",
       to: "/volunteer",
@@ -119,11 +116,8 @@ export const PROGRAMS: Program[] = [
     date: "By appointment",
     location: "Community Spaces",
     tag: "Accessibility",
-    img: siteImages.programSignsOfOurLight,
-    gallery: [
-      siteImages.programSignsOfOurLight2,
-      siteImages.programSignsOfOurLight3,
-    ],
+    img: programSignsOfOurLight,
+    gallery: [],
     ctaPrimary: {
       label: "Partner With Us",
       to: "mailto:lightuponlight1408@gmail.com?subject=Partner%20With%20Signs%20of%20Our%20Light",
@@ -147,11 +141,8 @@ export const PROGRAMS: Program[] = [
     date: "Ongoing",
     location: "Global",
     tag: "Mobility Aid",
-    img: siteImages.programSendingLightAbroad,
-    gallery: [
-      siteImages.programSendingLightAbroad2,
-      siteImages.programSendingLightAbroad3,
-    ],
+    img: programSendingLightAbroad,
+    gallery: [],
     ctaPrimary: {
       label: "Donate a Mobility Aid",
       to: "mailto:lightuponlight1408@gmail.com?subject=Donate%20a%20Mobility%20Aid",
@@ -175,11 +166,8 @@ export const PROGRAMS: Program[] = [
     date: "By appointment",
     location: "Greater Seattle Area",
     tag: "Donor Experience",
-    img: siteImages.programMeetOurLight,
-    gallery: [
-      siteImages.programMeetOurLight2,
-      siteImages.programMeetOurLight3,
-    ],
+    img: programMeetOurLight,
+    gallery: [],
     ctaPrimary: {
       label: "Schedule a Pickup",
       to: "mailto:lightuponlight1408@gmail.com?subject=Schedule%20a%20Donation%20Pickup",
