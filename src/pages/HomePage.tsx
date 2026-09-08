@@ -411,44 +411,55 @@ export default function HomePage() {
               className="w-full h-full object-cover object-[center_40%] [image-rendering:auto]"
             />
           </picture>
-          {/* Soft readability scrim only — no ribbon blur overlays */}
+          {/* Base left scrim for overall contrast */}
           <div
             aria-hidden
-            className="absolute inset-y-0 left-0 w-[58%] pointer-events-none"
+            className="absolute inset-0 pointer-events-none"
             style={{
               background:
-                "linear-gradient(to right, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.22) 52%, rgba(0,0,0,0.06) 78%, transparent 100%)",
+                "linear-gradient(to right, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.5) 34%, rgba(0,0,0,0.22) 58%, rgba(0,0,0,0.06) 78%, transparent 100%)",
             }}
           />
         </div>
 
         {/* Hero Content */}
         <main className="relative z-10 px-4 sm:px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl pt-6 sm:pt-8 pb-12 md:pt-0 md:pb-0">
-          <div className="max-w-4xl">
-            <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-6 sm:mb-8">
-              <span className="block">Their Light Is</span>
-              <span className="block">Already There.</span>
-              <span className="block">Help Us Let It Shine</span>
-            </h1>
-            <p className="text-base md:text-xl text-white/90 leading-[1.75] md:leading-[1.8] mb-10 md:mb-14 max-w-2xl font-medium">
-              We exist to help differently-abled people through advocacy, accessibility, and equality while changing society&apos;s perceptions through education.
-            </p>
+          <div className="relative max-w-4xl">
+            {/* Text-focused overlay so copy stays readable over the photo */}
+            <div
+              aria-hidden
+              className="absolute -inset-x-3 -inset-y-4 sm:-inset-x-6 sm:-inset-y-6 md:-inset-x-8 md:-inset-y-8 rounded-3xl pointer-events-none"
+              style={{
+                background:
+                  "radial-gradient(ellipse 90% 80% at 20% 45%, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.28) 55%, transparent 78%)",
+              }}
+            />
+            <div className="relative">
+              <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-6 sm:mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
+                <span className="block">Their Light Is</span>
+                <span className="block">Already There.</span>
+                <span className="block">Help Us Let It Shine</span>
+              </h1>
+              <p className="text-base md:text-xl text-white leading-[1.75] md:leading-[1.8] mb-10 md:mb-14 max-w-2xl font-medium drop-shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
+                We exist to help differently-abled people through advocacy, accessibility, and equality while changing society&apos;s perceptions through education.
+              </p>
 
-            <div>
-              <Link
-                to="/donate"
-                className="group inline-flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-5 bg-white pl-4 sm:pl-10 pr-2 sm:pr-3 py-2 sm:py-3 rounded-full text-slate-900 font-bold shadow-2xl hover:shadow-white/20 transition-all max-w-full"
-              >
-                <span className="text-sm sm:text-lg">Donate & Shine a Light</span>
-                <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-purple-600 flex items-center justify-center text-white group-hover:bg-purple-700 transition-colors shrink-0">
-                  <ArrowUpRight size={20} strokeWidth={2.5} className="sm:hidden" />
-                  <ArrowUpRight size={24} strokeWidth={2.5} className="hidden sm:block" />
-                </div>
-              </Link>
+              <div>
+                <Link
+                  to="/donate"
+                  className="group inline-flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-5 bg-white pl-4 sm:pl-10 pr-2 sm:pr-3 py-2 sm:py-3 rounded-full text-slate-900 font-bold shadow-2xl hover:shadow-white/20 transition-all max-w-full"
+                >
+                  <span className="text-sm sm:text-lg">Donate & Shine a Light</span>
+                  <div className="w-9 h-9 sm:w-12 sm:h-12 rounded-full bg-purple-600 flex items-center justify-center text-white group-hover:bg-purple-700 transition-colors shrink-0">
+                    <ArrowUpRight size={20} strokeWidth={2.5} className="sm:hidden" />
+                    <ArrowUpRight size={24} strokeWidth={2.5} className="hidden sm:block" />
+                  </div>
+                </Link>
+              </div>
+              <p className="mt-5 text-sm md:text-base text-white/95 font-medium max-w-2xl drop-shadow-[0_1px_6px_rgba(0,0,0,0.28)]">
+                Your generosity creates real access, greater opportunity, and lasting change.
+              </p>
             </div>
-            <p className="mt-5 text-sm md:text-base text-white/80 font-medium max-w-2xl">
-              Your generosity creates real access, greater opportunity, and lasting change.
-            </p>
           </div>
         </main>
       </div>
