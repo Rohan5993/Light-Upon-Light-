@@ -45,16 +45,16 @@ export default function Footer({ className = "", topPaddingClass = "pt-8 md:pt-1
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-5 mb-4">
           {/* Logo & Description */}
-          <div className="space-y-3 md:max-w-[260px] lg:max-w-[300px] shrink-0">
+          <div className="space-y-3 md:max-w-[300px] lg:max-w-[340px] shrink-0">
             <Link to="/" className="inline-flex items-center" aria-label="Light Upon Light home">
               <img
                 src={resolveMediaUrl(brandLogos.logoLulDark)}
                 alt="Light Upon Light"
-                width={280}
-                height={124}
+                width={340}
+                height={150}
                 decoding="async"
                 loading="lazy"
-                className="h-11 sm:h-12 md:h-14 w-auto max-w-[min(100%,260px)] object-contain object-left bg-transparent"
+                className="h-16 sm:h-[4.5rem] md:h-20 w-auto max-w-[min(100%,320px)] object-contain object-left bg-transparent"
               />
             </Link>
             <p className="text-gray-300 leading-snug text-sm font-medium">
