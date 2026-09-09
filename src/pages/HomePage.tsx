@@ -428,12 +428,12 @@ export default function HomePage() {
         <main className="relative z-10 px-4 sm:px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl pt-6 sm:pt-8 pb-12 md:pt-0 md:pb-0">
           <div className="relative max-w-4xl">
             <div className="relative">
-              <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-3 sm:mb-4 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
+              <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-6 sm:mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
                 <span className="block">Their Light Is</span>
                 <span className="block">Already There.</span>
                 <span className="block">Help Us Let It Shine</span>
               </h1>
-              <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.22em] text-[#F5E8A8]/90 mb-4 sm:mb-5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.25)]">
+              <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.22em] text-[#F5E8A8]/90 mb-2 sm:mb-2.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.25)]">
                 Our Mission
               </p>
               <p className="text-base md:text-xl text-white leading-[1.75] md:leading-[1.8] mb-10 md:mb-14 max-w-2xl font-medium drop-shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
