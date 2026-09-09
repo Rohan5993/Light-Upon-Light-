@@ -39,35 +39,35 @@ function SocialLinks({ className = "" }: { className?: string }) {
   );
 }
 
-export default function Footer({ className = "", topPaddingClass = "pt-8 md:pt-10" }: FooterProps) {
+export default function Footer({ className = "", topPaddingClass = "pt-[42px] md:pt-[50px]" }: FooterProps) {
   return (
     <footer className={`relative bg-[#270E32] ${topPaddingClass} pb-4 px-4 sm:px-6 md:px-16 overflow-hidden ${className}`}>
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-5 mb-4">
           {/* Logo & Description */}
-          <div className="space-y-3 md:max-w-[300px] lg:max-w-[340px] shrink-0">
+          <div className="space-y-3 md:max-w-[340px] lg:max-w-[380px] shrink-0">
             <Link to="/" className="inline-flex items-center" aria-label="Light Upon Light home">
               <img
                 src={resolveMediaUrl(brandLogos.logoLulDark)}
                 alt="Light Upon Light"
-                width={340}
-                height={150}
+                width={380}
+                height={168}
                 decoding="async"
                 loading="lazy"
-                className="h-16 sm:h-[4.5rem] md:h-20 w-auto max-w-[min(100%,320px)] object-contain object-left bg-transparent"
+                className="h-[4.75rem] sm:h-20 md:h-24 w-auto max-w-[min(100%,360px)] object-contain object-left bg-transparent"
               />
             </Link>
             <p className="text-gray-300 leading-snug text-sm font-medium">
               Uniting hearts and actions to create positive change that lasts beyond a single moment.
             </p>
-            <SocialLinks className="hidden md:flex flex-wrap gap-2.5" />
+            <SocialLinks className="hidden md:flex flex-wrap gap-2.5 !mt-6" />
           </div>
 
           {/* Quick Links & Contact */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:contents">
             <div className="space-y-3 shrink-0">
               <h2 className="text-white font-bold text-base">Quick Links</h2>
-              <ul className="grid grid-cols-1 gap-y-2 md:grid-cols-2 md:gap-x-10 md:gap-y-2">
+              <ul className="grid grid-cols-1 gap-y-2 md:grid-cols-2 md:gap-x-16 lg:gap-x-20 md:gap-y-2">
                 {[
                   { label: "Programs", path: "/programs" },
                   { label: "About Us", path: "/about" },

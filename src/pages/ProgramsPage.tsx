@@ -85,7 +85,7 @@ export default function ProgramsPage() {
         </div>
       </section>
 
-      <Footer className="mt-4" topPaddingClass="pt-8 md:pt-10" />
+      <Footer className="mt-4" topPaddingClass="pt-[42px] md:pt-[50px]" />
     </div>
     </>
   );

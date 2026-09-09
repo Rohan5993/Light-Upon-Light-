@@ -497,7 +497,7 @@ export default function BlogDetailPage() {
           </section>
         ) : null}
       </main>
-      <Footer className="mt-20" topPaddingClass="pt-8 md:pt-10" />
+      <Footer className="mt-20" topPaddingClass="pt-[42px] md:pt-[50px]" />
     </div>
     </>
   );

@@ -424,7 +424,7 @@ export default function VolunteerPage() {
           </div>
         </section>
 
-        <Footer topPaddingClass="pt-10" />
+        <Footer topPaddingClass="pt-[50px]" />
       </div>
     </>
   );

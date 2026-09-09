@@ -1153,7 +1153,7 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
         </div>
       </section>
 
-      <Footer topPaddingClass="pt-6 md:pt-8" />
+      <Footer topPaddingClass="pt-[34px] md:pt-[42px]" />
     </>
   );
 }
