@@ -17,6 +17,7 @@ import {
   MapPin,
   Compass,
   Linkedin,
+  Facebook,
 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -200,6 +201,7 @@ const BOARD_MEMBERS: {
   image: string;
   blurb: string[];
   linkedin?: string;
+  facebook?: string;
 }[] = [
   {
     name: "Megan Brown",
@@ -249,6 +251,7 @@ const BOARD_MEMBERS: {
       "Dr. Muhammad Salah is an internationally recognized educator, scholar, speaker, and media professional with decades of experience connecting with audiences around the world. He holds a PhD in Comparative Fiqh, a degree in Shari'ah and Islamic Law from Al-Azhar University, and a bachelor's degree in pharmacology.",
       "Throughout his career, he has taught at universities and educational institutions and produced more than 1,500 hours of television and educational programming. As Light Upon Light's Board Director — Communications & Outreach, Dr. Salah brings his extensive experience in media, public speaking, and community engagement to help share our story, spread our mission, and expand awareness of our work.",
     ],
+    facebook: "https://www.facebook.com/share/1BpUEkJX8t/?mibextid=wwXIfr",
   },
 ];
 
@@ -723,6 +726,18 @@ export default function AboutPage() {
                   >
                     <Linkedin size={13} />
                     LinkedIn
+                  </a>
+                )}
+                {member.facebook && (
+                  <a
+                    href={member.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-2.5 inline-flex items-center justify-center gap-1.5 w-full rounded-full border border-slate-200 bg-white py-1.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#1877F2] hover:border-[#1877F2] hover:bg-[#1877F2] hover:text-white transition-colors"
+                    aria-label={`${member.name} on Facebook`}
+                  >
+                    <Facebook size={13} />
+                    Facebook
                   </a>
                 )}
               </motion.article>
