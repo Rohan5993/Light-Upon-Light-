@@ -64,9 +64,9 @@ export default function Footer({ className = "", topPaddingClass = "pt-[42px] md
           </div>
 
           {/* Quick Links & Contact */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:contents">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:flex md:items-start md:gap-12 lg:gap-16 md:pt-[5px]">
             <div className="space-y-3 shrink-0">
-              <h2 className="text-white font-bold text-base">Quick Links</h2>
+              <h2 className="text-white font-bold text-base leading-none">Quick Links</h2>
               <ul className="grid grid-cols-1 gap-y-2 md:grid-cols-2 md:gap-x-16 lg:gap-x-20 md:gap-y-2">
                 {[
                   { label: "Programs", path: "/programs" },
@@ -86,7 +86,7 @@ export default function Footer({ className = "", topPaddingClass = "pt-[42px] md
             </div>
 
             <div className="space-y-3 md:max-w-[280px] shrink-0">
-              <h2 className="text-white font-bold text-base">Contact</h2>
+              <h2 className="text-white font-bold text-base leading-none">Contact</h2>
               <ul className="space-y-3">
                 <li className="flex items-start gap-2 sm:gap-3 text-gray-300">
                   <MapPin className="w-4 h-4 flex-shrink-0 text-white mt-0.5" />
