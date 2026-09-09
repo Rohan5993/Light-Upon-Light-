@@ -8,7 +8,7 @@ import { resolveMediaUrl } from "../lib/publicUrl";
 import { type BlogPost } from "../data/blogPosts";
 import { getAllBlogPosts } from "../services/blogService";
 
-const POSTS_PER_PAGE = 9;
+const POSTS_PER_PAGE = 10;
 
 export default function BlogPage() {
   const [page, setPage] = useState(1);
@@ -35,7 +35,12 @@ export default function BlogPage() {
     };
   }, []);
 
-  const totalPages = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE));
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+  const showPagination = totalPages > 1;
+
+  useEffect(() => {
+    if (totalPages > 0 && page > totalPages) setPage(totalPages);
+  }, [page, totalPages]);
 
   const paginatedPosts = useMemo(() => {
     const start = (page - 1) * POSTS_PER_PAGE;
@@ -77,7 +82,7 @@ export default function BlogPage() {
             </p>
           </div>
         ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
+        <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 ${showPagination ? "" : "mb-20"}`}>
           {paginatedPosts.map((post, i) => (
             <motion.article
               key={post.id}
@@ -112,7 +117,7 @@ export default function BlogPage() {
         </div>
         )}
 
-        {posts.length > 0 && (
+        {showPagination && (
         <div className="mt-14 mb-20 flex flex-wrap items-center justify-center gap-3 px-2">
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
             <button
