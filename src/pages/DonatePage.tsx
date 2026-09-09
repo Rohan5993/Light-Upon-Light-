@@ -29,28 +29,24 @@ const DONOR_STORIES = [
       "I donated because I wanted real proof that help was reaching families. The updates showed exactly where support went and what changed.",
     name: "Sarah J.",
     role: "Recurring Donor",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fm=webp&fit=crop&q=80&w=300",
   },
   {
     quote:
       "Monthly giving made it easy for me to stay consistent. It feels meaningful knowing my support helps programs run every single month.",
     name: "David R.",
     role: "Community Sponsor",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fm=webp&fit=crop&q=80&w=300",
   },
   {
     quote:
       "I started with a one-time donation and quickly saw impact stories that felt honest and transparent. That trust is why I kept giving.",
     name: "Amina K.",
     role: "First-time to Ongoing Donor",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fm=webp&fit=crop&q=80&w=300",
   },
   {
     quote:
       "What stood out most was how fast support reached people in need. The organization combines compassion with real execution.",
     name: "Michael T.",
     role: "Monthly Donor",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fm=webp&fit=crop&q=80&w=300",
   },
 ];
 
@@ -458,13 +454,7 @@ export default function DonatePage() {
         <section className="px-4 sm:px-6 pb-16 md:pb-20">
           <div className="max-w-7xl mx-auto rounded-2xl sm:rounded-[2rem] bg-gradient-to-br from-violet-50 via-sky-50 to-amber-50 border border-violet-100 p-5 sm:p-8 md:p-12">
             <div className="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-10 items-start">
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-5">
-                <img
-                  src={resolveMediaUrl(activeStory.image)}
-                  alt=""
-                  className="w-16 h-16 md:w-20 md:h-20 rounded-2xl object-cover border-2 border-violet-200 shrink-0"
-                />
-                <div className="min-w-0">
+              <div className="min-w-0">
                   <p className="text-[10px] font-bold uppercase tracking-widest text-violet-500 mb-3">Donor story</p>
                   <blockquote className="text-base sm:text-lg md:text-xl font-bold text-slate-700 leading-snug mb-4">
                     &ldquo;{activeStory.quote}&rdquo;
@@ -492,7 +482,6 @@ export default function DonatePage() {
                       <ChevronRight size={16} />
                     </button>
                   </div>
-                </div>
               </div>
 
               <div className="rounded-2xl bg-white border border-slate-100 p-6 shadow-sm w-full md:w-auto md:min-w-[260px] max-w-full">
