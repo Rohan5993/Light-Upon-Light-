@@ -457,8 +457,65 @@ export default function HomePage() {
         </main>
       </div>
 
+      {/* Our Pillars */}
+      <section className="relative px-4 sm:px-6 py-16 sm:py-20 md:py-28 overflow-hidden bg-white">
+        <div className="max-w-7xl mx-auto">
+          <FadeIn>
+            <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.28em] text-[#7107E7] mb-4">
+              Our Pillars
+            </p>
+            <h2 className="text-xl sm:text-[2rem] font-bold text-slate-900 tracking-[-0.03em] mb-12 md:mb-16">
+              How we let their light shine.
+            </h2>
+          </FadeIn>
+
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:auto-rows-fr">
+            {PILLARS.map((pillar, index) => {
+              const Icon = pillar.icon;
+              const wide = index === 0 || index === 3;
+              return (
+                <motion.article
+                  key={pillar.title}
+                  initial={{ opacity: 0, y: 22 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.25 }}
+                  transition={{ duration: 0.5, delay: Math.min(index * 0.08, 0.24) }}
+                  className={`h-full rounded-2xl bg-white p-6 md:p-7 flex flex-col ${
+                    wide ? "md:col-span-7" : "md:col-span-5"
+                  }`}
+                  style={{
+                    border: `0.5px solid ${pillar.border}73`,
+                    boxShadow: `0 0 18px ${pillar.border}33`,
+                  }}
+                >
+                  <div
+                    className="w-11 h-11 rounded-xl bg-white flex items-center justify-center mb-5"
+                    style={{
+                      color: pillar.border,
+                      border: `0.5px solid ${pillar.border}73`,
+                    }}
+                  >
+                    <Icon size={20} strokeWidth={2.1} />
+                  </div>
+                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#7107E7] mb-2">
+                    {pillar.step}
+                  </p>
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">{pillar.title}</h3>
+                  <p className="text-sm font-semibold text-slate-800 leading-snug mb-3">
+                    {pillar.headline}
+                  </p>
+                  <p className="text-sm md:text-[15px] text-slate-500 font-medium leading-relaxed">
+                    {pillar.desc}
+                  </p>
+                </motion.article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Founder's Diary */}
-      <section id="our-mission" className="px-4 sm:px-6 py-12 md:py-16 mt-8 md:mt-12 relative overflow-hidden">
+      <section id="our-mission" className="px-4 sm:px-6 py-12 md:py-16 relative overflow-hidden">
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -531,63 +588,6 @@ From her wheelchair she rises, leading Light Upon Light with a fire that cannot 
               <ArrowUpRight size={16} />
             </a>
           </FadeIn>
-        </div>
-      </section>
-
-      {/* Our Pillars */}
-      <section className="relative px-4 sm:px-6 py-16 sm:py-20 md:py-28 overflow-hidden bg-white">
-        <div className="max-w-7xl mx-auto">
-          <FadeIn>
-            <p className="text-[10px] md:text-[11px] font-bold uppercase tracking-[0.28em] text-[#7107E7] mb-4">
-              Our Pillars
-            </p>
-            <h2 className="text-xl sm:text-[2rem] font-bold text-slate-900 tracking-[-0.03em] mb-12 md:mb-16">
-              How we let their light shine.
-            </h2>
-          </FadeIn>
-
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:auto-rows-fr">
-            {PILLARS.map((pillar, index) => {
-              const Icon = pillar.icon;
-              const wide = index === 0 || index === 3;
-              return (
-                <motion.article
-                  key={pillar.title}
-                  initial={{ opacity: 0, y: 22 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.25 }}
-                  transition={{ duration: 0.5, delay: Math.min(index * 0.08, 0.24) }}
-                  className={`h-full rounded-2xl bg-white p-6 md:p-7 flex flex-col ${
-                    wide ? "md:col-span-7" : "md:col-span-5"
-                  }`}
-                  style={{
-                    border: `0.5px solid ${pillar.border}73`,
-                    boxShadow: `0 0 18px ${pillar.border}33`,
-                  }}
-                >
-                  <div
-                    className="w-11 h-11 rounded-xl bg-white flex items-center justify-center mb-5"
-                    style={{
-                      color: pillar.border,
-                      border: `0.5px solid ${pillar.border}73`,
-                    }}
-                  >
-                    <Icon size={20} strokeWidth={2.1} />
-                  </div>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#7107E7] mb-2">
-                    {pillar.step}
-                  </p>
-                  <h3 className="text-xl font-bold text-slate-900 mb-2">{pillar.title}</h3>
-                  <p className="text-sm font-semibold text-slate-800 leading-snug mb-3">
-                    {pillar.headline}
-                  </p>
-                  <p className="text-sm md:text-[15px] text-slate-500 font-medium leading-relaxed">
-                    {pillar.desc}
-                  </p>
-                </motion.article>
-              );
-            })}
-          </div>
         </div>
       </section>
 
