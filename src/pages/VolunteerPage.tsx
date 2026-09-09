@@ -417,7 +417,7 @@ export default function VolunteerPage() {
                 to="/programs"
                 className="inline-flex items-center justify-center gap-2 shrink-0 px-7 py-3.5 rounded-full bg-[#7107E7] text-white font-bold text-sm hover:bg-[#5c06bb] transition-colors"
               >
-                Explore Programs
+                Explore
                 <ArrowRight size={16} />
               </Link>
             </div>
