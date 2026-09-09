@@ -67,7 +67,7 @@ export default function Footer({ className = "", topPaddingClass = "pt-8 md:pt-1
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:contents">
             <div className="space-y-3 shrink-0">
               <h2 className="text-white font-bold text-base">Quick Links</h2>
-              <ul className="space-y-2">
+              <ul className="grid grid-cols-1 gap-y-2 md:grid-cols-2 md:gap-x-10 md:gap-y-2">
                 {[
                   { label: "Programs", path: "/programs" },
                   { label: "About Us", path: "/about" },
