@@ -18,6 +18,7 @@ import getInvolvedExplorePrograms from "./images/Exploreprograms.webp";
 import getInvolvedReadOurStories from "./images/read-our -story.webp";
 import education from "./images/education.webp";
 import workforce from "./images/workforce.webp";
+import mobility from "./images/mobility.jpeg";
 import aboutHero from "./images/about-hs.webp";
 import contactHero from "./images/contact-hs.webp";
 import volunteerHero from "./images/volunteer-hero.webp";
@@ -64,6 +65,7 @@ export const siteImages = {
   getInvolvedReadOurStories,
   education,
   workforce,
+  mobility,
   aboutHero,
   contactHero,
   volunteerHero,

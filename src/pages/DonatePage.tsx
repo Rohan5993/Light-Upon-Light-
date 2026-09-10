@@ -72,7 +72,7 @@ const ALLOCATION = [
     percent: "25%",
     percentValue: 25,
     desc: "Providing wheelchairs and other mobility aids to differently-abled people in need abroad.",
-    image: siteImages.donation,
+    image: siteImages.mobility,
     color: "yellow" as const,
   },
 ];
@@ -434,7 +434,11 @@ export default function DonatePage() {
                     <img
                       src={resolveMediaUrl(item.image)}
                       alt={item.title}
-                      className={`w-full h-44 object-cover ${item.title === "Education" ? "object-top" : "object-center"}`}
+                      className={`w-full h-44 object-cover ${
+                        item.title === "Education"
+                          ? "object-[center_28%]"
+                          : "object-center"
+                      }`}
                     />
                     <div className="p-6">
                       <span className={`inline-block text-[10px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border mb-3 ${c.chip}`}>
