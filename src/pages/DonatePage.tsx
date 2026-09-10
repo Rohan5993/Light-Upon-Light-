@@ -11,6 +11,8 @@ import {
   HeartHandshake,
 } from "lucide-react";
 import Header from "../components/Header";
+import Seo from "../components/Seo";
+import { PAGE_SEO } from "../data/seo";
 import Footer from "../components/Footer";
 import { siteImages } from "../assets/siteImages";
 import { resolveMediaUrl } from "../lib/publicUrl";
@@ -141,6 +143,7 @@ export default function DonatePage() {
 
   return (
     <>
+      <Seo {...PAGE_SEO.donate} />
       <Header variant="dark" />
       <PayPalScriptProvider
         options={{

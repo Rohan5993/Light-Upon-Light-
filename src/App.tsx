@@ -8,6 +8,8 @@ const BlogPage = lazy(() => import("./pages/BlogPage"));
 const BlogDetailPage = lazy(() => import("./pages/BlogDetailPage"));
 const DonatePage = lazy(() => import("./pages/DonatePage"));
 const AboutPage = lazy(() => import("./pages/AboutPage"));
+const FounderPage = lazy(() => import("./pages/FounderPage"));
+const PressPage = lazy(() => import("./pages/PressPage"));
 const VolunteerPage = lazy(() => import("./pages/VolunteerPage"));
 const ContactPage = lazy(() => import("./pages/ContactPage"));
 const AppointmentPage = lazy(() => import("./pages/AppointmentPage"));
@@ -53,6 +55,8 @@ export default function App() {
           <Route path="/blog" element={<BlogPage />} />
           <Route path="/blog/:id" element={<BlogDetailPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/about/ronahi-zebari" element={<FounderPage />} />
+          <Route path="/press" element={<PressPage />} />
           <Route path="/volunteer" element={<VolunteerPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/contact/appointment" element={<AppointmentPage />} />

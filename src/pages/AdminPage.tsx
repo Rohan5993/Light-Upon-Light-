@@ -24,6 +24,8 @@ import {
   isSupabaseConfigured,
   type BlogPostRow,
 } from "../lib/supabase";
+import Seo from "../components/Seo";
+import { PAGE_SEO } from "../data/seo";
 
 function AdminShell({
   children,
@@ -548,28 +550,34 @@ export default function AdminPage() {
 
   if (!ready) {
     return (
-      <div className="flex min-h-dvh items-center justify-center bg-[#f7f5f2] text-sm text-gray-600">
-        Loading admin…
-      </div>
+      <>
+        <Seo {...PAGE_SEO.admin} />
+        <div className="flex min-h-dvh items-center justify-center bg-[#f7f5f2] text-sm text-gray-600">
+          Loading admin…
+        </div>
+      </>
     );
   }
 
   return (
-    <AdminShell
-      user={session?.user ?? null}
-      isEditor={isEditor}
-      onSignOut={() => void signOut()}
-    >
-      {!session ? (
-        <LoginPanel onLogin={signInWithGoogle} />
-      ) : (
-        <Routes>
-          <Route index element={<PostList isEditor={isEditor} />} />
-          <Route path="posts/new" element={<PostEditor isEditor={isEditor} />} />
-          <Route path="posts/:id" element={<PostEditor isEditor={isEditor} />} />
-          <Route path="*" element={<Navigate to="/admin" replace />} />
-        </Routes>
-      )}
-    </AdminShell>
+    <>
+      <Seo {...PAGE_SEO.admin} />
+      <AdminShell
+        user={session?.user ?? null}
+        isEditor={isEditor}
+        onSignOut={() => void signOut()}
+      >
+        {!session ? (
+          <LoginPanel onLogin={signInWithGoogle} />
+        ) : (
+          <Routes>
+            <Route index element={<PostList isEditor={isEditor} />} />
+            <Route path="posts/new" element={<PostEditor isEditor={isEditor} />} />
+            <Route path="posts/:id" element={<PostEditor isEditor={isEditor} />} />
+            <Route path="*" element={<Navigate to="/admin" replace />} />
+          </Routes>
+        )}
+      </AdminShell>
+    </>
   );
 }

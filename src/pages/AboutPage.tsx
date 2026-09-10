@@ -21,6 +21,8 @@ import {
 } from "lucide-react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import Seo from "../components/Seo";
+import { PAGE_SEO } from "../data/seo";
 import { siteImages } from "../assets/siteImages";
 import { resolveMediaUrl } from "../lib/publicUrl";
 import storyCoverImage from "../assets/images/ourstory.webp";
@@ -372,6 +374,7 @@ export default function AboutPage() {
 
   return (
     <>
+      <Seo {...PAGE_SEO.about} includeOrganizationSchema />
       <Header variant="dark" />
       <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col overflow-x-hidden">
 
@@ -393,6 +396,13 @@ export default function AboutPage() {
             <h1 className="text-[1.875rem] sm:text-[2.5rem] md:text-[3rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">
               More Than a Nonprofit. A Movement for Change.
             </h1>
+            <p className="text-base sm:text-lg text-gray-500 font-medium leading-relaxed max-w-2xl mb-4">
+              Light Upon Light is a 501(c)(3) nonprofit (EIN 99-2690459) based in Redmond, Washington, founded by{" "}
+              <Link to="/about/ronahi-zebari" className="text-[#7107E7] font-semibold hover:underline">
+                Ronahi Zebari
+              </Link>
+              . We advance advocacy, accessibility, education, and equality for differently-abled people.
+            </p>
             <p className="text-base sm:text-lg text-gray-500 font-medium leading-relaxed max-w-2xl">
               What began with one moment of exclusion has grown into a movement dedicated to creating a world where differently-abled people are treated with dignity and respect, valued for who they are, and given the same opportunities as everyone else.
             </p>
@@ -406,6 +416,24 @@ export default function AboutPage() {
           </div>
         </div>
       </motion.section>
+
+      {/* Entity disambiguation */}
+      <section className="px-4 sm:px-6 pb-4 sm:pb-6 bg-white">
+        <div className="max-w-7xl mx-auto rounded-2xl border border-violet-100 bg-violet-50/60 px-6 py-6 md:px-8 md:py-7">
+          <h2 className="text-lg md:text-xl font-bold text-slate-900 mb-3">About this Light Upon Light</h2>
+          <p className="text-slate-700 font-medium leading-relaxed max-w-4xl">
+            Light Upon Light (EIN 99-2690459) is a Washington State 501(c)(3) nonprofit founded by Ronahi Zebari. We are a disability advocacy and accessibility organization based in Redmond and Everett, Washington. We are not affiliated with similarly named conference, religious, or international event brands that also use the phrase “Light Upon Light.” Official website:{" "}
+            <a href="https://thelightuponlight.org/" className="text-[#7107E7] font-semibold hover:underline">
+              https://thelightuponlight.org/
+            </a>
+            .{" "}
+            <Link to="/press" className="text-[#7107E7] font-semibold hover:underline">
+              Media kit
+            </Link>
+            .
+          </p>
+        </div>
+      </section>
 
       {/* 2) Our Story */}
       <motion.section

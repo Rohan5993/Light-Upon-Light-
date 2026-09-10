@@ -10,6 +10,8 @@ import ronahi from "../assets/images/Ronahi.webp";
 import programMeetOurLight from "../assets/images/program-meet-our-light.webp";
 import { resolveMediaUrl } from "../lib/publicUrl";
 import Footer from "../components/Footer";
+import Seo from "../components/Seo";
+import { PAGE_SEO } from "../data/seo";
 import HoverFillLink from "../components/HoverFillLink";
 import AnimatedText, { FadeIn } from "../components/motion/AnimatedText";
 import ScrollColorWords from "../components/motion/ScrollColorWords";
@@ -395,6 +397,7 @@ export default function HomePage() {
 
   return (
     <>
+      <Seo {...PAGE_SEO.home} includeOrganizationSchema />
       <div className="relative min-h-screen min-h-[100dvh] overflow-hidden selection:bg-purple-100 font-sans flex flex-col">
         <Header variant="light" />
         {/* Background Hero Image */}
@@ -428,6 +431,9 @@ export default function HomePage() {
         <main className="relative z-10 px-4 sm:px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl pt-6 sm:pt-8 pb-12 md:pt-0 md:pb-0">
           <div className="relative max-w-4xl">
             <div className="relative">
+              <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.22em] text-[#F5E8A8]/90 mb-3 sm:mb-4 drop-shadow-[0_1px_4px_rgba(0,0,0,0.25)]">
+                Light Upon Light
+              </p>
               <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-6 sm:mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
                 <span className="block">Their Light Is</span>
                 <span className="block">Already There.</span>
@@ -435,6 +441,9 @@ export default function HomePage() {
               </h1>
               <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.22em] text-[#F5E8A8]/90 mb-2 sm:mb-2.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.25)]">
                 Our Mission
+              </p>
+              <p className="text-base md:text-xl text-white leading-[1.75] md:leading-[1.8] mb-4 md:mb-5 max-w-2xl font-medium drop-shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
+                Light Upon Light is a 501(c)(3) nonprofit organization based in Redmond, Washington, creating advocacy, accessibility, education, and equality for differently-abled people.
               </p>
               <p className="text-base md:text-xl text-white leading-[1.75] md:leading-[1.8] mb-10 md:mb-14 max-w-2xl font-medium drop-shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
                 We exist to help differently-abled people through advocacy, accessibility, and equality while changing society&apos;s perceptions through education.

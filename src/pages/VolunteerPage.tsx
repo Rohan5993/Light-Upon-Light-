@@ -11,6 +11,8 @@ import {
   Clock3,
 } from "lucide-react";
 import Header from "../components/Header";
+import Seo from "../components/Seo";
+import { PAGE_SEO } from "../data/seo";
 import Footer from "../components/Footer";
 import { siteImages } from "../assets/siteImages";
 import {
@@ -127,6 +129,7 @@ export default function VolunteerPage() {
 
   return (
     <>
+      <Seo {...PAGE_SEO.volunteer} />
       <Header variant="dark" />
       <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col overflow-x-hidden">
 

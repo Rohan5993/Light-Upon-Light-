@@ -3,6 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import Header from "../components/Header";
+import Seo from "../components/Seo";
+import { PAGE_SEO } from "../data/seo";
 import Footer from "../components/Footer";
 import { resolveMediaUrl } from "../lib/publicUrl";
 import { type BlogPost } from "../data/blogPosts";
@@ -49,6 +51,7 @@ export default function BlogPage() {
 
   return (
     <>
+      <Seo {...PAGE_SEO.blog} />
       <Header variant="dark" />
       <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col overflow-x-hidden">
       <div className="absolute inset-0 flex pointer-events-none opacity-[0.03]">

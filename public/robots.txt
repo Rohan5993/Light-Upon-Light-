@@ -1,6 +1,8 @@
 # https://thelightuponlight.org/
 User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /admin/
 
 Sitemap: https://thelightuponlight.org/sitemap.xml
 

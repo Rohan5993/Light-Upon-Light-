@@ -69,12 +69,13 @@ export default function Footer({ className = "", topPaddingClass = "pt-[42px] md
               <h2 className="text-white font-bold text-base">Quick Links</h2>
               <ul className="grid grid-cols-1 gap-y-2 md:grid-cols-2 md:gap-x-16 lg:gap-x-20 md:gap-y-2">
                 {[
+                  { label: "About Light Upon Light", path: "/about" },
                   { label: "Programs", path: "/programs" },
-                  { label: "About Us", path: "/about" },
                   { label: "Blogs", path: "/blog" },
                   { label: "Volunteer", path: "/volunteer" },
                   { label: "Contact Us", path: "/contact" },
                   { label: "Donate", path: "/donate" },
+                  { label: "Press", path: "/press" },
                 ].map((link) => (
                   <li key={link.label}>
                     <Link to={link.path} className="text-gray-300 hover:text-white transition-colors text-sm font-medium">

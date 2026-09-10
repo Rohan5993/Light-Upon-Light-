@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ArrowLeft, ArrowRight, Facebook, Linkedin, House, ChevronRight } from "lucide-react";
 import Header from "../components/Header";
+import Seo from "../components/Seo";
 import Footer from "../components/Footer";
 import BlogAudioPlayer from "../components/BlogAudioPlayer";
 import HoverFillLink from "../components/HoverFillLink";
@@ -339,6 +340,14 @@ export default function BlogDetailPage() {
 
   return (
     <>
+      {post ? (
+        <Seo
+          title={`${post.title} | Light Upon Light`}
+          description={post.excerpt || `${post.title} — a story from Light Upon Light.`}
+          path={`/blog/${post.slug ?? post.id}`}
+          type="article"
+        />
+      ) : null}
       <Header variant="dark" />
       <div className="relative bg-[#f8f5ff] min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col overflow-x-hidden">
       <main className="max-w-7xl mx-auto w-full px-4 sm:px-6 pt-10 pb-10 md:pb-0">

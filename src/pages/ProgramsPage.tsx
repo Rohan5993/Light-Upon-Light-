@@ -3,6 +3,8 @@ import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
 import Header from "../components/Header";
+import Seo from "../components/Seo";
+import { PAGE_SEO } from "../data/seo";
 import Footer from "../components/Footer";
 import { resolveMediaUrl } from "../lib/publicUrl";
 import { useEffect } from "react";
@@ -16,6 +18,7 @@ export default function ProgramsPage() {
 
   return (
     <>
+      <Seo {...PAGE_SEO.programs} />
       <Header variant="dark" />
       <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col overflow-x-hidden">
 

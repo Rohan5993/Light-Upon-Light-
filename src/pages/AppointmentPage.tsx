@@ -3,6 +3,8 @@ import { Link, useSearchParams } from "react-router-dom";
 import { motion } from "motion/react";
 import { ArrowLeft, CalendarDays } from "lucide-react";
 import Header from "../components/Header";
+import Seo from "../components/Seo";
+import { PAGE_SEO } from "../data/seo";
 import Footer from "../components/Footer";
 import { buildCalComEmbedUrl } from "../data/booking";
 
@@ -22,6 +24,7 @@ export default function AppointmentPage() {
 
   return (
     <>
+      <Seo {...PAGE_SEO.appointment} />
       <Header variant="dark" />
       <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col overflow-x-hidden">
         <section className="relative px-4 sm:px-6 pt-10 pb-8 sm:pb-10 overflow-hidden">

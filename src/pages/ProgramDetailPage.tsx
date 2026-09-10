@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { PROGRAMS, type ProgramCta } from "../data/programs";
 import { useEffect } from "react";
 import Header from "../components/Header";
+import Seo from "../components/Seo";
 import Footer from "../components/Footer";
 import { resolveMediaUrl } from "../lib/publicUrl";
 import HoverFillLink from "../components/HoverFillLink";
@@ -65,6 +66,11 @@ export default function ProgramDetailPage() {
 
   return (
     <>
+      <Seo
+        title={`${program.title} | Light Upon Light`}
+        description={`${program.title} is a Light Upon Light program advancing advocacy, accessibility, education, and equality for differently-abled people.`}
+        path={`/programs/${program.id}`}
+      />
       <Header variant="dark" />
       <div className="relative bg-white min-h-[calc(100dvh-56px)] sm:min-h-[calc(100dvh-64px)] lg:min-h-[calc(100dvh-72px)] selection:bg-purple-100 font-sans flex flex-col overflow-x-hidden">
 

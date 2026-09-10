@@ -36,3 +36,54 @@ Edit rows directly in Supabase → Table Editor → `cms_blog_posts`, or upload 
 
 Those go by email through FormSubmit to `lightuponlight1408@gmail.com`.  
 No CMS needed for forms.
+
+---
+
+## Brand SEO — required manual steps (do these once)
+
+Site technical SEO (meta, schema, sitemap, prerender, robots) is already implemented on **https://thelightuponlight.org/**. These steps still require your logins:
+
+### A) Google Search Console (indexation)
+
+1. Open [Google Search Console](https://search.google.com/search-console)
+2. Add property → **Domain** → `thelightuponlight.org`
+3. Verify with the DNS TXT record Google shows (at your domain registrar)
+4. Sitemaps → submit: `https://thelightuponlight.org/sitemap.xml`
+5. URL Inspection → request indexing for:
+   - `https://thelightuponlight.org/`
+   - `/about`
+   - `/about/ronahi-zebari`
+   - `/press`
+   - `/programs`
+   - `/donate`
+   - `/blog`
+6. Also add the property in [Bing Webmaster Tools](https://www.bing.com/webmasters) (import from GSC or submit the same sitemap)
+
+After each production deploy you can run: `npm run seo:ping` (IndexNow).
+
+### B) Domain consolidation (critical)
+
+External profiles still teach Google that the homepage is **luul.org**. Fix in this order:
+
+1. **LinkedIn Company Page** (`light-upon-light-org`) → Edit → Website = `https://thelightuponlight.org/`
+2. **Idealist** org profile → website + public email → `https://thelightuponlight.org/` and `Info@thelightuponlight.org`
+3. **Wix site `luul.org` / `www.luul.org`** → set **301 redirects** of all URLs to `https://thelightuponlight.org/` (at minimum homepage → homepage). Do not keep two active official sites.
+4. Update Instagram, Facebook, YouTube, TikTok bios, email signatures, PayPal/org docs to `.org` only
+
+### C) Citations / directories
+
+Claim or update with identical NAP + EIN `99-2690459` + website `.org`:
+
+- GuideStar / Candid
+- Google Business Profile (if public visiting address)
+- VolunteerMatch / Catchafire (optional)
+- Ask podcast hosts and school/partner pages to link `https://thelightuponlight.org/`
+
+### NAP to use everywhere
+
+- Name: Light Upon Light  
+- Address: 16305 NE 87th St, Redmond, WA 98052  
+- Phone: 206-766-0884  
+- Email: Info@thelightuponlight.org  
+- EIN: 99-2690459  
+- Website: https://thelightuponlight.org/
