@@ -1,19 +1,15 @@
 {
   "rewrites": [
     {
-      "source": "/((?!assets/|blog/|api/|robots\\.txt$|sitemap\\.xml$|llms\\.txt$|llm\\.txt$|.*\\.md$|favicon(?:-.*)?\\.(?:ico|png|svg)$|apple-touch-icon\\.png$|icon-(?:192|512)\\.png$|hero-(?:mobile|desktop)\\.webp$|.*\\.(?:webp|svg|png|ico|jpg|jpeg|woff2|woff|css|js|mp4|xml|txt)$).*)",
+      "source": "/sitemap.xml",
+      "destination": "/api/sitemap"
+    },
+    {
+      "source": "/((?!assets/|api/|blog/|robots\\.txt$|llms\\.txt$|llm\\.txt$|.*\\.md$|favicon(?:-.*)?\\.(?:ico|png|svg)$|apple-touch-icon\\.png$|icon-(?:192|512)\\.png$|hero-(?:mobile|desktop)\\.webp$|.*\\.(?:webp|svg|png|ico|jpg|jpeg|woff2|woff|css|js|mp4|xml|txt)$).*)",
       "destination": "/index.html"
     }
   ],
   "headers": [
-    {
-      "source": "/sitemap.xml",
-      "headers": [
-        { "key": "Content-Type", "value": "application/xml; charset=utf-8" },
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
-        { "key": "X-Robots-Tag", "value": "noindex" }
-      ]
-    },
     {
       "source": "/robots.txt",
       "headers": [
@@ -78,7 +74,7 @@
       ]
     },
     {
-      "source": "/((?!sitemap\\.xml$|robots\\.txt$).*)",
+      "source": "/((?!sitemap\\.xml$|robots\\.txt$|api/sitemap$).*)",
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" },
