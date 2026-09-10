@@ -1,15 +1,25 @@
 {
   "rewrites": [
     {
-      "source": "/sitemap.xml",
-      "destination": "/api/sitemap"
-    },
-    {
-      "source": "/((?!assets/|api/|blog/|robots\\.txt$|llms\\.txt$|llm\\.txt$|.*\\.md$|favicon(?:-.*)?\\.(?:ico|png|svg)$|apple-touch-icon\\.png$|icon-(?:192|512)\\.png$|hero-(?:mobile|desktop)\\.webp$|.*\\.(?:webp|svg|png|ico|jpg|jpeg|woff2|woff|css|js|mp4|xml|txt)$).*)",
+      "source": "/((?!assets/|api/|blog/|robots\\.txt$|sitemap\\.xml$|sitemap\\.txt$|llms\\.txt$|llm\\.txt$|.*\\.md$|favicon(?:-.*)?\\.(?:ico|png|svg)$|apple-touch-icon\\.png$|icon-(?:192|512)\\.png$|hero-(?:mobile|desktop)\\.webp$|.*\\.(?:webp|svg|png|ico|jpg|jpeg|woff2|woff|css|js|mp4|xml|txt)$).*)",
       "destination": "/index.html"
     }
   ],
   "headers": [
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        { "key": "Content-Type", "value": "text/xml; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/sitemap.txt",
+      "headers": [
+        { "key": "Content-Type", "value": "text/plain; charset=utf-8" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
     {
       "source": "/robots.txt",
       "headers": [
@@ -74,7 +84,7 @@
       ]
     },
     {
-      "source": "/((?!sitemap\\.xml$|robots\\.txt$|api/sitemap$).*)",
+      "source": "/((?!sitemap\\.xml$|sitemap\\.txt$|robots\\.txt$).*)",
       "headers": [
         { "key": "X-Content-Type-Options", "value": "nosniff" },
         { "key": "X-Frame-Options", "value": "DENY" },
