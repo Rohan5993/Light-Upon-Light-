@@ -15,7 +15,7 @@ const ROUTES = [
     description:
       "Light Upon Light is a 501(c)(3) nonprofit in Redmond, Washington, led by Ronahi Zebari. We advance advocacy, accessibility, education, and equality for differently-abled people. EIN 99-2690459.",
     h1: "Their Light Is Already There. Help Us Let It Shine",
-    body: "Light Upon Light is a 501(c)(3) nonprofit organization based in Redmond, Washington, creating advocacy, accessibility, education, and equality for differently-abled people. Official website https://thelightuponlight.org/. EIN 99-2690459. Founded by Ronahi Zebari.",
+    body: "We exist to help differently-abled people through advocacy, accessibility, and equality while changing society's perceptions through education.",
   },
   {
     path: "/about",
