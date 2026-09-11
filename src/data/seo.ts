@@ -22,10 +22,10 @@ export const DEFAULT_DESCRIPTION =
 
 export const PAGE_SEO: Record<string, PageSeo> = {
   home: {
-    title: "Light Upon Light | Disability Advocacy Nonprofit in WA",
+    title: "Light Upon Light | Official Website — Disability Advocacy Nonprofit",
     description: DEFAULT_DESCRIPTION,
     path: "/",
-    ogTitle: "Light Upon Light",
+    ogTitle: "Light Upon Light | Official Website",
   },
   about: {
     title: "About Light Upon Light | Our Mission, Founder & Board",
@@ -102,7 +102,13 @@ export function organizationJsonLd() {
         "@type": "NGO",
         "@id": `${SITE_ORIGIN}/#organization`,
         name: "Light Upon Light",
-        alternateName: ["LUL", "Light Upon Light Nonprofit"],
+        alternateName: [
+          "LightUponLight",
+          "lightuponlight",
+          "Light Upon Light Nonprofit",
+          "LUL",
+          "luul",
+        ],
         url: `${SITE_ORIGIN}/`,
         logo: `${SITE_ORIGIN}/icon-512.png`,
         email: "Info@thelightuponlight.org",
@@ -110,6 +116,13 @@ export function organizationJsonLd() {
         foundingDate: "2024",
         taxID: "99-2690459",
         nonprofitStatus: "Nonprofit501c3",
+        slogan: "Their light is already there. Help us let it shine.",
+        knowsAbout: [
+          "disability advocacy",
+          "accessibility",
+          "inclusive education",
+          "differently-abled people",
+        ],
         address: {
           "@type": "PostalAddress",
           streetAddress: "16305 NE 87th St",

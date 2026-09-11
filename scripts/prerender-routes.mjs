@@ -11,7 +11,7 @@ const ROUTES = [
   {
     path: "/",
     file: "index.html",
-    title: "Light Upon Light | Disability Advocacy Nonprofit in WA",
+    title: "Light Upon Light | Official Website — Disability Advocacy Nonprofit",
     description:
       "Light Upon Light is a 501(c)(3) nonprofit in Redmond, Washington, led by Ronahi Zebari. We advance advocacy, accessibility, education, and equality for differently-abled people. EIN 99-2690459.",
     h1: "Their Light Is Already There. Help Us Let It Shine",
