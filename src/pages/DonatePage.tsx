@@ -216,7 +216,7 @@ export default function DonatePage() {
                     Why give today
                   </p>
                   <p className="text-white font-bold text-lg md:text-xl max-w-md leading-snug">
-                    A single gift can put real help in a family&apos;s hands this week.
+                    Your donation can be the light that brightens the dark spaces in their lives
                   </p>
                 </div>
               </div>

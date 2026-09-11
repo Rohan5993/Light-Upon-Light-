@@ -31,7 +31,13 @@ const SOCIAL_ICONS = {
 } as const;
 
 const ADDRESS = "16305 NE 87th St, Redmond, WA 98052";
-const MAP_SRC = `https://maps.google.com/maps?q=${encodeURIComponent(ADDRESS)}&z=15&output=embed`;
+const MAP_LAT = 47.6794657;
+const MAP_LNG = -122.1221175;
+const MAP_DELTA = 0.006;
+const MAP_SRC = `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(
+  `${MAP_LNG - MAP_DELTA},${MAP_LAT - MAP_DELTA},${MAP_LNG + MAP_DELTA},${MAP_LAT + MAP_DELTA}`,
+)}&layer=mapnik&marker=${encodeURIComponent(`${MAP_LAT},${MAP_LNG}`)}`;
+const MAP_EXTERNAL_HREF = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ADDRESS)}`;
 
 const CONTACT_DETAILS = [
   {
@@ -49,7 +55,7 @@ const CONTACT_DETAILS = [
   {
     label: "Address",
     value: "16305 NE 87th St, Redmond, WA 98052",
-    href: `https://maps.google.com/?q=${encodeURIComponent(ADDRESS)}`,
+    href: MAP_EXTERNAL_HREF,
     icon: MapPin,
   },
 ];
@@ -417,14 +423,23 @@ export default function ContactPage() {
                 16305 NE 87th St, Redmond, WA 98052
               </p>
             </div>
-            <div className="rounded-2xl sm:rounded-[1.75rem] overflow-hidden ring-1 ring-slate-200/80 aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] bg-slate-100">
+            <div className="rounded-2xl sm:rounded-[1.75rem] overflow-hidden ring-1 ring-slate-200/80 aspect-[4/3] sm:aspect-[16/9] md:aspect-[21/9] bg-slate-100 relative">
               <iframe
                 title="Light Upon Light location in Redmond, Washington"
                 src={MAP_SRC}
                 className="w-full h-full border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
+                allowFullScreen
               />
+              <a
+                href={MAP_EXTERNAL_HREF}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute bottom-3 right-3 rounded-full bg-white/95 px-3.5 py-2 text-xs font-bold text-slate-800 shadow-md ring-1 ring-slate-200 hover:bg-white transition-colors"
+              >
+                Open in Google Maps
+              </a>
             </div>
           </div>
         </section>
