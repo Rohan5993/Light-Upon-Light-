@@ -396,13 +396,6 @@ export default function AboutPage() {
             <h1 className="text-[1.875rem] sm:text-[2.5rem] md:text-[3rem] font-bold text-gray-900 tracking-tight leading-tight mb-6">
               More Than a Nonprofit. A Movement for Change.
             </h1>
-            <p className="text-base sm:text-lg text-gray-500 font-medium leading-relaxed max-w-2xl mb-4">
-              Light Upon Light is a 501(c)(3) nonprofit (EIN 99-2690459) based in Redmond, Washington, founded by{" "}
-              <Link to="/about/ronahi-zebari" className="text-[#7107E7] font-semibold hover:underline">
-                Ronahi Zebari
-              </Link>
-              . We advance advocacy, accessibility, education, and equality for differently-abled people.
-            </p>
             <p className="text-base sm:text-lg text-gray-500 font-medium leading-relaxed max-w-2xl">
               What began with one moment of exclusion has grown into a movement dedicated to creating a world where differently-abled people are treated with dignity and respect, valued for who they are, and given the same opportunities as everyone else.
             </p>

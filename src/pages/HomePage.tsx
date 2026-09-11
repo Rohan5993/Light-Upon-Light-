@@ -442,9 +442,6 @@ export default function HomePage() {
               <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.22em] text-[#F5E8A8]/90 mb-2 sm:mb-2.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.25)]">
                 Our Mission
               </p>
-              <p className="text-base md:text-xl text-white leading-[1.75] md:leading-[1.8] mb-4 md:mb-5 max-w-2xl font-medium drop-shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
-                Light Upon Light is a 501(c)(3) nonprofit organization based in Redmond, Washington, creating advocacy, accessibility, education, and equality for differently-abled people.
-              </p>
               <p className="text-base md:text-xl text-white leading-[1.75] md:leading-[1.8] mb-10 md:mb-14 max-w-2xl font-medium drop-shadow-[0_1px_8px_rgba(0,0,0,0.3)]">
                 We exist to help differently-abled people through advocacy, accessibility, and equality while changing society&apos;s perceptions through education.
               </p>
