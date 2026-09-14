@@ -31,6 +31,7 @@ import boardMember8990 from "../assets/board-members/IMG_8990.webp";
 import boardMember9354 from "../assets/board-members/IMG_9354.webp";
 import boardMember9397 from "../assets/board-members/IMG_9397.webp";
 import boardMember9405 from "../assets/board-members/IMG_9405.webp";
+import boardMemberCraigKerr from "../assets/board-members/craig-kerr.jpeg";
 
 const HISTORY = [
   {
@@ -254,6 +255,16 @@ const BOARD_MEMBERS: {
       "Throughout his career, he has taught at universities and educational institutions and produced more than 1,500 hours of television and educational programming. As Light Upon Light's Board Director — Communications & Outreach, Dr. Salah brings his extensive experience in media, public speaking, and community engagement to help share our story, spread our mission, and expand awareness of our work.",
     ],
     facebook: "https://www.facebook.com/share/1BpUEkJX8t/?mibextid=wwXIfr",
+  },
+  {
+    name: "Craig Kerr",
+    designation: "Education & Accessibility Strategy",
+    image: boardMemberCraigKerr,
+    blurb: [
+      "Craig Kerr is the Director of Services for Students with Disabilities (SSD) at Edmonds College, a higher education leader, and a dedicated accessibility advocate. For over 12 years, he has led institutional initiatives that ensure individuals with disabilities receive equitable access, reasonable accommodations, and dignity-centered support across academic programs and services.",
+      "Throughout his career, he has driven impactful community and equity initiatives from implementing digital accessibility standards to facilitating the Harvard award-winning Intercultural Leadership Initiative. As Light Upon Light's Board Member, Education & Accessibility Strategy, he leverages his deep expertise in program development and disability services to strengthen advocacy, education, and equal opportunity across Washington State.",
+    ],
+    linkedin: "https://www.linkedin.com/in/craig-kerr-94349a1b",
   },
 ];
 
