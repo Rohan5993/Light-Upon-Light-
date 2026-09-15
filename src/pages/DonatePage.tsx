@@ -177,29 +177,9 @@ export default function DonatePage() {
                     <span className="text-violet-500">compassion</span> into{" "}
                     <span className="text-sky-500">real change</span> for families who need it.
                   </h1>
-                  <p className="text-slate-500 text-base md:text-lg leading-relaxed max-w-xl mb-8">
-                    Every gift funds education, health, and community care. Pick an amount that feels right, monthly or one-time.
+                  <p className="text-slate-500 text-base md:text-lg leading-relaxed max-w-xl">
+                    Every gift funds inclusive education, mentorship, workforce development, accessibility evaluation, and mobility aid distribution.
                   </p>
-
-                  <div className="flex flex-wrap gap-3">
-                    {[
-                      { value: "8K+", label: "Volunteers", key: "blue" as const },
-                      { value: "120+", label: "Events", key: "purple" as const },
-                      { value: "501(c)(3)", label: "Tax-deductible", key: "yellow" as const },
-                    ].map((stat) => (
-                      <div
-                        key={stat.label}
-                        className={`rounded-2xl border px-5 py-3 ${palette[stat.key].card}`}
-                      >
-                        <p
-                          className={`text-xl font-black ${stat.value === "501(c)(3)" ? "text-black" : palette[stat.key].heading}`}
-                        >
-                          {stat.value}
-                        </p>
-                        <p className="text-xs font-semibold text-slate-500 mt-0.5">{stat.label}</p>
-                      </div>
-                    ))}
-                  </div>
                 </div>
               </div>
 
