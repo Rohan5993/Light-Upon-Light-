@@ -158,10 +158,10 @@ export default function Header({ variant = "light" }: HeaderProps) {
                 <img
                   src={resolveMediaUrl(brandLogos.logoLulLight)}
                   alt="Light Upon Light"
-                  width={180}
-                  height={80}
+                  width={220}
+                  height={98}
                   decoding="async"
-                  className="h-9 xl:h-11 w-auto max-w-[120px] xl:max-w-[180px] object-contain object-left bg-transparent group-hover:scale-[1.02] transition-transform duration-300"
+                  className="h-11 xl:h-[3.25rem] w-auto max-w-[160px] xl:max-w-[220px] object-contain object-left bg-transparent group-hover:scale-[1.02] transition-transform duration-300"
                 />
               </Link>
             )}
