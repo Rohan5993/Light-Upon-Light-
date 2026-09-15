@@ -116,7 +116,7 @@ export function organizationJsonLd() {
         foundingDate: "2024",
         taxID: "99-2690459",
         nonprofitStatus: "Nonprofit501c3",
-        slogan: "Their light is already there. Help us let it shine.",
+        slogan: "Their light is already there. Help us make it shine.",
         knowsAbout: [
           "disability advocacy",
           "accessibility",

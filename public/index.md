@@ -2,7 +2,7 @@
 
 Light Upon Light is a 501(c)(3) nonprofit creating a future where differently-abled people are valued, included, and given the same opportunities as everyone else.
 
-**Tagline:** Their Light Is Already There. Help Us Let It Shine.
+**Tagline:** Their Light Is Already There. Help Us Make It Shine.
 
 ## Mission
 

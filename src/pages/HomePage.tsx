@@ -434,7 +434,7 @@ export default function HomePage() {
               <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-6 sm:mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
                 <span className="block">Their Light Is</span>
                 <span className="block">Already There.</span>
-                <span className="block">Help Us Let It Shine</span>
+                <span className="block">Help Us Make It Shine.</span>
               </h1>
               <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.22em] text-[#F5E8A8]/90 mb-2 sm:mb-2.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.25)]">
                 Our Mission
