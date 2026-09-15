@@ -120,7 +120,7 @@ export default function VolunteerPage() {
     } catch (error) {
       const detail = error instanceof Error ? error.message : "Something went wrong.";
       setSubmitError(
-        `${detail} Please try again, or email us at lightuponlight1408@gmail.com.`,
+        `${detail} Please try again, or email us at info@thelightuponlight.org.`,
       );
     } finally {
       setIsSubmitting(false);

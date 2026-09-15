@@ -2,7 +2,7 @@
  * Free-forever form delivery via FormSubmit (no paid hosting / Render).
  */
 const FORMSUBMIT_ENDPOINT =
-  "https://formsubmit.co/ajax/lightuponlight1408@gmail.com";
+  "https://formsubmit.co/ajax/info@thelightuponlight.org";
 
 export type ContactInquiryType = "message" | "appointment";
 

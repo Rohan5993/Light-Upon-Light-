@@ -47,7 +47,7 @@ export const PROGRAMS: Program[] = [
     gallery: [],
     ctaPrimary: {
       label: "Bring Enlighten to Your School",
-      to: "mailto:lightuponlight1408@gmail.com?subject=Bring%20Enlighten%20to%20Our%20School",
+      to: "mailto:info@thelightuponlight.org?subject=Bring%20Enlighten%20to%20Our%20School",
       external: true,
     },
     ctaSecondary: {
@@ -120,7 +120,7 @@ export const PROGRAMS: Program[] = [
     gallery: [],
     ctaPrimary: {
       label: "Partner With Us",
-      to: "mailto:lightuponlight1408@gmail.com?subject=Partner%20With%20Signs%20of%20Our%20Light",
+      to: "mailto:info@thelightuponlight.org?subject=Partner%20With%20Signs%20of%20Our%20Light",
       external: true,
     },
     ctaSecondary: {
@@ -145,7 +145,7 @@ export const PROGRAMS: Program[] = [
     gallery: [],
     ctaPrimary: {
       label: "Donate a Mobility Aid",
-      to: "mailto:lightuponlight1408@gmail.com?subject=Donate%20a%20Mobility%20Aid",
+      to: "mailto:info@thelightuponlight.org?subject=Donate%20a%20Mobility%20Aid",
       external: true,
     },
     ctaSecondary: {
@@ -170,7 +170,7 @@ export const PROGRAMS: Program[] = [
     gallery: [],
     ctaPrimary: {
       label: "Schedule a Pickup",
-      to: "mailto:lightuponlight1408@gmail.com?subject=Schedule%20a%20Donation%20Pickup",
+      to: "mailto:info@thelightuponlight.org?subject=Schedule%20a%20Donation%20Pickup",
       external: true,
     },
     ctaSecondary: {

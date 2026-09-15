@@ -783,7 +783,7 @@ export default function AboutPage() {
                 <p className="text-gray-600 text-sm leading-relaxed">
                   Still have questions?{" "}
                   <a
-                    href="mailto:lightuponlight1408@gmail.com"
+                    href="mailto:info@thelightuponlight.org"
                     className="font-bold text-purple-600 hover:text-purple-700 transition-colors"
                   >
                     Email us

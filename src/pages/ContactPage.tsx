@@ -42,8 +42,8 @@ const MAP_EXTERNAL_HREF = `https://www.google.com/maps/search/?api=1&query=${enc
 const CONTACT_DETAILS = [
   {
     label: "Email",
-    value: "lightuponlight1408@gmail.com",
-    href: "mailto:lightuponlight1408@gmail.com",
+    value: "info@thelightuponlight.org",
+    href: "mailto:info@thelightuponlight.org",
     icon: Mail,
   },
   {
@@ -118,7 +118,7 @@ export default function ContactPage() {
     } catch (error) {
       const detail = error instanceof Error ? error.message : "Something went wrong.";
       setSubmitError(
-        `${detail} Please try again, or email us at lightuponlight1408@gmail.com.`,
+        `${detail} Please try again, or email us at info@thelightuponlight.org.`,
       );
     } finally {
       setIsSubmitting(false);

@@ -3,7 +3,7 @@
  * Activates once via confirmation email to the org inbox.
  */
 const FORMSUBMIT_ENDPOINT =
-  "https://formsubmit.co/ajax/lightuponlight1408@gmail.com";
+  "https://formsubmit.co/ajax/info@thelightuponlight.org";
 
 async function submitViaFormSubmit(payload: Record<string, string>): Promise<void> {
   const response = await fetch(FORMSUBMIT_ENDPOINT, {

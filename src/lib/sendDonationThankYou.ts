@@ -8,7 +8,7 @@ export type DonationReceipt = {
   transactionId: string;
 };
 
-const ORG_EMAIL = "lightuponlight1408@gmail.com";
+const ORG_EMAIL = "info@thelightuponlight.org";
 
 function amountLabel(receipt: DonationReceipt) {
   return receipt.frequency === "monthly"

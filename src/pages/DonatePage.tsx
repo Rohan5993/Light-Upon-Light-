@@ -419,7 +419,7 @@ export default function DonatePage() {
                       alt={item.title}
                       className={`w-full h-44 object-cover ${
                         item.title === "Education"
-                          ? "object-[center_28%]"
+                          ? "object-[center_48%]"
                           : "object-center"
                       }`}
                     />
