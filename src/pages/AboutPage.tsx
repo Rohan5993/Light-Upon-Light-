@@ -30,7 +30,7 @@ import boardMember8793 from "../assets/board-members/IMG_8793.webp";
 import boardMember8990 from "../assets/board-members/IMG_8990.webp";
 import boardMember9354 from "../assets/board-members/IMG_9354.webp";
 import boardMember9397 from "../assets/board-members/IMG_9397.webp";
-import boardMember9405 from "../assets/board-members/IMG_9405.webp";
+import boardMemberSarahBekins from "../assets/board-members/sarah-bekins-tompkins.jpeg";
 import boardMemberCraigKerr from "../assets/board-members/craig-kerr.jpeg";
 
 const HISTORY = [
@@ -239,7 +239,7 @@ const BOARD_MEMBERS: {
   {
     name: "Sarah Bekins Tompkins",
     designation: "Community Outreach & Participant Engagement",
-    image: boardMember9405,
+    image: boardMemberSarahBekins,
     blurb: [
       "Sarah Bekins Tompkins is a rare disease advocate and community leader with extensive experience in advocacy, public engagement, and elevating the perspectives of people with lived experience. Her work includes serving on the boards of the Northwest Rare Disease Coalition and Connective Strength, as well as contributing as a consumer reviewer for the Congressionally Directed Medical Research Programs and as a PCORI Ambassador.",
       "As Light Upon Light's Board Director — Community Outreach & Participant Engagement, Sarah helps strengthen relationships with the communities we serve, engage participants in our programs, and ensure their experiences and perspectives remain an important part of our work.",
