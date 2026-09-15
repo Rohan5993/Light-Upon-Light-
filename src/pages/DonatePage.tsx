@@ -207,22 +207,22 @@ export default function DonatePage() {
                 id="top-donate-card"
                 className="lg:col-span-5 lg:sticky lg:top-28 xl:top-32 rounded-2xl sm:rounded-[2rem] p-[3px] bg-gradient-to-br from-sky-200 via-violet-200 to-amber-200 shadow-[0_12px_48px_rgba(139,92,246,0.12)]"
               >
-                <div className="rounded-[calc(1rem-3px)] sm:rounded-[calc(2rem-3px)] bg-white h-full flex flex-col overflow-hidden">
-                  <div className="px-5 sm:px-7 pt-6 sm:pt-7 pb-5 border-b border-slate-100 bg-gradient-to-r from-sky-50/80 via-white to-amber-50/80">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className="w-2 h-2 rounded-full bg-sky-400" />
-                      <span className="w-2 h-2 rounded-full bg-violet-400" />
-                      <span className="w-2 h-2 rounded-full bg-amber-400" />
+                <div className="rounded-[calc(1rem-3px)] sm:rounded-[calc(2rem-3px)] bg-white flex flex-col overflow-hidden">
+                  <div className="px-5 sm:px-6 pt-4 sm:pt-5 pb-3.5 border-b border-slate-100 bg-gradient-to-r from-sky-50/80 via-white to-amber-50/80">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-sky-400" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-violet-400" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                     </div>
-                    <h2 className="text-xl font-black text-slate-800">Make a gift</h2>
-                    <p className="text-sm text-slate-500 mt-1">Select frequency and amount below.</p>
+                    <h2 className="text-lg sm:text-xl font-black text-slate-800">Make a gift</h2>
+                    <p className="text-sm text-slate-500 mt-0.5">Select frequency and amount below.</p>
                   </div>
 
-                  <div className="p-5 sm:p-7 md:p-8 flex flex-col flex-1">
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3">
+                  <div className="p-4 sm:p-5 md:p-6 flex flex-col flex-1">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">
                       Gift frequency
                     </p>
-                    <div className="grid grid-cols-2 gap-3 mb-6">
+                    <div className="grid grid-cols-2 gap-2.5 mb-4">
                       {(["monthly", "onetime"] as const).map((mode) => {
                         const active = frequency === mode;
                         const isMonthly = mode === "monthly";
@@ -236,7 +236,7 @@ export default function DonatePage() {
                               setCustomAmount("");
                               setPaymentError(null);
                             }}
-                            className={`rounded-2xl border-2 px-4 py-4 text-left transition-all ${
+                            className={`rounded-xl border-2 px-3.5 py-3 text-left transition-all ${
                               active
                                 ? isMonthly
                                   ? "border-sky-300 bg-sky-50 shadow-sm"
@@ -263,10 +263,10 @@ export default function DonatePage() {
                       })}
                     </div>
 
-                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-3">
+                    <p className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">
                       Select amount
                     </p>
-                    <div className="flex flex-wrap gap-2 mb-5">
+                    <div className="flex flex-wrap gap-2 mb-3.5">
                       {amountOptions.map((amount) => {
                         const active = !customAmount && selectedAmount === amount;
                         return (
@@ -278,7 +278,7 @@ export default function DonatePage() {
                               setSelectedAmount(amount);
                               setPaymentError(null);
                             }}
-                            className={`relative min-w-[3.75rem] sm:min-w-[4.5rem] flex-1 rounded-full border-2 px-3 sm:px-4 py-2.5 font-black text-sm sm:text-base transition-all ${
+                            className={`relative min-w-[3.5rem] sm:min-w-[4.25rem] flex-1 rounded-full border-2 px-3 sm:px-4 py-2 font-black text-sm sm:text-base transition-all ${
                               active
                                 ? "border-[#F3E8C8] bg-[#FFFBEA] text-amber-900"
                                 : "border-slate-100 bg-white text-slate-600 hover:border-sky-200 hover:bg-sky-50"
@@ -290,11 +290,11 @@ export default function DonatePage() {
                       })}
                     </div>
 
-                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1.5">
+                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-1">
                       Or enter custom amount
                     </label>
-                    <div className="relative mb-6">
-                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-violet-400 font-black text-lg">
+                    <div className="relative mb-4">
+                      <span className="absolute left-4 top-1/2 -translate-y-1/2 text-violet-400 font-black text-base">
                         $
                       </span>
                       <input
@@ -305,29 +305,29 @@ export default function DonatePage() {
                         }}
                         inputMode="numeric"
                         placeholder="0"
-                        className="w-full rounded-2xl border-2 border-slate-100 bg-slate-50 py-3.5 pl-10 pr-4 text-xl font-black text-slate-800 focus:outline-none focus:border-violet-300 focus:bg-white"
+                        className="w-full rounded-xl border-2 border-slate-100 bg-slate-50 py-2.5 pl-9 pr-4 text-lg font-black text-slate-800 focus:outline-none focus:border-violet-300 focus:bg-white"
                       />
                     </div>
 
-                    <div className="rounded-2xl bg-gradient-to-r from-sky-50 via-violet-50 to-amber-50 border border-violet-100 px-5 py-4 mb-5 text-center">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-violet-500 mb-1">
+                    <div className="rounded-xl bg-gradient-to-r from-sky-50 via-violet-50 to-amber-50 border border-violet-100 px-4 py-3 mb-4 text-center">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-violet-500 mb-0.5">
                         Your gift total
                       </p>
-                      <p className="text-3xl font-black text-slate-800">
+                      <p className="text-2xl font-black text-slate-800">
                         ${finalAmount}
                         {frequency === "monthly" && (
-                          <span className="text-lg font-bold text-violet-500">/month</span>
+                          <span className="text-base font-bold text-violet-500">/month</span>
                         )}
                       </p>
                     </div>
 
                     {!canDonate && (
-                      <p className="mb-3 text-center text-xs font-medium text-amber-700">
+                      <p className="mb-2 text-center text-xs font-medium text-amber-700">
                         Enter at least $1 to continue with PayPal.
                       </p>
                     )}
 
-                    <div className="min-h-[150px]">
+                    <div className="min-h-[120px]">
                     <PayPalDonateButtons
                       amount={finalAmount}
                       frequency={frequency}
@@ -344,15 +344,15 @@ export default function DonatePage() {
                     </div>
 
                     {paymentError && (
-                      <p className="mt-3 text-center text-xs font-medium text-red-600">{paymentError}</p>
+                      <p className="mt-2 text-center text-xs font-medium text-red-600">{paymentError}</p>
                     )}
 
-                    <p className="mt-3 text-center text-xs text-slate-400">
+                    <p className="mt-2 text-center text-xs text-slate-400">
                       {frequency === "monthly"
                         ? "PayPal will charge your selected monthly amount now. You can set up automatic renewals in your PayPal account after checkout."
                         : "Goes where help is needed most."}
                     </p>
-                    <div className="mt-3 inline-flex items-center justify-center gap-2 mx-auto px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-[11px] text-slate-500">
+                    <div className="mt-2 inline-flex items-center justify-center gap-2 mx-auto px-3 py-1 rounded-full bg-slate-50 border border-slate-100 text-[11px] text-slate-500">
                       <Lock size={12} className="text-sky-500" />
                       Secure checkout powered by PayPal
                     </div>
