@@ -432,7 +432,7 @@ export default function HomePage() {
                 width={1080}
                 height={680}
                 decoding="async"
-                className="h-full w-full object-cover object-[center_40%] blur-[6px] scale-105"
+                className="h-full w-full object-cover object-[center_40%] blur-[6px] scale-105 opacity-70"
               />
             </picture>
           </div>
