@@ -430,7 +430,12 @@ export default function HomePage() {
         {/* Hero Content */}
         <main className="relative z-10 px-4 sm:px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl pt-6 sm:pt-8 pb-12 md:pt-0 md:pb-0">
           <div className="relative max-w-4xl">
-            <div className="relative">
+            <div className="relative rounded-2xl px-5 py-6 sm:px-8 sm:py-8 md:px-10 md:py-10">
+              <div
+                aria-hidden
+                className="absolute inset-0 rounded-2xl bg-black/30 backdrop-blur-md pointer-events-none"
+              />
+              <div className="relative">
               <h1 className="text-[32px] sm:text-[40px] md:text-[48px] font-bold text-white leading-[1.2] tracking-[-0.02em] space-y-1 mb-8 sm:mb-10 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
                 <span className="block">Their Light</span>
                 <span className="block">Is Already There.</span>
@@ -458,6 +463,7 @@ export default function HomePage() {
               <p className="mt-5 text-sm md:text-base text-white/95 font-medium max-w-2xl drop-shadow-[0_1px_6px_rgba(0,0,0,0.28)]">
                 Your generosity creates real access, greater opportunity, and lasting change.
               </p>
+              </div>
             </div>
           </div>
         </main>
