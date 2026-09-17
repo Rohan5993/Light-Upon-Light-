@@ -400,7 +400,7 @@ export default function HomePage() {
       <Seo {...PAGE_SEO.home} includeOrganizationSchema />
       <div className="relative min-h-screen min-h-[100dvh] overflow-hidden selection:bg-purple-100 font-sans flex flex-col">
         <Header variant="light" />
-        {/* Background Hero Image — soft left blur stops before the girl (kept sharp) */}
+        {/* Background Hero Image — left blur + black wash; stops before the girl */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <picture>
             <source media="(min-width: 768px)" srcSet={HERO_DESKTOP} type="image/webp" />
@@ -419,9 +419,9 @@ export default function HomePage() {
             className="absolute inset-0 pointer-events-none"
             style={{
               WebkitMaskImage:
-                "linear-gradient(to right, #000 0%, #000 16%, rgba(0,0,0,0.45) 30%, transparent 42%)",
+                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.2) 48%, transparent 52%)",
               maskImage:
-                "linear-gradient(to right, #000 0%, #000 16%, rgba(0,0,0,0.45) 30%, transparent 42%)",
+                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.2) 48%, transparent 52%)",
             }}
           >
             <picture>
@@ -436,15 +436,15 @@ export default function HomePage() {
               />
             </picture>
           </div>
-          {/* Soft black wash above the blur (same fade mask, low opacity) */}
+          {/* Black overlay just above the blur (same mask — does not reach the girl) */}
           <div
             aria-hidden
-            className="absolute inset-0 pointer-events-none bg-black/25"
+            className="absolute inset-0 pointer-events-none bg-black/30"
             style={{
               WebkitMaskImage:
-                "linear-gradient(to right, #000 0%, #000 16%, rgba(0,0,0,0.45) 30%, transparent 42%)",
+                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.2) 48%, transparent 52%)",
               maskImage:
-                "linear-gradient(to right, #000 0%, #000 16%, rgba(0,0,0,0.45) 30%, transparent 42%)",
+                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.2) 48%, transparent 52%)",
             }}
           />
         </div>
