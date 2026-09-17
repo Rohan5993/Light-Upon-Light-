@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
 import { type BlogPost } from "../data/blogPosts";
 import Header from "../components/Header";
-import logoLul from "../assets/images/logo-lul.webp";
+import logoLul from "../assets/images/logolul.png";
 import ronahi from "../assets/images/Ronahi.webp";
 import programMeetOurLight from "../assets/images/program-meet-our-light.webp";
 import { resolveMediaUrl } from "../lib/publicUrl";
@@ -431,9 +431,9 @@ export default function HomePage() {
         <main className="relative z-10 px-4 sm:px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl pt-6 sm:pt-8 pb-12 md:pt-0 md:pb-0">
           <div className="relative max-w-4xl">
             <div className="relative">
-              <h1 className="text-[1.75rem] sm:text-[2rem] md:text-[3.5rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-6 sm:mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
-                <span className="block">Their Light Is</span>
-                <span className="block">Already There.</span>
+              <h1 className="text-[1.4rem] sm:text-[1.65rem] md:text-[2.75rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-6 sm:mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
+                <span className="block">Their Light</span>
+                <span className="block">Is Already There.</span>
                 <span className="block">Help Us Make It Shine.</span>
               </h1>
               <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.22em] text-[#F5E8A8]/90 mb-2 sm:mb-2.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.25)]">

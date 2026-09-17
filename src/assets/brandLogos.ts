@@ -1,10 +1,8 @@
-import logoLulLight from "./images/logo-lul-light.webp";
-import logoLulDark from "./images/logo-lul-dark.webp";
-import logoLul from "./images/logo-lul.webp";
+import logoLul from "./images/logolul.png";
 
 /** Brand marks only — keep Header/Footer off the full siteImages barrel */
 export const brandLogos = {
   logoLul,
-  logoLulLight,
-  logoLulDark,
+  logoLulLight: logoLul,
+  logoLulDark: logoLul,
 } as const;

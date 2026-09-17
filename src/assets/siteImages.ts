@@ -9,10 +9,8 @@ import heroGirlFountain from "./images/hero-girl-fountain.webp";
 import heroHomepage from "./images/hero-homepage.webp";
 import wheelchairMeeting from "./images/wheelchair-meeting.webp";
 import ourVision from "./images/our-vision.webp";
-import logoLul from "./images/logo-lul.webp";
-import logoLulLight from "./images/logo-lul-light.webp";
-import logoLulDark from "./images/logo-lul-dark.webp";
-import logo from "./images/logo.webp";
+import logoLul from "./images/logolul.png";
+import logo from "./images/logolul.png";
 import getInvolvedDonate from "./images/Donate.webp";
 import getInvolvedExplorePrograms from "./images/Exploreprograms.webp";
 import getInvolvedReadOurStories from "./images/read-our -story.webp";
@@ -57,8 +55,8 @@ export const siteImages = {
   wheelchairMeeting,
   ourVision,
   logoLul,
-  logoLulLight,
-  logoLulDark,
+  logoLulLight: logoLul,
+  logoLulDark: logoLul,
   logo,
   getInvolvedDonate,
   getInvolvedExplorePrograms,
