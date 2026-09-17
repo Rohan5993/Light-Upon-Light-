@@ -414,10 +414,10 @@ export default function HomePage() {
               className="w-full h-full object-cover object-[center_40%] [image-rendering:auto]"
             />
           </picture>
-          {/* Left panel behind copy — 50% width, full height, no image blur */}
+          {/* Left frosted panel — 50% width, full height, hard edge (matches reference blur) */}
           <div
             aria-hidden
-            className="absolute inset-y-0 left-0 w-[50%] pointer-events-none bg-black/60"
+            className="absolute inset-y-0 left-0 w-[50%] pointer-events-none bg-black/35 backdrop-blur-[28px] [-webkit-backdrop-filter:blur(28px)]"
           />
         </div>
 
