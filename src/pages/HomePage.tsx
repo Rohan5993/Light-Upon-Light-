@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { PROGRAMS } from "../data/programs";
 import { type BlogPost } from "../data/blogPosts";
 import Header from "../components/Header";
-import logoLul from "../assets/images/logolul.png";
+import logoLul from "../assets/images/logo-lul.webp";
 import ronahi from "../assets/images/Ronahi.webp";
 import programMeetOurLight from "../assets/images/program-meet-our-light.webp";
 import { resolveMediaUrl } from "../lib/publicUrl";
@@ -400,7 +400,7 @@ export default function HomePage() {
       <Seo {...PAGE_SEO.home} includeOrganizationSchema />
       <div className="relative min-h-screen min-h-[100dvh] overflow-hidden selection:bg-purple-100 font-sans flex flex-col">
         <Header variant="light" />
-        {/* Background Hero Image — left 50% is a lighter blur of the image itself */}
+        {/* Background Hero Image — soft left-side blur baked into the image layer (no hard split) */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <picture>
             <source media="(min-width: 768px)" srcSet={HERO_DESKTOP} type="image/webp" />
@@ -416,21 +416,25 @@ export default function HomePage() {
           </picture>
           <div
             aria-hidden
-            className="absolute inset-y-0 left-0 w-1/2 overflow-hidden pointer-events-none"
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 48%, transparent 72%)",
+              maskImage:
+                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 48%, transparent 72%)",
+            }}
           >
-            <div className="absolute inset-y-0 left-0 h-full w-[200%]">
-              <picture>
-                <source media="(min-width: 768px)" srcSet={HERO_DESKTOP} type="image/webp" />
-                <img
-                  src={HERO_MOBILE}
-                  alt=""
-                  width={1080}
-                  height={680}
-                  decoding="async"
-                  className="h-full w-full object-cover object-[center_40%] blur-[10px] scale-110"
-                />
-              </picture>
-            </div>
+            <picture>
+              <source media="(min-width: 768px)" srcSet={HERO_DESKTOP} type="image/webp" />
+              <img
+                src={HERO_MOBILE}
+                alt=""
+                width={1080}
+                height={680}
+                decoding="async"
+                className="h-full w-full object-cover object-[center_40%] blur-[8px] scale-110"
+              />
+            </picture>
           </div>
         </div>
 
