@@ -436,6 +436,17 @@ export default function HomePage() {
               />
             </picture>
           </div>
+          {/* Soft black wash above the blur (same fade mask, low opacity) */}
+          <div
+            aria-hidden
+            className="absolute inset-0 pointer-events-none bg-black/25"
+            style={{
+              WebkitMaskImage:
+                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 48%, transparent 72%)",
+              maskImage:
+                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 48%, transparent 72%)",
+            }}
+          />
         </div>
 
         {/* Hero Content */}
