@@ -1,4 +1,4 @@
-import logoLul from "./images/logov2.jpeg";
+import logoLul from "./images/logov2.png";
 
 /** Default chrome mark size (header left, footer). */
 export const BRAND_LOGO_WIDTH = 187;
