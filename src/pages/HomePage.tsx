@@ -419,9 +419,9 @@ export default function HomePage() {
             className="absolute inset-0 pointer-events-none"
             style={{
               WebkitMaskImage:
-                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.2) 48%, transparent 52%)",
+                "linear-gradient(to right, #000 0%, #000 10%, rgba(0,0,0,0.45) 15%, transparent 20%)",
               maskImage:
-                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.2) 48%, transparent 52%)",
+                "linear-gradient(to right, #000 0%, #000 10%, rgba(0,0,0,0.45) 15%, transparent 20%)",
             }}
           >
             <picture>
@@ -442,9 +442,9 @@ export default function HomePage() {
             className="absolute inset-0 pointer-events-none bg-black/30"
             style={{
               WebkitMaskImage:
-                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.2) 48%, transparent 52%)",
+                "linear-gradient(to right, #000 0%, #000 10%, rgba(0,0,0,0.45) 15%, transparent 20%)",
               maskImage:
-                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 40%, rgba(0,0,0,0.2) 48%, transparent 52%)",
+                "linear-gradient(to right, #000 0%, #000 10%, rgba(0,0,0,0.45) 15%, transparent 20%)",
             }}
           />
         </div>
