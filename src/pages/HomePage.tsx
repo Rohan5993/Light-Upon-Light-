@@ -431,7 +431,7 @@ export default function HomePage() {
         <main className="relative z-10 px-4 sm:px-6 md:px-16 flex-1 flex flex-col justify-center max-w-7xl pt-6 sm:pt-8 pb-12 md:pt-0 md:pb-0">
           <div className="relative max-w-4xl">
             <div className="relative">
-              <h1 className="text-[1.4rem] sm:text-[1.65rem] md:text-[2.75rem] font-bold text-white leading-[1.2] md:leading-[1.25] tracking-tight mb-6 sm:mb-8 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
+              <h1 className="text-[32px] sm:text-[40px] md:text-[48px] font-bold text-white leading-[1.2] tracking-[-0.02em] space-y-1 mb-8 sm:mb-10 drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)]">
                 <span className="block">Their Light</span>
                 <span className="block">Is Already There.</span>
                 <span className="block">Help Us Make It Shine.</span>

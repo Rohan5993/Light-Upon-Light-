@@ -2,7 +2,12 @@ import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import HoverFillLink from "./HoverFillLink";
-import { brandLogos } from "../assets/brandLogos";
+import {
+  brandLogos,
+  brandLogoClassName,
+  BRAND_LOGO_WIDTH,
+  BRAND_LOGO_HEIGHT,
+} from "../assets/brandLogos";
 import { resolveMediaUrl } from "../lib/publicUrl";
 
 interface HeaderProps {
@@ -25,15 +30,12 @@ export default function Header({ variant = "light" }: HeaderProps) {
 
   const navVariant = (active: boolean) => (active ? "purple" as const : "ghost" as const);
   const useLightChrome = isDark || isScrolled;
-  const brandLogo = useLightChrome ? brandLogos.logoLulLight : brandLogos.logoLulDark;
-  const isHeroLogo = !useLightChrome;
-  // Mobile/tablet: larger, readable mark that fills the bar
-  const logoMobileClass = isHeroLogo
-    ? "h-[58px] sm:h-[72px] md:h-[80px] w-auto max-w-full object-contain object-left bg-transparent group-hover:scale-[1.02] transition-transform duration-300"
-    : "h-[54px] sm:h-[64px] md:h-[72px] w-auto max-w-full object-contain object-left bg-transparent group-hover:scale-[1.02] transition-transform duration-300";
-  const logoDesktopClass = isHeroLogo
-    ? "h-16 xl:h-20 2xl:h-24 w-auto max-w-[min(28vw,320px)] xl:max-w-[min(36vw,400px)] 2xl:max-w-[min(42vw,480px)] object-contain object-left bg-transparent group-hover:scale-[1.02] transition-transform duration-300"
-    : "h-14 xl:h-16 2xl:h-20 w-auto max-w-[min(26vw,280px)] xl:max-w-[min(32vw,360px)] 2xl:max-w-[min(36vw,400px)] object-contain object-left bg-transparent group-hover:scale-[1.02] transition-transform duration-300";
+  const brandLogo = brandLogos.logoLul;
+  const logoClassName = [
+    brandLogoClassName,
+    "group-hover:scale-[1.02] transition-transform duration-300",
+    useLightChrome ? "drop-shadow-[0_1px_2px_rgba(15,23,42,0.2)]" : "drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]",
+  ].join(" ");
   const mobileHeaderGlass = isDark
     ? "bg-white/95 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/70 shadow-[0_8px_32px_rgba(15,23,42,0.08)]"
     : "bg-white/30 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/35 shadow-[0_8px_32px_rgba(0,0,0,0.12)]";
@@ -95,11 +97,11 @@ export default function Header({ variant = "light" }: HeaderProps) {
               <img
                 src={resolveMediaUrl(brandLogo)}
                 alt="Light Upon Light"
-                width={320}
-                height={142}
+                width={BRAND_LOGO_WIDTH}
+                height={BRAND_LOGO_HEIGHT}
                 decoding="async"
                 fetchPriority="high"
-                className={logoMobileClass}
+                className={logoClassName}
               />
             </span>
           </Link>
@@ -143,25 +145,25 @@ export default function Header({ variant = "light" }: HeaderProps) {
               <img
                 src={resolveMediaUrl(brandLogo)}
                 alt="Light Upon Light"
-                width={400}
-                height={177}
+                width={BRAND_LOGO_WIDTH}
+                height={BRAND_LOGO_HEIGHT}
                 decoding="async"
                 fetchPriority="high"
-                className={logoDesktopClass}
+                className={logoClassName}
               />
             </Link>
           )}
 
-          <nav className="flex items-center bg-white px-2 xl:px-3 py-2.5 xl:py-3 rounded-full shadow-xl gap-0.5 xl:gap-1 justify-self-center max-w-[calc(100vw-2rem)] overflow-hidden">
+          <nav className="flex items-center bg-white px-2 xl:px-3 py-2 xl:py-2.5 rounded-full shadow-xl gap-0.5 xl:gap-1 justify-self-center max-w-[calc(100vw-2rem)] overflow-hidden min-h-20">
             {isScrolled && (
               <Link to="/" className="flex items-center pl-1 pr-1.5 xl:pr-2 group shrink-0" aria-label="Light Upon Light home">
                 <img
-                  src={resolveMediaUrl(brandLogos.logoLulLight)}
+                  src={resolveMediaUrl(brandLogo)}
                   alt="Light Upon Light"
-                  width={220}
-                  height={98}
+                  width={BRAND_LOGO_WIDTH}
+                  height={BRAND_LOGO_HEIGHT}
                   decoding="async"
-                  className="h-11 xl:h-[3.25rem] w-auto max-w-[160px] xl:max-w-[220px] object-contain object-left bg-transparent group-hover:scale-[1.02] transition-transform duration-300"
+                  className={logoClassName}
                 />
               </Link>
             )}
