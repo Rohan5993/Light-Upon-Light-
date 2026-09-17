@@ -419,9 +419,9 @@ export default function HomePage() {
             className="absolute inset-0 pointer-events-none"
             style={{
               WebkitMaskImage:
-                "linear-gradient(to right, #000 0%, #000 30%, rgba(0,0,0,0.55) 42%, transparent 53%)",
+                "linear-gradient(to right, #000 0%, #000 35%, rgba(0,0,0,0.55) 48%, transparent 60%)",
               maskImage:
-                "linear-gradient(to right, #000 0%, #000 30%, rgba(0,0,0,0.55) 42%, transparent 53%)",
+                "linear-gradient(to right, #000 0%, #000 35%, rgba(0,0,0,0.55) 48%, transparent 60%)",
             }}
           >
             <picture>
@@ -436,15 +436,15 @@ export default function HomePage() {
               />
             </picture>
           </div>
-          {/* Black overlay just above the blur (same mask — does not reach the girl) */}
+          {/* Black overlay just above the blur — ends at 55% */}
           <div
             aria-hidden
             className="absolute inset-0 pointer-events-none bg-black/65"
             style={{
               WebkitMaskImage:
-                "linear-gradient(to right, #000 0%, #000 30%, rgba(0,0,0,0.55) 42%, transparent 53%)",
+                "linear-gradient(to right, #000 0%, #000 32%, rgba(0,0,0,0.55) 45%, transparent 55%)",
               maskImage:
-                "linear-gradient(to right, #000 0%, #000 30%, rgba(0,0,0,0.55) 42%, transparent 53%)",
+                "linear-gradient(to right, #000 0%, #000 32%, rgba(0,0,0,0.55) 45%, transparent 55%)",
             }}
           />
         </div>
