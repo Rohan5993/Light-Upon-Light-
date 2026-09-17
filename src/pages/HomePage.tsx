@@ -414,10 +414,10 @@ export default function HomePage() {
               className="w-full h-full object-cover object-[center_40%] [image-rendering:auto]"
             />
           </picture>
-          {/* Left panel behind copy — 30% width, full height, no image blur */}
+          {/* Left panel behind copy — 50% width, full height, no image blur */}
           <div
             aria-hidden
-            className="absolute inset-y-0 left-0 w-[30%] pointer-events-none bg-black/45"
+            className="absolute inset-y-0 left-0 w-[50%] pointer-events-none bg-black/60"
           />
         </div>
 
