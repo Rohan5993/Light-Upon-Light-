@@ -5,8 +5,11 @@ import HoverFillLink from "./HoverFillLink";
 import {
   brandLogos,
   brandLogoClassName,
+  brandLogoCenterClassName,
   BRAND_LOGO_WIDTH,
   BRAND_LOGO_HEIGHT,
+  BRAND_LOGO_CENTER_WIDTH,
+  BRAND_LOGO_CENTER_HEIGHT,
 } from "../assets/brandLogos";
 import { resolveMediaUrl } from "../lib/publicUrl";
 
@@ -35,6 +38,11 @@ export default function Header({ variant = "light" }: HeaderProps) {
     brandLogoClassName,
     "group-hover:scale-[1.02] transition-transform duration-300",
     useLightChrome ? "drop-shadow-[0_1px_2px_rgba(15,23,42,0.2)]" : "drop-shadow-[0_2px_6px_rgba(0,0,0,0.35)]",
+  ].join(" ");
+  const logoCenterClassName = [
+    brandLogoCenterClassName,
+    "group-hover:scale-[1.02] transition-transform duration-300",
+    "drop-shadow-[0_1px_2px_rgba(15,23,42,0.2)]",
   ].join(" ");
   const mobileHeaderGlass = isDark
     ? "bg-white/95 backdrop-blur-2xl backdrop-saturate-150 border-b border-white/70 shadow-[0_8px_32px_rgba(15,23,42,0.08)]"
@@ -154,16 +162,16 @@ export default function Header({ variant = "light" }: HeaderProps) {
             </Link>
           )}
 
-          <nav className="flex items-center bg-white px-2 xl:px-3 py-2 xl:py-2.5 rounded-full shadow-xl gap-0.5 xl:gap-1 justify-self-center max-w-[calc(100vw-2rem)] overflow-hidden min-h-20">
+          <nav className="flex items-center bg-white px-2 xl:px-3 py-2 xl:py-2.5 rounded-full shadow-xl gap-0.5 xl:gap-1 justify-self-center max-w-[calc(100vw-2rem)] overflow-hidden">
             {isScrolled && (
               <Link to="/" className="flex items-center pl-1 pr-1.5 xl:pr-2 group shrink-0" aria-label="Light Upon Light home">
                 <img
                   src={resolveMediaUrl(brandLogo)}
                   alt="Light Upon Light"
-                  width={BRAND_LOGO_WIDTH}
-                  height={BRAND_LOGO_HEIGHT}
+                  width={BRAND_LOGO_CENTER_WIDTH}
+                  height={BRAND_LOGO_CENTER_HEIGHT}
                   decoding="async"
-                  className={logoClassName}
+                  className={logoCenterClassName}
                 />
               </Link>
             )}
