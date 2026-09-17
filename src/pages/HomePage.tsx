@@ -400,7 +400,7 @@ export default function HomePage() {
       <Seo {...PAGE_SEO.home} includeOrganizationSchema />
       <div className="relative min-h-screen min-h-[100dvh] overflow-hidden selection:bg-purple-100 font-sans flex flex-col">
         <Header variant="light" />
-        {/* Background Hero Image — soft left-side blur baked into the image layer (no hard split) */}
+        {/* Background Hero Image — soft left blur stops before the girl (kept sharp) */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <picture>
             <source media="(min-width: 768px)" srcSet={HERO_DESKTOP} type="image/webp" />
@@ -419,9 +419,9 @@ export default function HomePage() {
             className="absolute inset-0 pointer-events-none"
             style={{
               WebkitMaskImage:
-                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 48%, transparent 72%)",
+                "linear-gradient(to right, #000 0%, #000 16%, rgba(0,0,0,0.45) 30%, transparent 42%)",
               maskImage:
-                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 48%, transparent 72%)",
+                "linear-gradient(to right, #000 0%, #000 16%, rgba(0,0,0,0.45) 30%, transparent 42%)",
             }}
           >
             <picture>
@@ -432,7 +432,7 @@ export default function HomePage() {
                 width={1080}
                 height={680}
                 decoding="async"
-                className="h-full w-full object-cover object-[center_40%] blur-[8px] scale-110"
+                className="h-full w-full object-cover object-[center_40%] blur-[6px] scale-105"
               />
             </picture>
           </div>
@@ -442,9 +442,9 @@ export default function HomePage() {
             className="absolute inset-0 pointer-events-none bg-black/25"
             style={{
               WebkitMaskImage:
-                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 48%, transparent 72%)",
+                "linear-gradient(to right, #000 0%, #000 16%, rgba(0,0,0,0.45) 30%, transparent 42%)",
               maskImage:
-                "linear-gradient(to right, #000 0%, #000 28%, rgba(0,0,0,0.55) 48%, transparent 72%)",
+                "linear-gradient(to right, #000 0%, #000 16%, rgba(0,0,0,0.45) 30%, transparent 42%)",
             }}
           />
         </div>
