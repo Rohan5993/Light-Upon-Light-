@@ -1057,11 +1057,11 @@ Through each of these efforts, we work to remove barriers, create meaningful opp
           src={logoLul}
           alt=""
           aria-hidden
-          width={1200}
-          height={800}
+          width={1743}
+          height={902}
           decoding="async"
           loading="lazy"
-          className="absolute inset-0 z-0 h-full w-full object-cover object-center pointer-events-none select-none"
+          className="absolute inset-0 z-0 h-full w-full object-cover object-center pointer-events-none select-none [image-rendering:auto]"
         />
 
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 py-10 sm:py-12 md:py-16">
