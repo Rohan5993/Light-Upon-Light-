@@ -17,8 +17,8 @@ import AnimatedText, { FadeIn } from "../components/motion/AnimatedText";
 import ScrollColorWords from "../components/motion/ScrollColorWords";
 import { TestimonialCard } from "../components/TestimonialCard";
 
-const HERO_MOBILE = "/hero-mobile.webp?v=2";
-const HERO_DESKTOP = "/hero-desktop.webp?v=2";
+const HERO_MOBILE = "/hero-mobile.webp?v=3";
+const HERO_DESKTOP = "/hero-desktop.webp?v=3";
 
 function avatarDataUri(initials: string, color: string) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><rect width="128" height="128" fill="${color}"/><text x="64" y="72" text-anchor="middle" font-family="system-ui,sans-serif" font-size="44" font-weight="700" fill="#fff">${initials}</text></svg>`;
@@ -419,9 +419,9 @@ export default function HomePage() {
             className="absolute inset-0 pointer-events-none"
             style={{
               WebkitMaskImage:
-                "linear-gradient(to right, #000 0%, #000 35%, rgba(0,0,0,0.55) 48%, transparent 60%)",
+                "linear-gradient(to right, #000 0%, #000 45%, rgba(0,0,0,0.35) 54%, transparent 60%)",
               maskImage:
-                "linear-gradient(to right, #000 0%, #000 35%, rgba(0,0,0,0.55) 48%, transparent 60%)",
+                "linear-gradient(to right, #000 0%, #000 45%, rgba(0,0,0,0.35) 54%, transparent 60%)",
             }}
           >
             <picture>
@@ -442,9 +442,9 @@ export default function HomePage() {
             className="absolute inset-0 pointer-events-none bg-black/65"
             style={{
               WebkitMaskImage:
-                "linear-gradient(to right, #000 0%, #000 32%, rgba(0,0,0,0.55) 45%, transparent 55%)",
+                "linear-gradient(to right, #000 0%, #000 40%, rgba(0,0,0,0.4) 50%, transparent 55%)",
               maskImage:
-                "linear-gradient(to right, #000 0%, #000 32%, rgba(0,0,0,0.55) 45%, transparent 55%)",
+                "linear-gradient(to right, #000 0%, #000 40%, rgba(0,0,0,0.4) 50%, transparent 55%)",
             }}
           />
         </div>
