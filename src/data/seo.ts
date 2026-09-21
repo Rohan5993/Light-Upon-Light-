@@ -6,6 +6,7 @@ export const ORGANIZATION_SAME_AS = [
   "https://www.facebook.com/people/Light-Upon-Light/61576724334985/",
   "https://www.youtube.com/@TheFoundersDiary24",
   "https://www.tiktok.com/@lightuponlight08",
+  "https://x.com/LULO424",
 ] as const;
 
 export type PageSeo = {
@@ -103,6 +104,7 @@ export function organizationJsonLd() {
         "@id": `${SITE_ORIGIN}/#organization`,
         name: "Light Upon Light",
         alternateName: [
+          "The Light Upon Light",
           "LightUponLight",
           "lightuponlight",
           "Light Upon Light Nonprofit",

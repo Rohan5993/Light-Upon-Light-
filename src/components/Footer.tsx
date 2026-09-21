@@ -1,4 +1,4 @@
-import { Instagram, Facebook, Linkedin, Youtube, Music2, MapPin, Mail, Phone } from "lucide-react";
+import { Instagram, Facebook, Linkedin, Youtube, Music2, MapPin, Mail, Phone, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import { SOCIAL_LINKS } from "../data/socialLinks";
 import {
@@ -15,6 +15,7 @@ const SOCIAL_ICONS = {
   LinkedIn: Linkedin,
   YouTube: Youtube,
   TikTok: Music2,
+  X,
 } as const;
 
 type FooterProps = {
