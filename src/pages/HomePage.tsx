@@ -542,7 +542,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Founder's Diary */}
+      {/* Founder's Story */}
       <section id="our-mission" className="px-4 sm:px-6 py-12 md:py-16 relative overflow-hidden">
         <div
           className="absolute inset-0 pointer-events-none"
@@ -558,7 +558,7 @@ export default function HomePage() {
         <div className="relative max-w-7xl mx-auto grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <FadeIn className="lg:col-span-6">
             <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#7107E7] mb-4">
-              Founder&apos;s Diary
+              Founder&apos;s Story
             </p>
 
             <h2 className="text-xl md:text-[1.5rem] font-bold text-slate-900 tracking-[-0.03em] leading-[1.3] mb-10">
@@ -566,12 +566,8 @@ export default function HomePage() {
             </h2>
 
             <ScrollColorWords
-              text={`Our Founder and CEO isn't just passionate about this cause. She has lived it. As a differently-abled woman herself, she knows the pain, the overlooked moments, and what it feels like to be denied basic dignity.
-
-It started when she was denied something as simple as a cup of tea. That one small, deeply unfair moment sparked everything. And she made sure it would never happen to anyone else.
-
-From her wheelchair she rises, leading Light Upon Light with a fire that cannot be dimmed, fighting every single day so that no differently-abled individual ever feels unseen, unheard, or unworthy again.`}
-              highlights={["sparked everything"]}
+              text={`Founded by the denial of a simple cup of tea because of a disability, yet it was that small moment started a movement. Light Upon Light (nonprofit organization) grows from lived experience, led by a differently-abled woman who belongs to the very community she is fighting for. Through advocacy, accessibility, education, and equality, she is creating a community where dignity is honored, belonging is expected, and differences are celebrated. Rest assured that at Light Upon Light, every human being is deserving of, and will receive, a cup of tea.`}
+              highlights={["cup of tea"]}
               className="text-[15px] md:text-base font-medium leading-[1.75] tracking-[-0.01em] mb-8"
             />
 
@@ -599,7 +595,7 @@ From her wheelchair she rises, leading Light Upon Light with a fire that cannot 
               <iframe
                 className="w-full h-full"
                 src="https://www.youtube.com/embed/ls7bEYWfP9w?autoplay=1&mute=1&playsinline=1&rel=0"
-                title="I Was Denied a Cup of Tea Because of My Disability — The Founder's Diary"
+                title="I Was Denied a Cup of Tea Because of My Disability — The Founder's Story"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
               />
